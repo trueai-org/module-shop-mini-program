@@ -25,7 +25,7 @@ Page({
           });
         }
       });
-    this.getCatalog();
+    // this.getCatalog();
   },
   getCatalog: function () {
     //CatalogList

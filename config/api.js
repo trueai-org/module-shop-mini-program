@@ -6,6 +6,8 @@ module.exports = {
   // add
   Widgets: ShopApiRootUrl + 'widgets', // 首页小部件
   Catalogs: ShopApiRootUrl + 'catalogs', // 分类
+  SubCategories: ShopApiRootUrl + 'catalogs/sub-categories', // 仅二级分类
+  Goods: ShopApiRootUrl + 'goods/grid', // 商品列表
 
   // ------------------------------
   IndexUrl: ApiRootUrl + 'index/index', //首页数据接口

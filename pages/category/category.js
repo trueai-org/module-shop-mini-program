@@ -12,11 +12,36 @@ Page({
     scrollTop: 0,
     scrollHeight: 0,
     page: 1,
-    size: 10000
+    size: 10,
+
+    categories: [],
+    current: {},
+    pageNum: 1,
+    pageSize: 5,
+    total: 0,
+    predicate: 'id',
+    reverse: true,
+    name: '',
+    categoryId: '',
+    pageData: []
   },
   onLoad: function (options) {
     // 页面初始化 options为页面跳转所带来的参数
-    var that = this;
+    let that = this;
+    util.request(api.SubCategories)
+      .then(function (res) {
+        if (res.success === true && res.data && res.data.length > 0) {
+          that.setData({
+            categories: res.data,
+            current: res.data[0],
+            categoryId: res.data[0].id
+          });
+          that.getGoods();
+        }
+      });
+
+    // return;
+
     if (options.id) {
       that.setData({
         id: parseInt(options.id)
@@ -31,9 +56,7 @@ Page({
       }
     });
 
-
     this.getCategoryInfo();
-
   },
   getCategoryInfo: function () {
     let that = this;
@@ -65,7 +88,7 @@ Page({
         } else {
           //显示错误信息
         }
-        
+
       });
   },
   onReady: function () {
@@ -73,7 +96,7 @@ Page({
   },
   onShow: function () {
     // 页面显示
-    console.log(1);
+    // console.log(1);
   },
   onHide: function () {
     // 页面隐藏
@@ -81,7 +104,7 @@ Page({
   getGoodsList: function () {
     var that = this;
 
-    util.request(api.GoodsList, {categoryId: that.data.id, page: that.data.page, size: that.data.size})
+    util.request(api.GoodsList, { categoryId: that.data.id, page: that.data.page, size: that.data.size })
       .then(function (res) {
         that.setData({
           goodsList: res.data.goodsList,
@@ -112,5 +135,66 @@ Page({
     });
 
     this.getCategoryInfo();
+  },
+  switchCate2: function (event) {
+    let id = event.currentTarget.dataset.id;
+    if (this.data.current.id == id) {
+      return false;
+    }
+    let first = this.data.categories.find(c => c.id == id);
+    if (first) {
+      this.setData({
+        current: first,
+        pageData: [],
+        pageNum: 1,
+        pageSize: this.data.pageSize,
+        total: 0,
+        predicate: 'id',
+        reverse: true,
+        name: '',
+        categoryId: first.id,
+      });
+      this.getGoods();
+    }
+  },
+  onReachBottom: function () {
+    // 当界面的下方距离页面底部距离小于100像素时触发回调
+    this.getGoods();
+  },
+  getGoods: function () {
+    let that = this;
+    if (this.data.total > 0 && this.data.total <= this.data.pageNum * this.data.pageSize)
+      return;
+    var params = {
+      pagination: {
+        current: that.data.pageNum,
+        pageSize: that.data.pageSize
+      },
+      sort: {
+        predicate: that.data.predicate,
+        reverse: that.data.reverse,
+      },
+      search: {
+        name: that.data.name,
+        categoryId: that.data.categoryId,
+      }
+    };
+    util.request(api.Goods, params, "POST")
+      .then(function (res) {
+        if (res.success === true) {
+          console.log(res);
+          let origin_data = that.data.pageData || [];
+          let new_data = origin_data.concat(res.data.list)
+          that.setData({
+            pageData: new_data,
+            total: parseInt(res.data.pagination.total)
+          });
+          if (parseInt(res.data.pagination.total) > parseInt(res.data.pagination.current) * parseInt(res.data.pagination.pageSize)) {
+            that.setData({
+              pageNum: (parseInt(res.data.pagination.current) + 1)
+            });
+          }
+        }
+      });
   }
 })
