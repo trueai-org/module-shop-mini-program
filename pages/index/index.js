@@ -49,7 +49,7 @@ Page({
       }
     });
 
-    util.request(api.Index).then(function (res) {
+    util.request(api.Widgets).then(function (res) {
       if (res.success === true) {
         that.setData({
           widgets: res.data.widgetInstances || []
@@ -67,7 +67,7 @@ Page({
               that.setData({ htmls: olds });
               return;
             }
-            util.request(api.Index + '/' + e.id).then(function (itemRes) {
+            util.request(api.Widgets + '/' + e.id).then(function (itemRes) {
               if (itemRes.success === true) {
                 if (e.widgetId == 5
                   && itemRes.data

@@ -9,9 +9,22 @@ Page({
     scrollLeft: 0,
     scrollTop: 0,
     goodsCount: 0,
-    scrollHeight: 0
+    scrollHeight: 0,
+
+    categories: [],
+    current: {}
   },
   onLoad: function (options) {
+    let that = this;
+    util.request(api.Catalogs)
+      .then(function (res) {
+        if (res.success === true && res.data && res.data.length > 0) {
+          that.setData({
+            categories: res.data,
+            current: res.data[0]
+          });
+        }
+      });
     this.getCatalog();
   },
   getCatalog: function () {
@@ -21,12 +34,12 @@ Page({
       title: '加载中...',
     });
     util.request(api.CatalogList).then(function (res) {
-        that.setData({
-          navList: res.data.categoryList,
-          currentCategory: res.data.currentCategory
-        });
-        wx.hideLoading();
+      that.setData({
+        navList: res.data.categoryList,
+        currentCategory: res.data.currentCategory
       });
+      wx.hideLoading();
+    });
     util.request(api.GoodsCount).then(function (res) {
       that.setData({
         goodsCount: res.data.goodsCount
@@ -70,7 +83,14 @@ Page({
     if (this.data.currentCategory.id == event.currentTarget.dataset.id) {
       return false;
     }
-
     this.getCurrentCategory(event.currentTarget.dataset.id);
+  },
+  switchCate2: function (event) {
+    let id = event.currentTarget.dataset.id;
+    if (this.data.current.id == id) {
+      return false;
+    }
+    let first = this.data.categories.find(c => c.id == id);
+    this.setData({ current: first });
   }
 })

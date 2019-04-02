@@ -4,7 +4,8 @@ const ShopApiRootUrl = 'https://localhost:44372/api/';
 module.exports = {
 
   // add
-  Index: ShopApiRootUrl + 'home/widgets', //首页小部件
+  Widgets: ShopApiRootUrl + 'widgets', // 首页小部件
+  Catalogs: ShopApiRootUrl + 'catalogs', // 分类
 
   // ------------------------------
   IndexUrl: ApiRootUrl + 'index/index', //首页数据接口
