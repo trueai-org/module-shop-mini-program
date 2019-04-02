@@ -1,4 +1,5 @@
-
+/* @import "../../lib/wxParse/wxParse.wxss" */
+/* 样式收到影响，暂不引用 */
 .search {
   height: 88rpx;
   width: 100%;
@@ -381,3 +382,4 @@
   font-size: 30rpx;
   color: #b4282d;
 }
+

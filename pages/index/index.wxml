@@ -1,24 +1,36 @@
-<!--index.wxml-->
+<!-- index.wxml -->
+<import src="./template/widget.wxml" />
 <view class="container">
   <view class="search">
     <navigator url="/pages/search/search" class="input">
       <image class="icon"></image>
-      <text class="txt">商品搜索, 共{{goodsCount}}款好物</text>
+      <!-- , 共{{goodsCount}}款好物 -->
+      <text class="txt">商品搜索</text>
     </navigator>
   </view>
-  <swiper class="banner" indicator-dots="true" autoplay="true" interval="3000" duration="1000">
+  <view class="header">
+    <template is="widget" data="{{widgets:widgets,widgetZoneId:1,carouselWidgets:carouselWidgets,categorys:categorys,htmls:htmls,simplProducts:simplProducts,products:products}}" />
+  </view>
+  <view class="content">
+    <template is="widget" data="{{widgets:widgets,widgetZoneId:2,carouselWidgets:carouselWidgets,categorys:categorys,htmls:htmls,simplProducts:simplProducts,products:products}}" />
+  </view>
+  <view class="content-after">
+    <template is="widget" data="{{widgets:widgets,widgetZoneId:3,carouselWidgets:carouselWidgets,categorys:categorys,htmls:htmls,simplProducts:simplProducts,products:products}}" />
+  </view>
+  <view>最近浏览 todo</view>
+  <!-- <swiper class="banner" indicator-dots="true" autoplay="true" interval="3000" duration="1000">
     <swiper-item wx:for="{{banner}}" wx:key="{{item.id}}">
       <navigator url="{{item.link}}">
         <image src="{{item.image_url}}" background-size="cover"></image>
       </navigator>
     </swiper-item>
-  </swiper>
-  <view class="m-menu">
+  </swiper> -->
+  <!-- <view class="m-menu">
     <navigator class="item" url="{{item.url}}" wx:for="{{channel}}" wx:key="{{item.id}}">
-      <image src="{{item.icon_url}}" background-size="cover"></image>
+      <image src="https://raw.githubusercontent.com/trueai-org/data/master/images/24/f1/66/24f16651fd91747a7abec44fba2608c5636897078214893420.png" background-size="cover"></image>
       <text>{{item.name}}</text>
     </navigator>
-  </view>
+  </view> -->
   <view class="a-section a-brand">
     <view class="h">
       <navigator url="../brand/brand">
@@ -40,7 +52,7 @@
       </view>
     </view>
   </view>
-  <view class="a-section a-new" wx:if="{{newGoods.length > 0}}">
+  <!-- <view class="a-section a-new" wx:if="{{newGoods.length > 0}}">
     <view class="h">
       <view>
         <navigator url="../newGoods/newGoods">
@@ -57,8 +69,8 @@
         </navigator>
       </view>
     </view>
-  </view>
-  <view class="a-section a-popular" wx:if="{{hotGoods.length > 0}}">
+  </view> -->
+  <!-- <view class="a-section a-popular" wx:if="{{hotGoods.length > 0}}">
     <view class="h">
       <view>
         <navigator url="../hotGoods/hotGoods">
@@ -80,8 +92,8 @@
         </navigator>
       </view>
     </view>
-  </view>
-  <view class="a-section a-topic" wx:if="topics.length > 0">
+  </view> -->
+  <!-- <view class="a-section a-topic" wx:if="topics.length > 0">
     <view class="h">
       <view>
         <navigator url="../topic/topic" open-type="switchTab">
@@ -103,8 +115,8 @@
         </view>
       </scroll-view>
     </view>
-  </view>
-  <view class="good-grid" wx:for="{{floorGoods}}" wx:key="{{item.id}}">
+  </view> -->
+  <!-- <view class="good-grid" wx:for="{{floorGoods}}" wx:key="{{item.id}}">
     <view class="h">
       <view>
         <text>{{item.name}}</text>
@@ -119,5 +131,5 @@
         </navigator>
       </block>
     </view>
-  </view>
+  </view> -->
 </view>
