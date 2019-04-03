@@ -17,7 +17,7 @@ Page({
     categories: [],
     current: {},
     pageNum: 1,
-    pageSize: 5,
+    pageSize: 10,
     total: 0,
     predicate: 'id',
     reverse: true,
@@ -31,16 +31,23 @@ Page({
     util.request(api.SubCategories)
       .then(function (res) {
         if (res.success === true && res.data && res.data.length > 0) {
+          let first = res.data[0];
+          if (options.id) {
+            let ss = res.data.find(c => c.id == options.id);
+            if (ss) {
+              first = ss;
+            }
+          }
           that.setData({
             categories: res.data,
-            current: res.data[0],
-            categoryId: res.data[0].id
+            current: first,
+            categoryId: first.id
           });
           that.getGoods();
         }
       });
 
-    // return;
+    return;
 
     if (options.id) {
       that.setData({
@@ -153,18 +160,23 @@ Page({
         reverse: true,
         name: '',
         categoryId: first.id,
+      }, () => {
+        this.getGoods();
       });
-      this.getGoods();
     }
   },
   onReachBottom: function () {
     // 当界面的下方距离页面底部距离小于100像素时触发回调
-    this.getGoods();
+    if (this.data.total > 0 && this.data.pageNum * this.data.pageSize < this.data.total) {
+      this.setData({
+        pageNum: this.data.pageNum + 1
+      }, () => {
+        this.getGoods();
+      });
+    }
   },
   getGoods: function () {
     let that = this;
-    if (this.data.total > 0 && this.data.total <= this.data.pageNum * this.data.pageSize)
-      return;
     var params = {
       pagination: {
         current: that.data.pageNum,
@@ -182,18 +194,12 @@ Page({
     util.request(api.Goods, params, "POST")
       .then(function (res) {
         if (res.success === true) {
-          console.log(res);
           let origin_data = that.data.pageData || [];
           let new_data = origin_data.concat(res.data.list)
           that.setData({
             pageData: new_data,
             total: parseInt(res.data.pagination.total)
           });
-          if (parseInt(res.data.pagination.total) > parseInt(res.data.pagination.current) * parseInt(res.data.pagination.pageSize)) {
-            that.setData({
-              pageNum: (parseInt(res.data.pagination.current) + 1)
-            });
-          }
         }
       });
   }

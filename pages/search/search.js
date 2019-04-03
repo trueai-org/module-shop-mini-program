@@ -17,9 +17,18 @@ Page({
     hotKeyword: [],
     page: 1,
     size: 20,
-    currentSortType: 'id',
-    currentSortOrder: 'desc',
-    categoryId: 0
+    // categoryId: 0,
+
+    categories: [{ id: 0, name: '全部' }],
+    current: {},
+    pageNum: 1,
+    pageSize: 6,
+    total: 0,
+    predicate: 'id',
+    reverse: true,
+    name: '',
+    categoryId: 0,
+    pageData: []
   },
   //事件处理函数
   closeSearch: function () {
@@ -32,8 +41,21 @@ Page({
     });
   },
   onLoad: function () {
+    let that = this;
+    util.request(api.SubCategories)
+      .then(function (res) {
+        if (res.success === true && res.data && res.data.length > 0) {
+          let origin_data = that.data.categories || [];
+          let new_data = origin_data.concat(res.data);
+          that.setData({
+            categories: new_data,
+            current: new_data[0]
+          });
+        }
+      });
 
-    this.getSearchKeyword();
+    this.getKeywords();
+    // this.getSearchKeyword();
   },
 
   getSearchKeyword() {
@@ -50,7 +72,6 @@ Page({
   },
 
   inputChange: function (e) {
-
     this.setData({
       keyword: e.detail.value,
       searchStatus: false
@@ -67,6 +88,18 @@ Page({
       }
     });
   },
+  getKeywords: function () {
+    let that = this;
+    util.request(api.Keywords).then(function (res) {
+      if (res.success === true) {
+        that.setData({
+          defaultKeyword: res.data.defaultKeyword,
+          hotKeyword: res.data.hotKeywords,
+          historyKeyword: res.data.historyKeywords
+        });
+      }
+    });
+  },
   inputFocus: function () {
     this.setData({
       searchStatus: false,
@@ -74,7 +107,7 @@ Page({
     });
 
     if (this.data.keyword) {
-      this.getHelpKeyword();
+      // this.getHelpKeyword();
     }
   },
   clearHistory: function () {
@@ -82,10 +115,14 @@ Page({
       historyKeyword: []
     })
 
-    util.request(api.SearchClearHistory, {}, 'POST')
+    util.request(api.ClearKeywords, {}, 'POST')
       .then(function (res) {
         console.log('清除成功');
       });
+    // util.request(api.SearchClearHistory, {}, 'POST')
+    //   .then(function (res) {
+    //     console.log('清除成功');
+    //   });
   },
   getGoodsList: function () {
     let that = this;
@@ -101,24 +138,36 @@ Page({
         });
       }
 
-      //重新获取关键词
-      that.getSearchKeyword();
+      // 重新获取关键词
+      // that.getSearchKeyword();
     });
   },
   onKeywordTap: function (event) {
-
     this.getSearchResult(event.target.dataset.keyword);
-
   },
   getSearchResult(keyword) {
+    // this.setData({
+    //   keyword: keyword,
+    //   page: 1,
+    //   categoryId: 0,
+    //   goodsList: []
+    // });
+    // this.getGoodsList();
+
     this.setData({
       keyword: keyword,
-      page: 1,
-      categoryId: 0,
-      goodsList: []
-    });
 
-    this.getGoodsList();
+      pageData: [],
+      pageNum: 1,
+      pageSize: this.data.pageSize,
+      total: 0,
+      predicate: 'id',
+      reverse: true,
+      name: keyword,
+      categoryId: 0,
+    }, () => {
+      this.getGoods();
+    });
   },
   openSortFilter: function (event) {
     let currentId = event.currentTarget.id;
@@ -139,7 +188,6 @@ Page({
           'currentSortOrder': tmpSortOrder,
           'categoryFilter': false
         });
-
         this.getGoodsList();
         break;
       default:
@@ -175,5 +223,119 @@ Page({
   },
   onKeywordConfirm(event) {
     this.getSearchResult(event.detail.value);
-  }
+  },
+  onReachBottom: function () {
+    // 当界面的下方距离页面底部距离小于100像素时触发回调
+    if (this.data.total > 0 && this.data.pageNum * this.data.pageSize < this.data.total) {
+      this.setData({
+        pageNum: this.data.pageNum + 1
+      }, () => {
+        this.getGoods();
+      });
+    }
+  },
+  getGoods: function () {
+    let that = this;
+    var params = {
+      pagination: {
+        current: that.data.pageNum,
+        pageSize: that.data.pageSize
+      },
+      sort: {
+        predicate: that.data.predicate,
+        reverse: that.data.reverse,
+      },
+      search: {
+        name: that.data.name,
+        categoryId: that.data.categoryId,
+      }
+    };
+    util.request(api.Goods, params, "POST")
+      .then(function (res) {
+        if (res.success === true) {
+          let origin_data = that.data.pageData || [];
+          let new_data = origin_data.concat(res.data.list)
+          that.setData({
+            searchStatus: true,
+            categoryFilter: false,
+            pageData: new_data,
+            total: parseInt(res.data.pagination.total)
+          });
+        }
+
+        // 重新获取关键词
+        that.getKeywords();
+      });
+  },
+  selectCategory2: function (event) {
+    let id = event.currentTarget.dataset.id;
+    if (this.data.current.id == id) {
+      return false;
+    }
+    let first = this.data.categories.find(c => c.id == id);
+    if (first) {
+      this.setData({
+        categoryFilter: false,
+        current: first,
+        pageData: [],
+        pageNum: 1,
+        pageSize: this.data.pageSize,
+        total: 0,
+        categoryId: first.id,
+      }, () => {
+        this.getGoods();
+      });
+    }
+  },
+  openSortFilter2: function (event) {
+    let currentId = event.currentTarget.id;
+    switch (currentId) {
+      case 'categoryFilter':
+        this.setData({
+          'categoryFilter': !this.data.categoryFilter,
+          'currentSortOrder': 'asc'
+        });
+        break;
+      case 'priceSort':
+        // let tmpSortOrder = 'asc';
+        // if (this.data.currentSortOrder == 'asc') {
+        //   tmpSortOrder = 'desc';
+        // }
+        // this.setData({
+        //   'currentSortType': 'price',
+        //   'currentSortOrder': tmpSortOrder,
+        //   'categoryFilter': false
+        // });
+        // this.getGoodsList();
+        this.setData({
+          currentSortType: 'price',
+          categoryFilter: false,
+          predicate: 'price',
+          reverse: !this.data.reverse,
+          pageNum: 1,
+          pageData: []
+        }, () => {
+          this.getGoods();
+        });
+        break;
+      default:
+        //综合排序
+        // this.setData({
+        //   'currentSortType': 'default',
+        //   'currentSortOrder': 'desc',
+        //   'categoryFilter': false
+        // });
+        // this.getGoodsList();
+        this.setData({
+          currentSortType: 'default',
+          categoryFilter: false,
+          predicate: 'id',
+          reverse: true,
+          pageNum: 1,
+          pageData: []
+        }, () => {
+          this.getGoods();
+        });
+    }
+  },
 })

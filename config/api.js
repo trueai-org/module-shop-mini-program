@@ -1,13 +1,15 @@
 const ApiRootUrl = 'http://127.0.0.1:8360/api/';
-const ShopApiRootUrl = 'https://localhost:44372/api/';
+const ApiHost = 'https://localhost:44372/api/';
+// const ApiHost = 'https://circle.ac.cn/api/';
 
 module.exports = {
-
   // add
-  Widgets: ShopApiRootUrl + 'widgets', // 首页小部件
-  Catalogs: ShopApiRootUrl + 'catalogs', // 分类
-  SubCategories: ShopApiRootUrl + 'catalogs/sub-categories', // 仅二级分类
-  Goods: ShopApiRootUrl + 'goods/grid', // 商品列表
+  Widgets: ApiHost + 'widgets', // 首页小部件
+  Catalogs: ApiHost + 'catalogs', // 分类
+  SubCategories: ApiHost + 'catalogs/sub-categories', // 仅二级分类
+  Goods: ApiHost + 'goods/grid', // 商品列表
+  Keywords: ApiHost + 'goods/keywords', // 搜索关键词列表
+  ClearKeywords: ApiHost + 'goods/keywords/clear-histories', // 清除历史关键词
 
   // ------------------------------
   IndexUrl: ApiRootUrl + 'index/index', //首页数据接口
