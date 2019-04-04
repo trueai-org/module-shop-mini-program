@@ -6,7 +6,7 @@
                 <view wx:for="{{ categorys }}" wx:for-index="idx" wx:for-item="item1">
                     <view wx:if="{{item1.widgetZoneId==widgetZoneId && item1.id == item.id}}">
                         <view class="m-menu">
-                            <navigator class="item" url="/pages/category/category?id=1005000" wx:for="{{item1.categorys}}" wx:for-item="item2" wx:key="{{item2.id}}">
+                            <navigator class="item" url="/pages/category/category?id={{item2.id}}" wx:for="{{item1.categorys}}" wx:for-item="item2" wx:key="{{item2.id}}">
                                 <image src="{{item2.thumbnailUrl}}" background-size="cover"></image>
                                 <text>{{item2.name}}</text>
                             </navigator>

@@ -61,7 +61,14 @@ Page({
       })
       return false
     }
+ 
+
     util.login().then((res) => {
+
+      console.log(res);
+      console.log(e);
+      // return false;
+
       return util.request(api.AuthLoginByWeixin, {
         code: res,
         userInfo: e.detail
