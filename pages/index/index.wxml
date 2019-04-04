@@ -115,7 +115,7 @@
       </scroll-view>
     </view>
   </view> -->
-  <!-- <view class="good-grid" wx:for="{{floorGoods}}" wx:key="{{item.id}}">
+  <view class="good-grid" wx:for="{{floorGoods}}" wx:key="{{item.id}}">
     <view class="h">
       <view>
         <text>{{item.name}}</text>
@@ -130,5 +130,5 @@
         </navigator>
       </block>
     </view>
-  </view> -->
+  </view>
 </view>

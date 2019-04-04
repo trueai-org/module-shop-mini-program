@@ -3,13 +3,29 @@ const ApiHost = 'https://localhost:44372/api/';
 // const ApiHost = 'https://circle.ac.cn/api/';
 
 module.exports = {
-  // add
+  // 首页
   Widgets: ApiHost + 'widgets', // 首页小部件
+
+  // 分类
   Catalogs: ApiHost + 'catalogs', // 分类
   SubCategories: ApiHost + 'catalogs/sub-categories', // 仅二级分类
-  Goods: ApiHost + 'goods/grid', // 商品列表
+
+  // 商品
+  Goods: ApiHost + 'goods', // 商品列表
+  GoodsRelated2: ApiHost + 'goods/related', // 推荐商品列表
+  GoodsGrid: ApiHost + 'goods/grid', // 商品列表
+  GoodsStocks: ApiHost + 'goods/stocks', // 商品库存
+
+  // 商品搜索
   Keywords: ApiHost + 'goods/keywords', // 搜索关键词列表
-  ClearKeywords: ApiHost + 'goods/keywords/clear-histories', // 清除历史关键词
+  ClearKeywords: ApiHost + 'goods/keywords/clear-histories', // 清除历史搜索记录
+
+  // 购物车
+  Cart: ApiHost + 'cart', // 购物车列表
+  CartAddItem: ApiHost + 'cart/add-item',
+  CartUpdateItem: ApiHost + 'cart/update-item-quantity',
+  CartCheckedItem: ApiHost + 'cart/checked',
+  CartRemoveItem: ApiHost + 'cart/remove-items',
 
   // ------------------------------
   IndexUrl: ApiRootUrl + 'index/index', //首页数据接口

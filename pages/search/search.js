@@ -250,7 +250,7 @@ Page({
         categoryId: that.data.categoryId,
       }
     };
-    util.request(api.Goods, params, "POST")
+    util.request(api.GoodsGrid, params, "POST")
       .then(function (res) {
         if (res.success === true) {
           let origin_data = that.data.pageData || [];
