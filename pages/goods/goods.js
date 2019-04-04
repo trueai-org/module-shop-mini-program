@@ -254,6 +254,7 @@ Page({
         stockProduct = s;
       }
     });
+    // console.log(stockProduct);
     return stockProduct;
   },
   getCheckedProductItem: function (key) {
@@ -273,7 +274,7 @@ Page({
     });
     var that = this;
     this.getGoodsInfo();
-    util.request(api.Carts).then(function (res) {
+    util.request(api.Cart).then(function (res) {
       if (res.success === true) {
         that.setData({
           cartGoodsCount: res.data.checkedSubCount

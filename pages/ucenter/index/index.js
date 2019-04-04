@@ -8,26 +8,26 @@ Page({
     userInfo: {},
     showLoginDialog: false
   },
-  onLoad: function(options) {
+  onLoad: function (options) {
     // 页面初始化 options为页面跳转所带来的参数
   },
-  onReady: function() {
+  onReady: function () {
 
   },
-  onShow: function() {
+  onShow: function () {
     this.setData({
       userInfo: app.globalData.userInfo,
     });
   },
-  onHide: function() {
+  onHide: function () {
     // 页面隐藏
 
   },
-  onUnload: function() {
+  onUnload: function () {
     // 页面关闭
   },
 
-  onUserInfoClick: function() {
+  onUserInfoClick: function () {
     if (wx.getStorageSync('token')) {
 
     } else {
@@ -41,13 +41,13 @@ Page({
     })
   },
 
-  onCloseLoginDialog () {
+  onCloseLoginDialog() {
     this.setData({
       showLoginDialog: false
     })
   },
 
-  onDialogBody () {
+  onDialogBody() {
     // 阻止冒泡
   },
 
@@ -61,57 +61,61 @@ Page({
       })
       return false
     }
- 
 
     util.login().then((res) => {
+      // return util.request(api.AuthLoginByWeixin, {
+      //   code: res,
+      //   userInfo: e.detail
+      // }, 'POST');
 
-      console.log(res);
-      console.log(e);
-      // return false;
-
-      return util.request(api.AuthLoginByWeixin, {
+      return util.request(api.LoginByWeixin, {
         code: res,
-        userInfo: e.detail
+        nickName: e.detail.userInfo.nickName,
+        avatarUrl: e.detail.userInfo.avatarUrl
       }, 'POST');
     }).then((res) => {
-      console.log(res)
-      if (res.errno !== 0) {
+      // console.log(res)
+      if (res.success !== true) {
         wx.showToast({
           title: '微信登录失败',
         })
         return false;
       }
+      let userInfo = {
+        name: res.data.name,
+        avatar: res.data.avatar
+      };
       // 设置用户信息
       this.setData({
-        userInfo: res.data.userInfo,
+        userInfo: userInfo,
         showLoginDialog: false
       });
-      app.globalData.userInfo = res.data.userInfo;
+      app.globalData.userInfo = userInfo;
       app.globalData.token = res.data.token;
-      wx.setStorageSync('userInfo', JSON.stringify(res.data.userInfo));
+      wx.setStorageSync('userInfo', JSON.stringify(userInfo));
       wx.setStorageSync('token', res.data.token);
     }).catch((err) => {
       console.log(err)
     })
   },
 
-  onOrderInfoClick: function(event) {
+  onOrderInfoClick: function (event) {
     wx.navigateTo({
       url: '/pages/ucenter/order/order',
     })
   },
 
-  onSectionItemClick: function(event) {
+  onSectionItemClick: function (event) {
 
   },
 
   // TODO 移到个人信息页面
-  exitLogin: function() {
+  exitLogin: function () {
     wx.showModal({
       title: '',
       confirmColor: '#b4282d',
       content: '退出登录？',
-      success: function(res) {
+      success: function (res) {
         if (res.confirm) {
           wx.removeStorageSync('token');
           wx.removeStorageSync('userInfo');

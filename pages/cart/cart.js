@@ -56,7 +56,7 @@ Page({
     //   });
     // });
 
-    util.request(api.Cart + "?access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIyYTEzYzcyMi1kNWMyLTQyYzctYTU3ZC01MWU2ZDgyYmU0YzAiLCJuYW1laWQiOiIyIiwidW5pcXVlX25hbWUiOiJzeXN0ZW0iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJhZG1pbiIsIm5iZiI6MTU1NDM0OTQ2NCwiZXhwIjoxNTU0NDM1ODY0LCJpc3MiOiJNb2R1bGVTaG9wIiwiYXVkIjoiQW55b25lIn0.Sb9byTTvplFEpdLF7aoi-3E-NO56_AW9AXkJP22Opt4").then(function (res) {
+    util.request(api.Cart).then(function (res) {
       if (res.success === true) {
         that.setData({
           cart: res.data
@@ -82,7 +82,7 @@ Page({
     let that = this;
 
     if (!this.data.isEditCart) {
-      util.request(api.CartCheckedItem + "?access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIyYTEzYzcyMi1kNWMyLTQyYzctYTU3ZC01MWU2ZDgyYmU0YzAiLCJuYW1laWQiOiIyIiwidW5pcXVlX25hbWUiOiJzeXN0ZW0iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJhZG1pbiIsIm5iZiI6MTU1NDM0OTQ2NCwiZXhwIjoxNTU0NDM1ODY0LCJpc3MiOiJNb2R1bGVTaG9wIiwiYXVkIjoiQW55b25lIn0.Sb9byTTvplFEpdLF7aoi-3E-NO56_AW9AXkJP22Opt4",
+      util.request(api.CartCheckedItem,
         { productIds: [that.data.cart.items[itemIndex].productId], isChecked: that.data.cart.items[itemIndex].isChecked ? false : true }, 'PUT').then(function (res) {
           if (res.success === true) {
             that.setData({
@@ -125,7 +125,7 @@ Page({
       var productIds = this.data.cart.items.map(function (v) {
         return v.productId;
       });
-      util.request(api.CartCheckedItem + "?access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIyYTEzYzcyMi1kNWMyLTQyYzctYTU3ZC01MWU2ZDgyYmU0YzAiLCJuYW1laWQiOiIyIiwidW5pcXVlX25hbWUiOiJzeXN0ZW0iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJhZG1pbiIsIm5iZiI6MTU1NDM0OTQ2NCwiZXhwIjoxNTU0NDM1ODY0LCJpc3MiOiJNb2R1bGVTaG9wIiwiYXVkIjoiQW55b25lIn0.Sb9byTTvplFEpdLF7aoi-3E-NO56_AW9AXkJP22Opt4",
+      util.request(api.CartCheckedItem,
         { productIds: productIds, isChecked: that.isCheckedAll() ? false : true }, 'PUT').then(function (res) {
           if (res.success === true) {
             that.setData({
@@ -176,7 +176,7 @@ Page({
   },
   updateCart: function (productId, quantity) {
     let that = this;
-    util.request(api.CartUpdateItem + "?access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIyYTEzYzcyMi1kNWMyLTQyYzctYTU3ZC01MWU2ZDgyYmU0YzAiLCJuYW1laWQiOiIyIiwidW5pcXVlX25hbWUiOiJzeXN0ZW0iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJhZG1pbiIsIm5iZiI6MTU1NDM0OTQ2NCwiZXhwIjoxNTU0NDM1ODY0LCJpc3MiOiJNb2R1bGVTaG9wIiwiYXVkIjoiQW55b25lIn0.Sb9byTTvplFEpdLF7aoi-3E-NO56_AW9AXkJP22Opt4",
+    util.request(api.CartUpdateItem,
       { productId: productId, quantity: quantity }, 'PUT').then(function (res) {
         if (res.success === true) {
           // that.setData({
@@ -248,7 +248,7 @@ Page({
       }
     });
 
-    util.request(api.CartRemoveItem + "?access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIyYTEzYzcyMi1kNWMyLTQyYzctYTU3ZC01MWU2ZDgyYmU0YzAiLCJuYW1laWQiOiIyIiwidW5pcXVlX25hbWUiOiJzeXN0ZW0iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJhZG1pbiIsIm5iZiI6MTU1NDM0OTQ2NCwiZXhwIjoxNTU0NDM1ODY0LCJpc3MiOiJNb2R1bGVTaG9wIiwiYXVkIjoiQW55b25lIn0.Sb9byTTvplFEpdLF7aoi-3E-NO56_AW9AXkJP22Opt4",
+    util.request(api.CartRemoveItem,
       { productIds: productIds }, 'DELETE').then(function (res) {
         if (res.success === true) {
           let cart = res.data;

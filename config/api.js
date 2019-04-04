@@ -27,6 +27,9 @@ module.exports = {
   CartCheckedItem: ApiHost + 'cart/checked',
   CartRemoveItem: ApiHost + 'cart/remove-items',
 
+  // 登录
+  LoginByWeixin: ApiHost + 'mp/login', //微信登录
+
   // ------------------------------
   IndexUrl: ApiRootUrl + 'index/index', //首页数据接口
   CatalogList: ApiRootUrl + 'catalog/index',  //分类目录全部分类数据接口
