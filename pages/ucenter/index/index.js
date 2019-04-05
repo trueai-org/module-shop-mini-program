@@ -5,7 +5,10 @@ const app = getApp();
 
 Page({
   data: {
-    userInfo: {},
+    userInfo: {
+      name: '',
+      avatar: app.defaultAvatar
+    },
     showLoginDialog: false
   },
   onLoad: function (options) {
@@ -121,12 +124,10 @@ Page({
       content: '退出登录？',
       success: function (res) {
         if (res.confirm) {
-
-          // TODO 暂时这么处理
           that.setData({
             userInfo: {
-              nickname: '点击登录',
-              avatar: 'http://yanxuan.nosdn.127.net/8945ae63d940cc42406c3f67019c5cb6.png'
+              name: '',
+              avatar: app.defaultAvatar
             }
           });
           wx.removeStorageSync('token');

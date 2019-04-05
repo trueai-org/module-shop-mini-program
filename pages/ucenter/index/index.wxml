@@ -75,7 +75,7 @@
       </navigator>
     </view>
   </view>
-  <view wx:if="{{userInfo}}" class="logout" bindtap="exitLogin">退出登录</view>
+  <view wx:if="{{userInfo && userInfo.name}}" class="logout" bindtap="exitLogin">退出登录</view>
 </view>
 <view class='dialog-login' wx:if="{{showLoginDialog}}" bindtap='onCloseLoginDialog'>
   <view class='dialog-body' catchtap='onDialogBody'>
