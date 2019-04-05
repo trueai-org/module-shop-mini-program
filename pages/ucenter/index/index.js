@@ -111,17 +111,27 @@ Page({
 
   // TODO 移到个人信息页面
   exitLogin: function () {
+    let that = this;
     wx.showModal({
       title: '',
       confirmColor: '#b4282d',
       content: '退出登录？',
       success: function (res) {
         if (res.confirm) {
+
+          // TODO 暂时这么处理
+          that.setData({
+            userInfo: {
+              nickname: '点击登录',
+              avatar: 'http://yanxuan.nosdn.127.net/8945ae63d940cc42406c3f67019c5cb6.png'
+            }
+          });
           wx.removeStorageSync('token');
           wx.removeStorageSync('userInfo');
-          wx.switchTab({
-            url: '/pages/index/index'
-          });
+          // wx.clearStorageSync();
+          // wx.switchTab({
+          //   url: '/pages/index/index'
+          // });
         }
       }
     })
