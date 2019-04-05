@@ -7,7 +7,6 @@
     </view>
     <image bindtap="onUserInfoClick" class='btn' src='/static/images/address_right.png'></image>
   </view>
-
   <view class="user-menu">
     <view class="item">
       <navigator url="/pages/ucenter/order/order" class="a">
@@ -75,11 +74,16 @@
         <text class="txt">意见反馈</text>
       </navigator>
     </view>
+    <view class="item item-bottom">
+      <navigator url="url" class="a" bindgetuserinfo="onWechatLogin">
+        <!-- <text class="icon help"></text> -->
+        <!-- <text class="txt" bindgetuserinfo="onWechatLogin">重新授权</text> -->
+        <button type="primary" open-type="getUserInfo" bindgetuserinfo="onWechatLogin">重新授权</button>
+      </navigator>
+    </view>
   </view>
-
   <!-- <view class="logout" bindtap="exitLogin">退出登录</view> -->
 </view>
-
 <view class='dialog-login' wx:if="{{showLoginDialog}}" bindtap='onCloseLoginDialog'>
   <view class='dialog-body' catchtap='onDialogBody'>
     <view class='title'>请选择登录方式</view>
