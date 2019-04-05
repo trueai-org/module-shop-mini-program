@@ -16,12 +16,15 @@ Page({
     orderTotalPrice: 0.00,  //订单总价
     actualPrice: 0.00,     //实际需要支付的总价
     addressId: 0,
-    couponId: 0
+    couponId: 0,
+
+    address: {},
+    items: [],
+    info: {}
   },
   onLoad: function (options) {
 
     // 页面初始化 options为页面跳转所带来的参数
-
     try {
       var addressId = wx.getStorageSync('addressId');
       if (addressId) {
@@ -29,7 +32,6 @@ Page({
           'addressId': addressId
         });
       }
-
       var couponId = wx.getStorageSync('couponId');
       if (couponId) {
         this.setData({
@@ -39,24 +41,40 @@ Page({
     } catch (e) {
       // Do something when catch error
     }
-
-
   },
   getCheckoutInfo: function () {
     let that = this;
-    util.request(api.CartCheckout, { addressId: that.data.addressId, couponId: that.data.couponId }).then(function (res) {
-      if (res.errno === 0) {
+    // util.request(api.CartCheckout, { addressId: that.data.addressId, couponId: that.data.couponId }).then(function (res) {
+    //   if (res.errno === 0) {
+    //     console.log(res.data);
+    //     that.setData({
+    //       checkedGoodsList: res.data.checkedGoodsList,
+    //       checkedAddress: res.data.checkedAddress,
+    //       actualPrice: res.data.actualPrice,
+    //       checkedCoupon: res.data.checkedCoupon,
+    //       couponList: res.data.couponList,
+    //       couponPrice: res.data.couponPrice,
+    //       freightPrice: res.data.freightPrice,
+    //       goodsTotalPrice: res.data.goodsTotalPrice,
+    //       orderTotalPrice: res.data.orderTotalPrice
+    //     });
+    //   }
+    //   wx.hideLoading();
+    // });
+
+    util.request(api.CartCheckout2).then(function (res) {
+      if (res.success === true) {
         console.log(res.data);
         that.setData({
-          checkedGoodsList: res.data.checkedGoodsList,
-          checkedAddress: res.data.checkedAddress,
-          actualPrice: res.data.actualPrice,
-          checkedCoupon: res.data.checkedCoupon,
-          couponList: res.data.couponList,
-          couponPrice: res.data.couponPrice,
-          freightPrice: res.data.freightPrice,
-          goodsTotalPrice: res.data.goodsTotalPrice,
-          orderTotalPrice: res.data.orderTotalPrice
+          checkedGoodsList: res.data.items,
+          checkedAddress: res.data.address,
+          actualPrice: 0,
+          checkedCoupon: 1,
+          couponList: [],
+          couponPrice: 0,
+          freightPrice: 0,
+          goodsTotalPrice: 0,
+          orderTotalPrice: 0
         });
       }
       wx.hideLoading();

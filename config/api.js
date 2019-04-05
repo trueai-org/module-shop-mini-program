@@ -1,6 +1,6 @@
 const ApiRootUrl = 'http://127.0.0.1:8360/api/';
-// const ApiHost = 'https://localhost:44372/api/';
-const ApiHost = 'https://circle.ac.cn/api/';
+const ApiHost = 'https://localhost:44372/api/';
+// const ApiHost = 'https://circle.ac.cn/api/';
 
 module.exports = {
   // 首页
@@ -27,8 +27,15 @@ module.exports = {
   CartCheckedItem: ApiHost + 'cart/checked',
   CartRemoveItem: ApiHost + 'cart/remove-items',
 
+  // 购物车 下单
+  CartCheckout2: ApiHost + 'checkout', // 下单前确认信息
+
   // 登录
-  LoginByWeixin: ApiHost + 'mp/login', //微信登录
+  LoginByWeixin: ApiHost + 'mp/login', // 微信登录
+
+  // 用户地址
+  Addresses: ApiHost + 'user-addresses', // 用户地址
+  Provinces: ApiHost + 'user-addresses/provinces', // 省市区
 
   // ------------------------------
   IndexUrl: ApiRootUrl + 'index/index', //首页数据接口

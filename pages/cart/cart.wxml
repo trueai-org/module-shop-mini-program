@@ -37,8 +37,7 @@
           </view>
         </view>
       </view>
-
-      <!--<view class="group-item">
+      <!-- <view class="group-item">
                 <view class="header">
                     <view class="promotion">
                         <text class="tag">满赠</text>
@@ -66,10 +65,12 @@
                         </view>
                     </view>
                 </view>
-            </view>-->
+            </view> -->
     </view>
     <view class="cart-bottom">
-      <view class="checkbox {{checkedAllStatus ? 'checked' : ''}}" bindtap="checkedAll">全选({{cart.checkedSubCount}})</view>
+      <view class="checkbox {{checkedAllStatus ? 'checked' : ''}}" bindtap="checkedAll">
+        全选({{cart.checkedSubCount}})
+      </view>
       <view class="total">{{!isEditCart ? '￥'+cart.checkedSubTotal : ''}}</view>
       <view class="delete" bindtap="editCart">{{!isEditCart ? '编辑' : '完成'}}</view>
       <view class="checkout" bindtap="deleteCart" wx:if="{{isEditCart}}">删除所选</view>

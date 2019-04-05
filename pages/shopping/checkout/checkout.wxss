@@ -146,6 +146,7 @@ page{
     height: auto;
     overflow: hidden;
     background: #fff;
+    margin-bottom: 120rpx;
 }
 
 .order-box .order-item{
@@ -187,7 +188,7 @@ page{
     overflow: hidden;
     background: #fff;
     padding-left: 31.25rpx;
-    margin-bottom: 120rpx;
+    margin-bottom: 20rpx;
 }
 
 .goods-items .item{

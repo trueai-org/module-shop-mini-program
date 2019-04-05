@@ -1,310 +1,230 @@
 var util = require('../../../utils/util.js');
 var api = require('../../../config/api.js');
 var app = getApp();
+
 Page({
   data: {
-    address: {
-      id:0,
-      province_id: 0,
-      city_id: 0,
-      district_id: 0,
-      address: '',
-      full_region: '',
-      name: '',
-      mobile: '',
-      is_default: 0
-    },
-    addressId: 0,
+    address: {},
+    userAddressId: 0,
     openSelectRegion: false,
-    selectRegionList: [
-      { id: 0, name: '省份', parent_id: 1, type: 1 },
-      { id: 0, name: '城市', parent_id: 1, type: 2 },
-      { id: 0, name: '区县', parent_id: 1, type: 3 }
-    ],
-    regionType: 1,
-    regionList: [],
-    selectRegionDone: false
+    fistOpen: true,
+
+    value: [0, 0, 0],
+    allCitys: [],
+    allDistricts: [],
+    provinces: [],
+    citys: [],
+    districts: [],
+    provinceStr: ''
+  },
+
+  bindChange: function (e) {
+    const val = e.detail.value;
+    if (!val || val[0] < 0)
+      return;
+    if (val[1] < 0 || val[2] < 0) {
+      this.setData({
+        citys: [],
+        districts: [],
+      })
+      return;
+    }
+    let p = this.data.provinces[val[0]];
+    let cs = [];
+    let c = undefined;
+    if (p) {
+      cs = this.data.allCitys.filter(c => c.parentId == p.id);
+    }
+    if (cs.length > val[1]) {
+      c = cs[val[1]];
+    }
+    let ds = [];
+    let d = undefined;
+    if (c) {
+      ds = this.data.allDistricts.filter(x => x.parentId == c.id);
+    }
+    if (ds.length > val[2]) {
+      d = ds[val[2]];
+    }
+    this.setData({
+      value: val,
+      citys: cs,
+      districts: ds,
+      provinceStr: (p ? p.name : '') + ' ' + (c ? c.name : '') + ' ' + (d ? d.name : '')
+    })
   },
   bindinputMobile(event) {
     let address = this.data.address;
-    address.mobile = event.detail.value;
+    address.phone = event.detail.value;
     this.setData({
       address: address
     });
   },
   bindinputName(event) {
     let address = this.data.address;
-    address.name = event.detail.value;
+    address.contactName = event.detail.value;
     this.setData({
       address: address
     });
   },
-  bindinputAddress (event){
+  bindinputAddress(event) {
     let address = this.data.address;
-    address.address = event.detail.value;
+    address.addressLine1 = event.detail.value;
     this.setData({
       address: address
     });
   },
-  bindIsDefault(){
+  bindIsDefault() {
     let address = this.data.address;
-    address.is_default = !address.is_default;
+    address.isDefault = !address.isDefault;
     this.setData({
       address: address
     });
   },
   getAddressDetail() {
     let that = this;
-    util.request(api.AddressDetail, { id: that.data.addressId }).then(function (res) {
-      if (res.errno === 0) {
+    util.request(api.Addresses + '/' + that.data.userAddressId).then(function (res) {
+      if (res.success === true) {
         that.setData({
           address: res.data
+        }, () => {
+          that.getRegionList(res.data);
         });
       }
     });
-  },
-  setRegionDoneStatus() {
-    let that = this;
-    let doneStatus = that.data.selectRegionList.every(item => {
-      return item.id != 0;
-    });
-
-    that.setData({
-      selectRegionDone: doneStatus
-    })
-
   },
   chooseRegion() {
     let that = this;
     this.setData({
       openSelectRegion: !this.data.openSelectRegion
+    }, () => {
+      if (this.data.fistOpen && !this.data.userAddressId) {
+        this.bindChange({ detail: { value: that.data.value } });
+        this.setData({ fistOpen: false });
+      }
     });
-
-    //设置区域选择数据
-    let address = this.data.address;
-    if (address.province_id > 0 && address.city_id > 0 && address.district_id > 0) {
-      let selectRegionList = this.data.selectRegionList;
-      selectRegionList[0].id = address.province_id;
-      selectRegionList[0].name = address.province_name;
-      selectRegionList[0].parent_id = 1;
-
-      selectRegionList[1].id = address.city_id;
-      selectRegionList[1].name = address.city_name;
-      selectRegionList[1].parent_id = address.province_id;
-
-      selectRegionList[2].id = address.district_id;
-      selectRegionList[2].name = address.district_name;
-      selectRegionList[2].parent_id = address.city_id;
-
-      this.setData({
-        selectRegionList: selectRegionList,
-        regionType: 3
-      });
-
-      this.getRegionList(address.city_id);
-    } else {
-      this.setData({
-        selectRegionList: [
-          { id: 0, name: '省份', parent_id: 1, type: 1 },
-          { id: 0, name: '城市', parent_id: 1, type: 2 },
-          { id: 0, name: '区县', parent_id: 1, type: 3 }
-        ],
-        regionType: 1
-      })
-      this.getRegionList(1);
-    }
-
-    this.setRegionDoneStatus();
-
   },
   onLoad: function (options) {
     // 页面初始化 options为页面跳转所带来的参数
-    console.log(options)
     if (options.id) {
       this.setData({
-        addressId: options.id
+        userAddressId: options.id
       });
       this.getAddressDetail();
+    } else {
+      this.getRegionList();
     }
-
-    this.getRegionList(1);
-
   },
   onReady: function () {
 
   },
-  selectRegionType(event) {
-    let that = this;
-    let regionTypeIndex = event.target.dataset.regionTypeIndex;
-    let selectRegionList = that.data.selectRegionList;
-
-    //判断是否可点击
-    if (regionTypeIndex + 1 == this.data.regionType || (regionTypeIndex - 1 >= 0 && selectRegionList[regionTypeIndex-1].id <= 0)) {
-      return false;
-    }
-
-    this.setData({
-      regionType: regionTypeIndex + 1
-    })
-    
-    let selectRegionItem = selectRegionList[regionTypeIndex];
-
-    this.getRegionList(selectRegionItem.parent_id);
-
-    this.setRegionDoneStatus();
-
-  },
-  selectRegion(event) {
-    let that = this;
-    let regionIndex = event.target.dataset.regionIndex;
-    let regionItem = this.data.regionList[regionIndex];
-    let regionType = regionItem.type;
-    let selectRegionList = this.data.selectRegionList;
-    selectRegionList[regionType - 1] = regionItem;
-
-
-    if (regionType != 3) {
-      this.setData({
-        selectRegionList: selectRegionList,
-        regionType: regionType + 1
-      })
-      this.getRegionList(regionItem.id);
-    } else {
-      this.setData({
-        selectRegionList: selectRegionList
-      })
-    }
-
-    //重置下级区域为空
-    selectRegionList.map((item, index) => {
-      if (index > regionType - 1) {
-        item.id = 0;
-        item.name = index == 1 ? '城市' : '区县';
-        item.parent_id = 0;
-      }
-      return item;
-    });
-
-    this.setData({
-      selectRegionList: selectRegionList
-    })
-
-
-    that.setData({
-      regionList: that.data.regionList.map(item => {
-
-        //标记已选择的
-        if (that.data.regionType == item.type && that.data.selectRegionList[that.data.regionType - 1].id == item.id) {
-          item.selected = true;
-        } else {
-          item.selected = false;
-        }
-
-        return item;
-      })
-    });
-
-    this.setRegionDoneStatus();
-
-  },
-  doneSelectRegion() {
-    if (this.data.selectRegionDone === false) {
-      return false;
-    }
-
-    let address = this.data.address;
-    let selectRegionList = this.data.selectRegionList;
-    address.province_id = selectRegionList[0].id;
-    address.city_id = selectRegionList[1].id;
-    address.district_id = selectRegionList[2].id;
-    address.province_name = selectRegionList[0].name;
-    address.city_name = selectRegionList[1].name;
-    address.district_name = selectRegionList[2].name;
-    address.full_region = selectRegionList.map(item => {
-      return item.name;
-    }).join('');
-
-    this.setData({
-      address: address,
-      openSelectRegion: false
-    });
-
-  },
   cancelSelectRegion() {
     this.setData({
-      openSelectRegion: false,
-      regionType: this.data.regionDoneStatus ? 3 : 1
+      openSelectRegion: false
     });
-
   },
-  getRegionList(regionId) {
+  getRegionList(info) {
     let that = this;
-    let regionType = that.data.regionType;
-    util.request(api.RegionList, { parentId: regionId }).then(function (res) {
-      if (res.errno === 0) {
+    util.request(api.Provinces).then(function (res) {
+      if (res.success === true) {
         that.setData({
-          regionList: res.data.map(item => {
-
-            //标记已选择的
-            if (regionType == item.type && that.data.selectRegionList[regionType - 1].id == item.id) {
-              item.selected = true;
-            } else {
-              item.selected = false;
-            }
-
-            return item;
-          })
+          provinces: res.data.provinces,
+          allCitys: res.data.citys,
+          allDistricts: res.data.districts,
+          citys: [],
+          districts: [],
         });
+
+        if (info) {
+          let i0 = 0, i1 = 0, i2 = 0;
+          let p = undefined, c = undefined, d = undefined;
+          let cs = [], ds = [];
+          i0 = that.data.provinces.findIndex(c => c.id == info.stateOrProvinceId);
+          if (i0 >= 0) {
+            p = that.data.provinces[i0];;
+            if (p) {
+              cs = that.data.allCitys.filter(c => c.parentId == p.id);
+              i1 = cs.findIndex(c => c.id == info.cityId);
+              if (i1 >= 0) {
+                c = cs[i1];
+                ds = that.data.allDistricts.filter(x => x.parentId == c.id);
+                if (info.districtId && info.districtId >= 0 && ds.length >= 0) {
+                  i2 = ds.findIndex(c => c.id == info.districtId)
+                  if (i2 >= 0) {
+                    d = ds[i2];
+                  }
+                }
+              }
+            }
+          }
+          i0 = i0 < 0 ? 0 : i0;
+          i1 = i1 < 0 ? 0 : i1;
+          i2 = i2 < 0 ? 0 : i2;
+          that.setData({
+            value: [i0, i1, i2],
+            citys: cs,
+            districts: ds,
+            provinceStr: (p ? p.name : '') + ' ' + (c ? c.name : '') + ' ' + (d ? d.name : '')
+          });
+        }
       }
     });
   },
-  cancelAddress(){
+  cancelAddress() {
     wx.reLaunch({
       url: '/pages/shopping/address/address',
     })
   },
-  saveAddress(){
-    console.log(this.data.address)
+  saveAddress() {
     let address = this.data.address;
-
-    if (address.name == '') {
+    if (address.contactName == '') {
       util.showErrorToast('请输入姓名');
-
       return false;
     }
 
-    if (address.mobile == '') {
+    if (address.phone == '') {
       util.showErrorToast('请输入手机号码');
       return false;
     }
 
-
-    if (address.district_id == 0) {
-      util.showErrorToast('请输入省市区');
-      return false;
-    }
-
-    if (address.address == '') {
+    if (address.addressLine1 == '') {
       util.showErrorToast('请输入详细地址');
       return false;
     }
 
-
     let that = this;
-    util.request(api.AddressSave, { 
-      id: address.id,
-      name: address.name,
-      mobile: address.mobile,
-      province_id: address.province_id,
-      city_id: address.city_id,
-      district_id: address.district_id,
-      address: address.address,
-      is_default: address.is_default,
-    }, 'POST').then(function (res) {
-      if (res.errno === 0) {
+    if (that.data.citys.length <= 0 || that.data.districts.length <= 0) {
+      util.showErrorToast('请选择省/市/区县');
+      return false;
+    }
+
+    let value = that.data.value;
+    let stateOrProvinceId, cityId, districtId;
+    stateOrProvinceId = that.data.provinces[value[0]].id;
+    cityId = that.data.citys[value[1]].id;
+    districtId = that.data.districts[value[2]].id;
+
+    let url = api.Addresses;
+    let method = 'POST';
+    if (that.data.userAddressId) {
+      url += '/' + that.data.userAddressId;
+      method = 'PUT';
+    }
+    util.request(url, {
+      contactName: address.contactName,
+      phone: address.phone,
+      isDefault: address.isDefault,
+      addressLine1: address.addressLine1,
+      stateOrProvinceId: stateOrProvinceId,
+      cityId: cityId,
+      districtId: districtId,
+    }, method).then(function (res) {
+      if (res.success === true) {
         wx.reLaunch({
           url: '/pages/shopping/address/address',
         })
+      } else {
+        util.showErrorToast(res.message);
       }
     });
 

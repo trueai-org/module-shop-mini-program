@@ -17,24 +17,23 @@ Page({
     // 页面显示
 
   },
-  getAddressList (){
+  getAddressList() {
     let that = this;
-    util.request(api.AddressList).then(function (res) {
-      if (res.errno === 0) {
+    util.request(api.Addresses).then(function (res) {
+      if (res.success === true) {
         that.setData({
           addressList: res.data
         });
       }
     });
   },
-  addressAddOrUpdate (event) {
+  addressAddOrUpdate(event) {
     console.log(event)
     wx.navigateTo({
       url: '/pages/ucenter/addressAdd/addressAdd?id=' + event.currentTarget.dataset.addressId
     })
   },
-  deleteAddress(event){
-    console.log(event.target)
+  deleteAddress(event) {
     let that = this;
     wx.showModal({
       title: '',
@@ -42,17 +41,15 @@ Page({
       success: function (res) {
         if (res.confirm) {
           let addressId = event.target.dataset.addressId;
-          util.request(api.AddressDelete, { id: addressId }, 'POST').then(function (res) {
-            if (res.errno === 0) {
+          util.request(api.Addresses + '/' + addressId, {}, 'DELETE').then(function (res) {
+            if (res.success === true) {
               that.getAddressList();
             }
           });
-          console.log('用户点击确定')
         }
       }
     })
     return false;
-    
   },
   onHide: function () {
     // 页面隐藏

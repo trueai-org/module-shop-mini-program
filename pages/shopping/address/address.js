@@ -17,29 +17,26 @@ Page({
     // 页面显示
 
   },
-  getAddressList (){
+  getAddressList() {
     let that = this;
-    util.request(api.AddressList).then(function (res) {
-      if (res.errno === 0) {
+    util.request(api.Addresses).then(function (res) {
+      if (res.success === true) {
         that.setData({
           addressList: res.data
         });
       }
     });
   },
-  addressAddOrUpdate (event) {
-    console.log(event)
+  addressAddOrUpdate(event) {
     wx.navigateTo({
       url: '/pages/shopping/addressAdd/addressAdd?id=' + event.currentTarget.dataset.addressId
     })
   },
-  selectAddress(event){
+  selectAddress(event) {
     console.log(event.currentTarget.dataset.addressId);
-
     try {
       wx.setStorageSync('addressId', event.currentTarget.dataset.addressId);
     } catch (e) {
-
     }
 
     //选择该收货地址

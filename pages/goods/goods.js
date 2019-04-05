@@ -277,7 +277,7 @@ Page({
     util.request(api.Cart).then(function (res) {
       if (res.success === true) {
         that.setData({
-          cartGoodsCount: res.data.checkedSubCount
+          cartGoodsCount: res.data.subCount
         });
       }
     });
@@ -377,7 +377,7 @@ Page({
           wx.showToast({
             image: '/static/images/icon_error.png',
             title: '商品库存不足',
-            mask: true
+            // mask: true
           });
           return false;
         }
@@ -385,7 +385,7 @@ Page({
         wx.showToast({
           image: '/static/images/icon_error.png',
           title: '商品不允许购买',
-          mask: true
+          // mask: true
         });
         return false;
       }
@@ -395,7 +395,7 @@ Page({
         wx.showToast({
           image: '/static/images/icon_error.png',
           title: '剩余库存:' + stockProduct.stockQuantity,
-          mask: true
+          // mask: true
         });
         return false;
       }
@@ -409,13 +409,13 @@ Page({
             });
             that.setData({
               openAttr: !that.data.openAttr,
-              cartGoodsCount: _res.data.checkedSubCount
+              cartGoodsCount: _res.data.subCount
             });
           } else {
             wx.showToast({
               image: '/static/images/icon_error.png',
               title: _res.message,
-              mask: true
+              // mask: true
             });
           }
         });
