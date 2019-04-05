@@ -67,6 +67,18 @@ function request(url, data = {}, method = "GET") {
           wx.showToast({
             title: '请登录',
           })
+          // 清空本地缓存
+          try {
+            wx.removeStorageSync('userInfo');
+            wx.removeStorageSync('token');
+          } catch (e) {
+            // Do something when catch error
+          }
+        }
+        else if (res.statusCode == 403) {
+          wx.showToast({
+            title: '您没有操作权限',
+          })
         }
         else {
           reject(res.message);

@@ -74,13 +74,6 @@
         <text class="txt">意见反馈</text>
       </navigator>
     </view>
-    <view class="item item-bottom">
-      <navigator url="url" class="a" bindgetuserinfo="onWechatLogin">
-        <!-- <text class="icon help"></text> -->
-        <!-- <text class="txt" bindgetuserinfo="onWechatLogin">重新授权</text> -->
-        <button type="primary" open-type="getUserInfo" bindgetuserinfo="onWechatLogin">重新授权</button>
-      </navigator>
-    </view>
   </view>
   <!-- <view class="logout" bindtap="exitLogin">退出登录</view> -->
 </view>
