@@ -15,9 +15,12 @@ Page({
 
   },
   onShow: function () {
-    this.setData({
-      userInfo: app.globalData.userInfo,
-    });
+    if (wx.getStorageSync('userInfo')) {
+      this.setData({
+        userInfo: app.globalData.userInfo,
+      });
+    }
+
   },
   onHide: function () {
     // 页面隐藏
