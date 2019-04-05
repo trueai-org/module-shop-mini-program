@@ -23,7 +23,7 @@ Page({
     info: {}
   },
   onLoad: function (options) {
-
+    console.log(options);
     // 页面初始化 options为页面跳转所带来的参数
     try {
       var addressId = wx.getStorageSync('addressId');
@@ -62,9 +62,8 @@ Page({
     //   wx.hideLoading();
     // });
 
-    util.request(api.CartCheckout2).then(function (res) {
+    util.request(api.CartCheckout2,{ userAddressId:that.data.addressId }).then(function (res) {
       if (res.success === true) {
-        console.log(res.data);
         that.setData({
           checkedGoodsList: res.data.items,
           checkedAddress: res.data.address,
