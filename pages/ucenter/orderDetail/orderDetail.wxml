@@ -1,12 +1,12 @@
 <view class="container">
     <view class="order-info">
-        <view class="item-a">下单时间：{{orderInfo.add_time}}</view>
-        <view class="item-b">订单编号：{{orderInfo.order_sn}}</view>
+        <view class="item-a">下单时间：{{order.createdOn}}</view>
+        <view class="item-b">订单编号：{{order.no}}</view>
         <view class="item-c">
-            <view class="l">实付：<text class="cost">￥{{orderInfo.actual_price}}</text></view>
+            <view class="l">实付：<text class="cost">￥{{order.paymentFeeAmount}}</text></view>
             <view class="r">
-                <view class="btn" bindtap="cancelOrder">取消订单</view>
-                <view class="btn active" bindtap="payOrder">去付款</view>
+                <view wx:if="{{order.orderStatus==0 || order.orderStatus==20 || order.orderStatus==25}}" class="btn active" bindtap="cancelOrder">取消订单</view>
+                <view wx:if="{{order.orderStatus==20 || order.orderStatus==25}}" class="btn active" bindtap="payOrder">去付款</view>
             </view>
         </view>
     </view>
@@ -14,20 +14,20 @@
     <view class="order-goods">
         <view class="h">
             <view class="label">商品信息</view>
-            <view class="status">{{orderInfo.order_status_text}}</view>
+            <view class="status">{{order.orderStatusString}}</view>
         </view>
         <view class="goods">
-            <view class="item" wx:for="{{orderGoods}}" wx:key="{{item.id}}">
+            <view class="item" wx:for="{{order.items}}" wx:key="{{item.id}}">
                 <view class="img">
-                    <image src="{{item.list_pic_url}}"></image>
+                    <image src="{{item.productMediaUrl}}"></image>
                 </view>
                 <view class="info">
                     <view class="t">
-                        <text class="name">{{item.goods_name}}</text>
-                        <text class="number">x{{item.number}}</text>
+                        <text class="name">{{item.productName}}</text>
+                        <text class="number">x{{item.quantity}}</text>
                     </view>
                     <view class="attr">{{item.goods_specifition_name_value}}</view>
-                    <view class="price">￥{{item.retail_price}}</view>
+                    <view class="price">￥{{item.productPrice}}</view>
                 </view>
             </view>
         </view>
@@ -36,24 +36,24 @@
     <view class="order-bottom">
         <view class="address">
             <view class="t">
-                <text class="name">{{orderInfo.consignee}}</text>
-                <text class="mobile">{{orderInfo.mobile}}</text>
+                <text class="name">{{order.address.contactName}}</text>
+                <text class="mobile">{{order.address.phone}}</text>
             </view>
-            <view class="b">{{orderInfo.full_region + orderInfo.address}}</view>
+            <view class="b">{{order.address.fullAddressLine1}}</view>
         </view>
         <view class="total">
             <view class="t">
                 <text class="label">商品合计：</text>
-                <text class="txt">￥{{orderInfo.goods_price}}</text>
+                <text class="txt">￥{{order.subTotal}}</text>
             </view>
             <view class="t">
                 <text class="label">运费：</text>
-                <text class="txt">￥{{orderInfo.freight_price}}</text>
+                <text class="txt">￥{{order.shippingFeeAmount}}</text>
             </view>
         </view>
         <view class="pay-fee">
             <text class="label">实付：</text>
-            <text class="txt">￥{{orderInfo.actual_price}}</text>
+            <text class="txt">￥{{order.orderTotal}}</text>
         </view>
     </view>
 </view>

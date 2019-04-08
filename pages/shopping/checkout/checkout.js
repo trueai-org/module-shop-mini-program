@@ -62,7 +62,7 @@ Page({
     //   wx.hideLoading();
     // });
 
-    util.request(api.CartCheckout2,{ userAddressId:that.data.addressId }).then(function (res) {
+    util.request(api.CartCheckout2, { userAddressId: that.data.addressId }).then(function (res) {
       if (res.success === true) {
         that.setData({
           checkedGoodsList: res.data.items,
@@ -114,21 +114,42 @@ Page({
       util.showErrorToast('请选择收货地址');
       return false;
     }
-    util.request(api.OrderSubmit, { addressId: this.data.addressId, couponId: this.data.couponId }, 'POST').then(res => {
-      if (res.errno === 0) {
-        const orderId = res.data.orderInfo.id;
-        pay.payOrder(parseInt(orderId)).then(res => {
-          wx.redirectTo({
-            url: '/pages/payResult/payResult?status=1&orderId=' + orderId
-          });
-        }).catch(res => {
-          wx.redirectTo({
-            url: '/pages/payResult/payResult?status=0&orderId=' + orderId
-          });
-        });
+    // util.request(api.OrderSubmit, { addressId: this.data.addressId, couponId: this.data.couponId }, 'POST').then(res => {
+    //   if (res.errno === 0) {
+    //     const orderId = res.data.orderInfo.id;
+    //     pay.payOrder(parseInt(orderId)).then(res => {
+    //       wx.redirectTo({
+    //         url: '/pages/payResult/payResult?status=1&orderId=' + orderId
+    //       });
+    //     }).catch(res => {
+    //       wx.redirectTo({
+    //         url: '/pages/payResult/payResult?status=0&orderId=' + orderId
+    //       });
+    //     });
+    //   } else {
+    //     util.showErrorToast('下单失败');
+    //   }
+    // });
+    util.request(api.CartOrderSubmit, {
+      shippingUserAddressId: this.data.addressId,
+      orderNote: '',
+      couponId: this.data.couponId
+    }, 'POST').then(res => {
+      if (res.success === true) {
+        // const orderId = res.data.orderInfo.id;
+        // pay.payOrder(parseInt(orderId)).then(res => {
+        //   wx.redirectTo({
+        //     url: '/pages/payResult/payResult?status=1&orderId=' + orderId
+        //   });
+        // }).catch(res => {
+        //   wx.redirectTo({
+        //     url: '/pages/payResult/payResult?status=0&orderId=' + orderId
+        //   });
+        // });
       } else {
         util.showErrorToast('下单失败');
       }
     });
+
   }
 })

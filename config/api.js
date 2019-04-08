@@ -1,6 +1,6 @@
 const ApiRootUrl = 'http://127.0.0.1:8360/api/';
-// const ApiHost = 'https://localhost:44372/api/';
-const ApiHost = 'https://circle.ac.cn/api/';
+const ApiHost = 'https://localhost:44372/api/';
+// const ApiHost = 'https://circle.ac.cn/api/';
 
 module.exports = {
   // 首页
@@ -29,6 +29,7 @@ module.exports = {
 
   // 购物车 下单
   CartCheckout2: ApiHost + 'checkout', // 下单前确认信息
+  CartOrderSubmit: ApiHost + 'checkout/cart-submit', // 购物车提交订单
 
   // 登录
   LoginByWeixin: ApiHost + 'mp/login', // 微信登录
@@ -36,6 +37,12 @@ module.exports = {
   // 用户地址
   Addresses: ApiHost + 'user-addresses', // 用户地址
   Provinces: ApiHost + 'user-addresses/provinces', // 省市区
+
+  // 客户订单
+  Orders: ApiHost + 'customer-orders',
+  OrderGrid: ApiHost + 'customer-orders/grid', // 订单列表
+  OrderCancel2: ApiHost + 'customer-orders/grid', // 订单取消
+
 
   // ------------------------------
   IndexUrl: ApiRootUrl + 'index/index', //首页数据接口

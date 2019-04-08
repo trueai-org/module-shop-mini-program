@@ -6,7 +6,11 @@ Page({
     orderId: 0,
     orderInfo: {},
     orderGoods: [],
-    handleOption: {}
+    handleOption: {},
+
+    order: {
+      address: {}
+    }
   },
   onLoad: function (options) {
     // 页面初始化 options为页面跳转所带来的参数
@@ -17,17 +21,25 @@ Page({
   },
   getOrderDetail() {
     let that = this;
-    util.request(api.OrderDetail, {
-      orderId: that.data.orderId
-    }).then(function (res) {
-      if (res.errno === 0) {
-        console.log(res.data);
+    // util.request(api.OrderDetail, {
+    //   orderId: that.data.orderId
+    // }).then(function (res) {
+    //   if (res.errno === 0) {
+    //     console.log(res.data);
+    //     that.setData({
+    //       orderInfo: res.data.orderInfo,
+    //       orderGoods: res.data.orderGoods,
+    //       handleOption: res.data.handleOption
+    //     });
+    //     //that.payTimer();
+    //   }
+    // });
+
+    util.request(api.Orders + '/' + that.data.orderId).then(function (res) {
+      if (res.success === true) {
         that.setData({
-          orderInfo: res.data.orderInfo,
-          orderGoods: res.data.orderGoods,
-          handleOption: res.data.handleOption
+          order: res.data
         });
-        //that.payTimer();
       }
     });
   },
