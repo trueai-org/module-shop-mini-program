@@ -1,8 +1,6 @@
 var util = require('../../../utils/util.js');
 var api = require('../../../config/api.js');
 
-
-
 var app = getApp();
 
 Page({
@@ -11,11 +9,11 @@ Page({
   },
   getFootprintList() {
     let that = this;
-    util.request(api.FootprintList).then(function (res) {
-      if (res.errno === 0) {
-        console.log(res.data);
+    util.request(api.RecentlyViewed).then(function (res) {
+      if (res.success === true) {
+        // console.log(res.data);
         that.setData({
-          footprintList: res.data.data
+          footprintList: res.data
         });
       }
     });
