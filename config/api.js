@@ -43,7 +43,11 @@ module.exports = {
   OrderGrid: ApiHost + 'customer-orders/grid', // 订单列表
   OrderCancel2: ApiHost + 'customer-orders/grid', // 订单取消
 
+  // 最近浏览
   RecentlyViewed: ApiHost + 'recently-viewed', // 最近浏览
+
+  // 我的收藏
+  Wishlist: ApiHost + 'wishlist', // 我的收藏
 
   // ------------------------------
   IndexUrl: ApiRootUrl + 'index/index', //首页数据接口

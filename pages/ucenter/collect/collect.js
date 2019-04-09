@@ -10,11 +10,11 @@ Page({
   },
   getCollectList() {
     let that = this;
-    util.request(api.CollectList, { typeId: that.data.typeId}).then(function (res) {
-      if (res.errno === 0) {
+    util.request(api.Wishlist).then(function (res) {
+      if (res.success === true) {
         console.log(res.data);
         that.setData({
-          collectList: res.data.data
+          collectList: res.data
         });
       }
     });
