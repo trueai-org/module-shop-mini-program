@@ -2,6 +2,7 @@ var app = getApp();
 var WxParse = require('../../lib/wxParse/wxParse.js');
 var util = require('../../utils/util.js');
 var api = require('../../config/api.js');
+var user = require('../../services/user.js');
 
 Page({
   data: {
@@ -77,21 +78,14 @@ Page({
         });
         WxParse.wxParse('specification', 'html', res.data.specification, that);
         WxParse.wxParse('description', 'html', res.data.description, that);
-        that.getGoodsRelated();
-        that.getGoodsStocks();
       }
     });
+    that.getGoodsRelated();
+    that.getGoodsStocks();
+    that.getCollectStatus();
   },
   getGoodsRelated: function () {
-    // let that = this;
-    // util.request(api.GoodsRelated, { id: that.data.id }).then(function (res) {
-    //   if (res.errno === 0) {
-    //     that.setData({
-    //       relatedGoods: res.data.goodsList,
-    //     });
-    //   }
-    // });
-
+    let that = this;
     util.request(api.GoodsRelated2 + '/' + that.data.id).then(function (res) {
       if (res.success === true) {
         that.setData({
@@ -99,6 +93,24 @@ Page({
         });
       }
     });
+  },
+  getCollectStatus: function () {
+    if (user.checkLogin()) {
+      let that = this;
+      util.request(api.WishlistCollectStatusByProduct + '/' + that.data.id).then(function (res) {
+        if (res.success === true) {
+          if (res.data == true) {
+            that.setData({
+              'collectBackImage': that.data.hasCollectImage
+            });
+          } else {
+            that.setData({
+              'collectBackImage': that.data.noCollectImage
+            });
+          }
+        }
+      });
+    }
   },
   getGoodsStocks: function () {
     let that = this;
@@ -311,31 +323,44 @@ Page({
       openAttr: false,
     });
   },
-  addCannelCollect: function () {
+  addCollect: function () {
     let that = this;
-    //添加或是取消收藏
-    util.request(api.CollectAddOrDelete, { typeId: 0, valueId: this.data.id }, "POST")
+    util.request(api.Wishlist, { productId: this.data.id }, "POST")
       .then(function (res) {
-        let _res = res;
-        if (_res.errno == 0) {
-          if (_res.data.type == 'add') {
-            that.setData({
-              'collectBackImage': that.data.hasCollectImage
-            });
-          } else {
-            that.setData({
-              'collectBackImage': that.data.noCollectImage
-            });
-          }
-
+        if (res.success === true) {
+          that.setData({
+            collectBackImage: that.data.hasCollectImage
+          });
         } else {
           wx.showToast({
-            image: '/static/images/icon_error.png',
-            title: _res.errmsg,
+            title: res.message,
             mask: true
           });
         }
       });
+  },
+  removeCollect: function () {
+    let that = this;
+    util.request(api.Wishlist + '/' + this.data.id, {}, "DELETE")
+      .then(function (res) {
+        if (res.success === true) {
+          that.setData({
+            collectBackImage: that.data.noCollectImage
+          });
+        } else {
+          wx.showToast({
+            title: res.message,
+            mask: true
+          });
+        }
+      });
+  },
+  switchCollect: function () {
+    if (this.data.collectBackImage == this.data.noCollectImage) {
+      this.addCollect();
+    } else {
+      this.removeCollect();
+    }
   },
   openCartPage: function () {
     wx.switchTab({

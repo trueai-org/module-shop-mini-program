@@ -3,7 +3,7 @@
     <view class="day-item" wx:for="{{footprintList}}" wx:key="{{index}}">
       <view class="day-hd">{{item.latestViewedOnForDay}}</view>
       <view class="day-list">
-        <view class="item" data-footprint="{{iitem}}" bindtouchstart="touchStart" bindtouchend="touchEnd" bindtap="deleteItem" wx:for="{{item.items}}"  wx:for-item="iitem" wx:key="{{iitem.id}}">
+        <view class="item" bindtouchstart="touchStart" bindtouchend="touchEnd" bindtap="deleteItem" wx:for="{{item.items}}" wx:for-item="iitem" wx:key="{{iitem.id}}" data-id="{{iitem.id}}">
           <image class="img" src="{{iitem.thumbnailUrl}}"></image>
           <view class="info">
             <view class="name">{{iitem.name}}</view>

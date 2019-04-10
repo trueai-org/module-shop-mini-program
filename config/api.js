@@ -1,6 +1,6 @@
 const ApiRootUrl = 'http://127.0.0.1:8360/api/';
-const ApiHost = 'https://localhost:44372/api/';
-// const ApiHost = 'https://circle.ac.cn/api/';
+// const ApiHost = 'https://localhost:44372/api/';
+const ApiHost = 'https://circle.ac.cn/api/';
 
 module.exports = {
   // 首页
@@ -48,6 +48,7 @@ module.exports = {
 
   // 我的收藏
   Wishlist: ApiHost + 'wishlist', // 我的收藏
+  WishlistCollectStatusByProduct: ApiHost + 'wishlist/collect-status', // {productId:int:min(1)} 商品收藏状态
 
   // ------------------------------
   IndexUrl: ApiRootUrl + 'index/index', //首页数据接口

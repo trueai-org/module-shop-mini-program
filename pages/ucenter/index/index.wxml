@@ -41,7 +41,7 @@
     <view class="item">
       <navigator url="/pages/ucenter/footprint/footprint" class="a">
         <text class="icon security"></text>
-        <text class="txt">我的足迹</text>
+        <text class="txt">我的浏览</text>
       </navigator>
     </view>
     <!-- <view class="item no-border">

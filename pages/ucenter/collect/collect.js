@@ -5,14 +5,12 @@ var app = getApp();
 
 Page({
   data: {
-    typeId: 0,
     collectList: []
   },
   getCollectList() {
     let that = this;
     util.request(api.Wishlist).then(function (res) {
       if (res.success === true) {
-        console.log(res.data);
         that.setData({
           collectList: res.data
         });
@@ -36,10 +34,8 @@ Page({
     // 页面关闭
   },
   openGoods(event) {
-    
     let that = this;
-    let goodsId = this.data.collectList[event.currentTarget.dataset.index].value_id;
-
+    let goodsId = event.currentTarget.dataset.id;
     //触摸时间距离页面打开的毫秒数  
     var touchTime = that.data.touch_end - that.data.touch_start;
     console.log(touchTime);
@@ -47,15 +43,13 @@ Page({
     if (touchTime > 350) {
       wx.showModal({
         title: '',
-        content: '确定删除吗？',
+        content: '确定取消收藏吗？',
         success: function (res) {
           if (res.confirm) {
-            
-            util.request(api.CollectAddOrDelete, { typeId: that.data.typeId, valueId: goodsId}, 'POST').then(function (res) {
-              if (res.errno === 0) {
-                console.log(res.data);
+            util.request(api.Wishlist + '/' + goodsId, {}, 'DELETE').then(function (res) {
+              if (res.success === true) {
                 wx.showToast({
-                  title: '删除成功',
+                  title: '取消收藏成功',
                   icon: 'success',
                   duration: 2000
                 });
@@ -66,11 +60,10 @@ Page({
         }
       })
     } else {
-      
       wx.navigateTo({
         url: '/pages/goods/goods?id=' + goodsId,
       });
-    }  
+    }
   },
   //按下事件开始  
   touchStart: function (e) {
@@ -87,5 +80,5 @@ Page({
       touch_end: e.timeStamp
     })
     console.log(e.timeStamp + '- touch-end')
-  }, 
+  },
 })

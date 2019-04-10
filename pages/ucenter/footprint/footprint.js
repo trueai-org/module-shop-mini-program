@@ -11,27 +11,26 @@ Page({
     let that = this;
     util.request(api.RecentlyViewed).then(function (res) {
       if (res.success === true) {
-        // console.log(res.data);
         that.setData({
           footprintList: res.data
         });
       }
     });
   },
-  deleteItem (event){
+  deleteItem(event) {
     let that = this;
-    let footprint = event.currentTarget.dataset.footprint;
-    var touchTime = that.data.touch_end - that.data.touch_start;
+    let productId = event.currentTarget.dataset.id;
+    let touchTime = that.data.touch_end - that.data.touch_start;
     console.log(touchTime);
     //如果按下时间大于350为长按  
     if (touchTime > 350) {
       wx.showModal({
         title: '',
-        content: '要删除所选足迹？',
+        content: '要删除所选浏览记录吗？',
         success: function (res) {
           if (res.confirm) {
-            util.request(api.FootprintDelete, { footprintId: footprint.id }, 'POST').then(function (res) {
-              if (res.errno === 0) {
+            util.request(api.RecentlyViewed + '/' + productId, {}, 'DELETE').then(function (res) {
+              if (res.success === true) {
                 wx.showToast({
                   title: '删除成功',
                   icon: 'success',
@@ -40,16 +39,15 @@ Page({
                 that.getFootprintList();
               }
             });
-            console.log('用户点击确定')
           }
         }
       });
     } else {
       wx.navigateTo({
-        url: '/pages/goods/goods?id=' + footprint.goods_id,
+        url: '/pages/goods/goods?id=' + productId,
       });
     }
-    
+
   },
   onLoad: function (options) {
     this.getFootprintList();
@@ -82,5 +80,5 @@ Page({
       touch_end: e.timeStamp
     })
     console.log(e.timeStamp + '- touch-end')
-  }, 
+  },
 })
