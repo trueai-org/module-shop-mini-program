@@ -189,9 +189,10 @@
 .comments .h .i {
   display: block;
   float: right;
-  width: 164rpx;
+  /* width: 264rpx; */
   height: 100.5rpx;
   line-height: 100.5rpx;
+  padding-right: 48rpx;
   background: url(http://nos.netease.com/mailpub/hxm/yanxuan-wap/p/20150730/style/img/icon-normal/address-right-990628faa7.png) right center no-repeat;
   background-size: 52rpx;
 }

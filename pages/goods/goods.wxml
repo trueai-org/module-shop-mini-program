@@ -37,10 +37,22 @@
     <view class="h">
       <navigator url="../comment/comment?entityId={{product.id}}&entityTypeId=3">
         <text class="t">评价({{reviewsInfo.reviewsCount>999?'999+':reviewsInfo.reviewsCount}})</text>
-        <text class="i">查看全部</text>
+        <view class="i">
+          好评度
+          <text class="text-red text-xl">{{reviewsInfo.positiveRatingPercent}}%</text>
+        </view>
       </navigator>
     </view>
     <view class="b">
+      <view class="cu-capsule radius margin-top-sm">
+        <view class="cu-tag bg-cyan">
+          <text class="text-white">评分</text>
+        </view>
+        <view class="cu-tag line-cyan">
+          <text class="text-cyan text-xl">{{reviewsInfo.ratingAverage}}</text>
+          /5
+        </view>
+      </view>
       <view class="item">
         <view class="info">
           <!-- <view class="user">
@@ -48,14 +60,6 @@
             <text>{{comment.data.nickname}}</text>
           </view> -->
           <!-- <view class="time">{{comment.data.add_time}}</view> -->
-          <view>
-            好评度
-            <text class="" selectable="false" space="false" decode="false">{{reviewsInfo.positiveRatingPercent}}%</text>
-          </view>
-          <view>
-            评分
-            <text class="" selectable="false" space="false" decode="false">{{reviewsInfo.ratingAverage}}/5</text>
-          </view>
         </view>
         <!-- <view class="content">{{comment.data.content}}</view> -->
         <!-- <view class="imgs" wx:if="{{comment.data.pic_list.length > 0}}">

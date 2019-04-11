@@ -1,33 +1,69 @@
 <view class="comments">
-    <view class="h">
-        <view class="item {{ showType == 0 ? 'active' : ''}}" bindtap="switchTab">
-            <view class="txt">全部({{reviewsInfo.reviewsCount}})</view>
-        </view>
-        <view class="item {{ showType == 0 ? '' : 'active'}}" bindtap="switchTab">
-            <view class="txt">有图({{reviewsInfo.mediasCount}})</view>
-        </view>
+  <view class="h">
+    <!-- <view class="item {{ showType == 0 ? 'active' : ''}}" bindtap="switchTab">
+      <view class="txt">全部({{reviewsInfo.reviewsCount}})</view>
     </view>
+    <view class="item {{ showType == 0 ? '' : 'active'}}" bindtap="switchTab">
+      <view class="txt">有图({{reviewsInfo.mediasCount}})</view>
+    </view> -->
+    <view style="padding:25rpx 0rpx 25rpx 36rpx;">
+      <button bindtap="switchAll" class="cu-btn round sm {{ratingLevel==null&&isMedia==null?'bg-red':'line text-red'}}">全部 {{reviewsInfo.reviewsCount}}</button>
+      <button bindtap="switchLevel" data-id="5" class="cu-btn round sm {{ratingLevel==5?'bg-orange':'line text-orange'}}">
+        好评 {{reviewsInfo.rating5Count}}
+      </button>
+      <button bindtap="switchLevel" data-id="3" class="cu-btn round sm {{ratingLevel==3?'bg-orange':'line text-orange'}}">
+        中评 {{reviewsInfo.rating2Count+reviewsInfo.rating3Count+reviewsInfo.rating4Count}}
+      </button>
+      <button bindtap="switchLevel" data-id="1" class="cu-btn round sm {{ratingLevel==1?'bg-orange':'line text-orange'}}">
+        差评 {{reviewsInfo.rating1Count}}
+      </button>
+      <button bindtap="switchMedia" class="cu-btn round sm {{isMedia===true?'bg-cyan':'line text-cyan'}}">有图 {{reviewsInfo.mediasCount}}</button>
+    </view>
+  </view>
   <view class="b">
-    <view class="item" wx:for="{{comments}}" wx:key="{{item.id}}">
-      <view class="info">
-        <view class="user">
-          <image src="{{item.user_info.avatar}}"></image>
-          <text>{{item.user_info.nickname}}</text>
+    <view class="item" wx:for="{{pageData}}" wx:key="{{item.id}}">
+      <view class="cu-item">
+        <view class="cu-list menu-avatar" style="margin-left:-30rpx;">
+          <view class="cu-item">
+            <view class="cu-avatar round lg" style="background-image:url({{item.avatar}});"></view>
+            <view class="content">
+              <view class="text">{{item.reviewerName}}</view>
+              <view class="text-gray text-sm">
+                <text wx:for="{{item.rating}}" class="icon-favorfill text-red"></text>
+                <text wx:for="{{(5 - item.rating)}}" class="icon-favor text-red"></text>
+              </view>
+            </view>
+            <view>
+              <view class="text-gray text-sm flex justify-between">{{item.createdOnForDate}}</view>
+            </view>
+          </view>
         </view>
-        <view class="time">{{item.add_time}}</view>
+        <view class="text-content">{{item.comment}}</view>
+        <view wx:if="{{item.mediaUrls.length > 0}}" class="grid flex-sub col-3 grid-square margin-right">
+          <view wx:for="{{item.mediaUrls}}" class="bg-img only-img" style="background-image:url({{item}});"></view>
+        </view>
+        <view class="margin-top-sm flex justify-between text-left">
+          <view class="text-gray text-df">白色 × 2</view>
+          <view class="margin-right text-gray text-sm">
+            <text class="icon-appreciate margin-lr-xs">{{item.supportCount}}</text>
+            <text class="icon-message margin-lr-xs">{{item.replieCount}}</text>
+          </view>
+        </view>
+        <view wx:if="{{item.replies.length>0}}">
+          <view wx:for="{{item.replies}}" wx:for-item="iitem" class="bg-gray padding-sm radius margin-top-sm text-sm margin-right">
+            <view class="flex">
+              <view>{{iitem.replierName}}：</view>
+              <view class="flex-sub">{{iitem.comment}}</view>
+            </view>
+            <view class="margin-top-sm flex justify-between">
+              <view class="text-gray text-df">{{iitem.createdOnForDate}}</view>
+              <view>
+                <text class="icon-appreciatefill text-red"></text>
+              </view>
+            </view>
+          </view>
+        </view>
       </view>
-      <view class="comment">{{item.content}}</view>
-      <view class="imgs" wx:if="{{item.pic_list.length > 0}}">
-        <image class="img" wx:for="{{item.pic_list}}" wx:key="{{pitem.id}}" wx:for-item="pitem" src="{{pitem.pic_url}}"></image>
-      </view>
-      <view class="spec">
-        <!-- <text class="item">白色 2件</text> -->
-      </view>
-      <!--<view class="customer-service" wx:if="{{item.commentReplyVO}}">
-        <text class="u">小选回复：</text>
-        <text class="c">{{item.commentReplyVO.replyContent}}</text>
-      </view>-->
     </view>
-
   </view>
 </view>

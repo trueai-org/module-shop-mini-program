@@ -26,6 +26,10 @@
     text-align: center;
 }
 
+.comments .h view button{
+    margin-right: 8rpx;
+}
+
 .comments .h .item .txt{
     display: inline-block;
     height: 82rpx;

@@ -31,13 +31,16 @@ Page({
     },
 
     pageNum: 1,
-    pageSize: 10,
+    pageSize: 5,
     total: 0,
     predicate: 'id',
     reverse: true,
-    name: '',
-    categoryId: '',
-    pageData: []
+    pageData: [],
+    isMedia: null,
+    ratingLevel: null,
+
+    noCollectImage: "/static/images/icon_collect.png",
+    hasCollectImage: "/static/images/icon_collect_checked.png",
   },
   getCommentCount: function () {
     let that = this;
@@ -89,9 +92,9 @@ Page({
     });
     this.getReviewsInfo();
     this.getList();
-    
-    this.getCommentCount();
-    this.getCommentList();
+
+    // this.getCommentCount();
+    // this.getCommentList();
   },
   getReviewsInfo: function () {
     let that = this;
@@ -127,32 +130,79 @@ Page({
       showType: this.data.showType == 1 ? 0 : 1
     });
 
-    this.getCommentList();
+  },
+
+  switchAll: function () {
+    this.setData({
+      isMedia: null,
+      ratingLevel: null
+    });
+    this.queckResetQuery();
+  },
+  switchMedia: function () {
+    this.setData({
+      isMedia: this.data.isMedia === true ? null : true
+    });
+    this.queckResetQuery();
+  },
+  switchLevel: function (event) {
+    if (event) {
+      let level = event.currentTarget.dataset.id;
+      this.setData({
+        ratingLevel: level == this.data.ratingLevel ? null : level
+      });
+    } else {
+      this.setData({
+        ratingLevel: null
+      });
+    }
+    this.queckResetQuery();
+  },
+  queckResetQuery() {
+    this.setData({
+      pageData: [],
+      pageNum: 1,
+      pageSize: this.data.pageSize,
+      total: 0,
+      predicate: 'id',
+      reverse: true,
+      isMedia: this.data.isMedia,
+      ratingLevel: this.data.ratingLevel
+    }, () => {
+      this.getList();
+    });
   },
   onReachBottom: function () {
     console.log('onPullDownRefresh');
-    if (this.data.showType == 0) {
+    // if (this.data.showType == 0) {
 
-      if (this.data.allCount / this.data.size < this.data.allPage) {
-        return false;
-      }
+    //   if (this.data.allCount / this.data.size < this.data.allPage) {
+    //     return false;
+    //   }
 
+    //   this.setData({
+    //     'allPage': this.data.allPage + 1
+    //   });
+    // } else {
+    //   if (this.data.hasPicCount / this.data.size < this.data.picPage) {
+    //     return false;
+    //   }
+
+    //   this.setData({
+    //     'picPage': this.data.picPage + 1
+    //   });
+    // }
+
+
+
+    // this.getCommentList();
+    if (this.data.total > 0 && this.data.pageNum * this.data.pageSize < this.data.total) {
       this.setData({
-        'allPage': this.data.allPage + 1
-      });
-    } else {
-      if (this.data.hasPicCount / this.data.size < this.data.picPage) {
-        return false;
-      }
-
-      this.setData({
-        'picPage': this.data.picPage + 1
+        pageNum: this.data.pageNum + 1
+      }, () => {
+        this.getList();
       });
     }
-
-
-
-    this.getCommentList();
   },
   getList: function () {
     let that = this;
@@ -168,6 +218,8 @@ Page({
       search: {
         entityId: that.data.entityId,
         entityTypeId: that.data.entityTypeId,
+        isMedia: that.data.isMedia,
+        ratingLevel: that.data.ratingLevel
       }
     };
     util.request(api.ReviewsGrid, params, "POST")

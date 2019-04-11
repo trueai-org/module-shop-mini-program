@@ -1,3 +1,6 @@
+@import "static/colorui/main.wxss";
+@import "static/colorui/icon.wxss";
+
 /**app.wxss**/
 .container {
   box-sizing: border-box;
