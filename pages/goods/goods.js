@@ -36,7 +36,19 @@ Page({
     stocks: [],
     currentStock: {},
     isAllSpec: false,
-    currentSkuImageUrl: ''
+    currentSkuImageUrl: '',
+
+    reviewsInfo: {
+      reviewsCount: 0,
+      mediasCount: 0,
+      ratingAverage: 0,
+      positiveRatingPercent: 0,
+      rating1Count: 0,
+      rating2Count: 0,
+      rating3Count: 0,
+      rating4Count: 0,
+      rating5Count: 0
+    }
   },
   getGoodsInfo: function () {
     let that = this;
@@ -83,6 +95,20 @@ Page({
     that.getGoodsRelated();
     that.getGoodsStocks();
     that.getCollectStatus();
+    that.getReviewsInfo();
+  },
+  getReviewsInfo: function () {
+    let that = this;
+    util.request(api.ReviewsInfo, {
+      entityId: that.data.id,
+      entityTypeId: 3
+    }, 'POST').then(function (res) {
+      if (res.success === true) {
+        that.setData({
+          reviewsInfo: res.data,
+        });
+      }
+    });
   },
   getGoodsRelated: function () {
     let that = this;
@@ -286,10 +312,15 @@ Page({
     });
     var that = this;
     this.getGoodsInfo();
-    util.request(api.Cart).then(function (res) {
-      if (res.success === true) {
-        that.setData({
-          cartGoodsCount: res.data.subCount
+
+    user.checkLogin().then(v => {
+      if (v === true) {
+        util.request(api.Cart).then(function (res) {
+          if (res.success === true) {
+            that.setData({
+              cartGoodsCount: res.data.subCount
+            });
+          }
         });
       }
     });

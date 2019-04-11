@@ -77,7 +77,7 @@ function request(url, data = {}, method = "GET") {
         }
         else if (res.statusCode == 403) {
           wx.showToast({
-            title: '您没有操作权限',
+            title: '您没有权限',
           })
         }
         else {

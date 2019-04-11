@@ -33,10 +33,10 @@
       </view>
       <image class="i" src="../../static/images/address_right.png" background-size="cover"></image>
     </view> -->
-  <view class="comments" wx:if="{{comment.count > 0}}">
+  <view class="comments" wx:if="{{reviewsInfo.reviewsCount > 0}}">
     <view class="h">
       <navigator url="../comment/comment?valueId={{goods.id}}&typeId=0">
-        <text class="t">评价({{comment.count > 999 ? '999+' : comment.count}})</text>
+        <text class="t">评价({{reviewsInfo.reviewsCount > 999 ? '999+' : reviewsInfo.reviewsCount}})</text>
         <text class="i">查看全部</text>
       </navigator>
     </view>
