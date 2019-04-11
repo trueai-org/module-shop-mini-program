@@ -35,24 +35,32 @@
     </view> -->
   <view class="comments" wx:if="{{reviewsInfo.reviewsCount > 0}}">
     <view class="h">
-      <navigator url="../comment/comment?valueId={{goods.id}}&typeId=0">
-        <text class="t">评价({{reviewsInfo.reviewsCount > 999 ? '999+' : reviewsInfo.reviewsCount}})</text>
+      <navigator url="../comment/comment?entityId={{product.id}}&entityTypeId=3">
+        <text class="t">评价({{reviewsInfo.reviewsCount>999?'999+':reviewsInfo.reviewsCount}})</text>
         <text class="i">查看全部</text>
       </navigator>
     </view>
     <view class="b">
       <view class="item">
         <view class="info">
-          <view class="user">
+          <!-- <view class="user">
             <image src="{{comment.data.avatar}}"></image>
             <text>{{comment.data.nickname}}</text>
+          </view> -->
+          <!-- <view class="time">{{comment.data.add_time}}</view> -->
+          <view>
+            好评度
+            <text class="" selectable="false" space="false" decode="false">{{reviewsInfo.positiveRatingPercent}}%</text>
           </view>
-          <view class="time">{{comment.data.add_time}}</view>
+          <view>
+            评分
+            <text class="" selectable="false" space="false" decode="false">{{reviewsInfo.ratingAverage}}/5</text>
+          </view>
         </view>
-        <view class="content">{{comment.data.content}}</view>
-        <view class="imgs" wx:if="{{comment.data.pic_list.length > 0}}">
+        <!-- <view class="content">{{comment.data.content}}</view> -->
+        <!-- <view class="imgs" wx:if="{{comment.data.pic_list.length > 0}}">
           <image class="img" wx:for="{{comment.data.pic_list}}" wx:key="{{item.id}}" src="{{item.pic_url}}"></image>
-        </view>
+        </view> -->
         <!-- <view class="spec">白色 2件</view> -->
       </view>
     </view>
@@ -120,9 +128,7 @@
             <view class="a" style="" wx:elif="{{currentStock.isAllowToOrder && currentStock.displayStockAvailability && currentStock.displayStockQuantity}}">
               库存：{{currentStock.stockQuantity}}
             </view>
-            <view class="a" style="" wx:elif="{{currentStock.isAllowToOrder && currentStock.displayStockAvailability}}">
-              有货
-            </view>
+            <view class="a" style="" wx:elif="{{currentStock.isAllowToOrder && currentStock.displayStockAvailability}}">有货</view>
           </view>
           <view class="a" wx:if="{{product.options.length>0}}">{{checkedSpecText}}</view>
         </view>

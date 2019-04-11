@@ -1,10 +1,10 @@
 <view class="comments">
     <view class="h">
         <view class="item {{ showType == 0 ? 'active' : ''}}" bindtap="switchTab">
-            <view class="txt">全部({{allCount}})</view>
+            <view class="txt">全部({{reviewsInfo.reviewsCount}})</view>
         </view>
         <view class="item {{ showType == 0 ? '' : 'active'}}" bindtap="switchTab">
-            <view class="txt">有图({{hasPicCount}})</view>
+            <view class="txt">有图({{reviewsInfo.mediasCount}})</view>
         </view>
     </view>
   <view class="b">
