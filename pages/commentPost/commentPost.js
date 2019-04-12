@@ -68,13 +68,13 @@ Page({
       comment: that.data.content,
       isAnonymous: that.data.isAnonymous
     }, 'POST').then(function (res) {
+      that.setData({
+        loadProgress: false
+      });
       if (res.success === true) {
         wx.showToast({
           title: '评论成功',
           complete: function () {
-            that.setData({
-              loadProgress: false
-            });
             that.setData({
               content: ''
             });

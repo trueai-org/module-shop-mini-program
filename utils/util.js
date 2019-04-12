@@ -74,6 +74,7 @@ function request(url, data = {}, method = "GET") {
           } catch (e) {
             // Do something when catch error
           }
+          resolve(res.data);
         }
         else if (res.statusCode == 403) {
           wx.showToast({
