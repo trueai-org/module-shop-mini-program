@@ -3,6 +3,7 @@
 }
 
 .goodsimgs {
+  margin-top: 90rpx;
   width: 750rpx;
   height: 750rpx;
 }

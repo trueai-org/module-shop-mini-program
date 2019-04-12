@@ -48,7 +48,16 @@ Page({
       rating3Count: 0,
       rating4Count: 0,
       rating5Count: 0
-    }
+    },
+
+    tabCur: 0,
+    // TabCur:0,
+    // tabNav: ['Flex布局', 'Grid布局', '辅助布局']
+  },
+  tabSelect(e) {
+    this.setData({
+      tabCur: e.currentTarget.dataset.id
+    })
   },
   getGoodsInfo: function () {
     let that = this;
@@ -121,22 +130,24 @@ Page({
     });
   },
   getCollectStatus: function () {
-    if (user.checkLogin()) {
-      let that = this;
-      util.request(api.WishlistCollectStatusByProduct + '/' + that.data.id).then(function (res) {
-        if (res.success === true) {
-          if (res.data == true) {
-            that.setData({
-              'collectBackImage': that.data.hasCollectImage
-            });
-          } else {
-            that.setData({
-              'collectBackImage': that.data.noCollectImage
-            });
+    let that = this;
+    user.checkLogin().then(c => {
+      if (c) {
+        util.request(api.WishlistCollectStatusByProduct + '/' + that.data.id).then(function (res) {
+          if (res.success === true) {
+            if (res.data == true) {
+              that.setData({
+                'collectBackImage': that.data.hasCollectImage
+              });
+            } else {
+              that.setData({
+                'collectBackImage': that.data.noCollectImage
+              });
+            }
           }
-        }
-      });
-    }
+        });
+      }
+    })
   },
   getGoodsStocks: function () {
     let that = this;
@@ -356,7 +367,9 @@ Page({
   },
   addCollect: function () {
     let that = this;
-    util.request(api.Wishlist, { productId: this.data.id }, "POST")
+    util.request(api.Wishlist, {
+        productId: this.data.id
+      }, "POST")
       .then(function (res) {
         if (res.success === true) {
           that.setData({
@@ -456,7 +469,10 @@ Page({
         return false;
       }
       // 添加到购物车
-      util.request(api.CartAddItem, { productId: stockProduct.productId, quantity: this.data.number }, "POST")
+      util.request(api.CartAddItem, {
+          productId: stockProduct.productId,
+          quantity: this.data.number
+        }, "POST")
         .then(function (res) {
           let _res = res;
           if (_res.success === true) {

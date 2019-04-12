@@ -1,7 +1,7 @@
 .comments{
     width: 100%;
     height: auto;
-    padding-left:30rpx;
+    /* padding-left:30rpx; */
     background: #fff;
     /* margin: 20rpx 0; */
 }
@@ -42,11 +42,14 @@
 }
 
 .comments .b{
-    margin-top: 85rpx;
+    margin-top: 90rpx;
     height: auto;
-    width: 720rpx;
+    /* width: 720rpx; */
 }
 
+.cu-bar .action button{
+    margin-right: 4rpx;
+}
 .comments .b view button{
     margin-right: 4rpx;
 }
@@ -57,10 +60,10 @@
 
 .comments .item{
     height: auto;
-    width: 720rpx;
+    /* width: 720rpx; */
     overflow: hidden;
-    border-bottom: 1px solid #d9d9d9;
-    padding-bottom: 25rpx;
+    /* border-bottom: 1px solid #d9d9d9; */
+    /* padding-bottom: 25rpx; */
 }
 
 .comments .info{

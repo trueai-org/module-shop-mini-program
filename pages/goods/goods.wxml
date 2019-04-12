@@ -1,7 +1,18 @@
 <view class="container">
+  <scroll-view scroll-x class="bg-white nav text-center fixed" style="top:0px">
+    <view class="cu-item text {{0==tabCur?'text-red cur':''}}" bindtap='tabSelect' data-id="{{0}}">首页</view>
+    <view class="cu-item text {{1==tabCur?'text-red cur':''}}" bindtap='tabSelect' data-id="{{1}}">详情</view>
+    <view class="cu-item text {{2==tabCur?'text-red cur':''}}" bindtap='tabSelect' data-id="{{2}}">评价</view>
+    <view class="cu-item text {{3==tabCur?'text-red cur':''}}" bindtap='tabSelect' data-id="{{3}}">推荐</view>
+  </scroll-view>
   <swiper class="goodsimgs" indicator-dots="true" autoplay="true" interval="3000" duration="1000">
     <swiper-item wx:for="{{product.productImages}}" wx:key="{{item.id}}">
       <image src="{{item.mediaUrl}}" background-size="cover"></image>
+    </swiper-item>
+  </swiper>
+  <swiper class="screen-swiper square-dot" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500">
+    <swiper-item wx:for="{{product.productImages}}" wx:key>
+      <image src="{{item.mediaUrl}}" mode="aspectFill"></image>
     </swiper-item>
   </swiper>
   <view class="service-policy">

@@ -1,5 +1,14 @@
+<scroll-view scroll-x class="bg-white nav fixed" style="top:0px">
+  <view class="flex text-center">
+    <view class="cu-item flex-sub {{ showType == 0 ? 'text-red cur' : ''}}" bindtap="switchTab" data-id="{{0}}">全部({{reviewsInfo.reviewsCount}})</view>
+    <view class="cu-item flex-sub {{ showType == 0 ? '' : 'text-red cur'}}" bindtap="switchTab" data-id="{{1}}">
+      最新
+      <!-- <text wx:if="{{predicate=='id'}}" class="icon-triangledownfill lg text-gray"></text> -->
+    </view>
+  </view>
+</scroll-view>
 <view class="comments">
-  <view class="h">
+  <!-- <view class="h">
     <view class="item {{ showType == 0 ? 'active' : ''}}" bindtap="switchTab">
       <view class="txt">默认</view>
     </view>
@@ -9,23 +18,31 @@
         <text wx:if="{{predicate=='id'}}" class="icon-triangledownfill lg text-gray"></text>
       </view>
     </view>
-  </view>
+  </view> -->
   <view class="b">
-    <view class="padding-sm" style="margin-left:-30rpx;">
-      <button bindtap="switchAll" class="cu-btn round sm {{ratingLevel==null&&isMedia==null?'bg-red':'line text-red'}}">全部 {{reviewsInfo.reviewsCount}}</button>
-      <button bindtap="switchLevel" data-id="5" class="cu-btn round sm {{ratingLevel==5?'bg-orange':'line text-orange'}}">
-        好评 {{reviewsInfo.rating5Count}}
-      </button>
-      <button bindtap="switchLevel" data-id="3" class="cu-btn round sm {{ratingLevel==3?'bg-orange':'line text-orange'}}">
-        中评 {{reviewsInfo.rating2Count+reviewsInfo.rating3Count+reviewsInfo.rating4Count}}
-      </button>
-      <button bindtap="switchLevel" data-id="1" class="cu-btn round sm {{ratingLevel==1?'bg-orange':'line text-orange'}}">
-        差评 {{reviewsInfo.rating1Count}}
-      </button>
-      <button bindtap="switchMedia" class="cu-btn round sm {{isMedia===true?'bg-cyan':'line text-cyan'}}">有图 {{reviewsInfo.mediasCount}}</button>
+    <view class="cu-bar bg-white solid-bottom">
+      <view class='action'>
+        <!-- <button bindtap="switchAll" class="cu-btn round sm {{ratingLevel==null&&isMedia==null?'bg-red':'line text-red'}}">
+          全部 {{reviewsInfo.reviewsCount}}
+        </button> -->
+        <button bindtap="switchLevel" data-id="5" class="cu-btn round sm {{ratingLevel==5?'bg-orange':'line text-orange'}}">
+          好评 {{reviewsInfo.rating5Count}}
+        </button>
+        <button bindtap="switchLevel" data-id="3" class="cu-btn round sm {{ratingLevel==3?'bg-orange':'line text-orange'}}">
+          中评 {{reviewsInfo.rating2Count+reviewsInfo.rating3Count+reviewsInfo.rating4Count}}
+        </button>
+        <button bindtap="switchLevel" data-id="1" class="cu-btn round sm {{ratingLevel==1?'bg-orange':'line text-orange'}}">
+          差评 {{reviewsInfo.rating1Count}}
+        </button>
+        <button bindtap="switchMedia" class="cu-btn round sm {{isMedia===true?'bg-cyan':'line text-cyan'}}">有图 {{reviewsInfo.mediasCount}}</button>
+      </view>
+      <view class='action'>
+        <text class="text-sm">好评度</text>
+        <text class="text-red text">{{reviewsInfo.positiveRatingPercent}}%</text>
+      </view>
     </view>
-    <view class="item" wx:for="{{pageData}}" wx:key="{{item.id}}">
-      <view class="cu-item">
+    <view class="item solid-bottom" wx:for="{{pageData}}" wx:key="{{item.id}}">
+      <view class="cu-item padding">
         <view class="cu-list menu-avatar" style="margin-left:-30rpx;">
           <view class="cu-item">
             <view class="cu-avatar round lg" style="background-image:url({{item.avatar?item.avatar:defaultAvatar}});"></view>
@@ -47,13 +64,13 @@
         </view>
         <view class="margin-top-sm flex justify-between text-left">
           <view class="text-gray text-df">白色 × 2</view>
-          <view class="margin-right text-gray text-sm">
+          <view class="text-gray text-sm">
             <text bindtap="supportReview" data-id="{{item.id}}" class="icon-appreciate margin-lr-xs">{{item.supportCount}}</text>
             <text bindtap="redirectReview" data-id="{{item.id}}" class="icon-message margin-lr-xs">{{item.replieCount}}</text>
           </view>
         </view>
         <view wx:if="{{item.replies.length>0}}">
-          <view wx:for="{{item.replies}}" wx:for-item="iitem" class="bg-gray padding-sm radius margin-top-sm text-sm margin-right">
+          <view wx:for="{{item.replies}}" wx:for-item="iitem" class="bg-gray padding-sm radius margin-top-sm text-sm">
             <view class="flex">
               <view>{{iitem.replierName}}：</view>
               <view class="flex-sub">{{iitem.comment}}</view>

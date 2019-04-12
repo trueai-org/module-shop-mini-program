@@ -27,9 +27,9 @@
                 </view>
             </view>
             <view class="cu-list menu-avatar comment solids-top">
-                <view class="cu-bar bg-white solid-bottom ">
+                <view class="cu-bar bg-white solid-bottom">
                     <view class='action'>
-                        <text class='icon-titles text-orange '></text>
+                        <text class='icon-titles text-orange'></text>
                         {{item.replieCount}}条回复
                     </view>
                 </view>
@@ -75,7 +75,7 @@
         <button bindtap="onPost" class="cu-btn bg-red shadow">发送</button>
     </view>
 </view>
-<view class='load-progress {{loadProgress!=0?"show":"hide"}}' style="top:{{0}}px;">
+<view class='load-progress {{loadProgress?"show":"hide"}}' style="top:{{0}}px;">
     <!-- <view class='load-progress-bar bg-green' style="transform: translate3d(-{{100-loadProgress}}%, 0px, 0px);"></view> -->
     <view class='load-progress-spinner text-green'></view>
 </view>
