@@ -4,17 +4,7 @@ var api = require('../../config/api.js');
 
 Page({
   data: {
-    comments: [],
-    allCommentList: [],
-    picCommentList: [],
-    typeId: 0,
-    valueId: 0,
     showType: 0,
-    allCount: 0,
-    hasPicCount: 0,
-    allPage: 1,
-    picPage: 1,
-    size: 20,
 
     entityId: 0,
     entityTypeId: 0,
@@ -30,59 +20,16 @@ Page({
       rating5Count: 0
     },
 
+    defaultAvatar: app.defaultAvatar,
+
     pageNum: 1,
     pageSize: 5,
     total: 0,
-    predicate: 'id',
+    predicate: 'supportCount',
     reverse: true,
     pageData: [],
     isMedia: null,
-    ratingLevel: null,
-
-    noCollectImage: "/static/images/icon_collect.png",
-    hasCollectImage: "/static/images/icon_collect_checked.png",
-  },
-  getCommentCount: function () {
-    let that = this;
-    util.request(api.CommentCount, {
-      valueId: that.data.valueId,
-      typeId: that.data.typeId
-    }).then(function (res) {
-      if (res.errno === 0) {
-
-        that.setData({
-          allCount: res.data.allCount,
-          hasPicCount: res.data.hasPicCount
-        });
-      }
-    });
-  },
-  getCommentList: function () {
-    let that = this;
-    util.request(api.CommentList, {
-      valueId: that.data.valueId,
-      typeId: that.data.typeId,
-      size: that.data.size,
-      page: (that.data.showType == 0 ? that.data.allPage : that.data.picPage),
-      showType: that.data.showType
-    }).then(function (res) {
-      if (res.errno === 0) {
-
-        if (that.data.showType == 0) {
-          that.setData({
-            allCommentList: that.data.allCommentList.concat(res.data.data),
-            allPage: res.data.currentPage,
-            comments: that.data.allCommentList.concat(res.data.data)
-          });
-        } else {
-          that.setData({
-            picCommentList: that.data.picCommentList.concat(res.data.data),
-            picPage: res.data.currentPage,
-            comments: that.data.picCommentList.concat(res.data.data)
-          });
-        }
-      }
-    });
+    ratingLevel: null
   },
   onLoad: function (options) {
     // 页面初始化 options为页面跳转所带来的参数
@@ -92,9 +39,6 @@ Page({
     });
     this.getReviewsInfo();
     this.getList();
-
-    // this.getCommentCount();
-    // this.getCommentList();
   },
   getReviewsInfo: function () {
     let that = this;
@@ -126,12 +70,67 @@ Page({
 
   },
   switchTab: function () {
+    let type = this.data.showType == 1 ? 0 : 1;
     this.setData({
-      showType: this.data.showType == 1 ? 0 : 1
+      showType: type,
+      predicate: type == 1 ? 'id' : 'supportCount'
     });
-
+    this.queckResetQuery();
   },
-
+  redirectReview: function (event) {
+    let id = event.currentTarget.dataset.id;
+    wx.navigateTo({
+      url: '../commentPost/commentPost?reviewId=' + id
+    })
+  },
+  supportReview: function (event) {
+    let id = event.currentTarget.dataset.id;
+    if (id) {
+      let that = this;
+      util.request(api.Supports, {
+        entityId: id,
+        entityTypeId: 10 //Review
+      }, 'POST').then(function (res) {
+        if (res.success === true) {
+          let first = that.data.pageData.find(c => c.id == id);
+          if (first) {
+            first.supportCount = parseInt(res.data);
+            that.setData({
+              pageData: that.data.pageData
+            });
+          }
+        }
+      });
+    }
+  },
+  supportReply: function (event) {
+    let id = event.currentTarget.dataset.id;
+    if (id) {
+      let that = this;
+      util.request(api.Supports, {
+        entityId: id,
+        entityTypeId: 11 //Reply
+      }, 'POST').then(function (res) {
+        if (res.success === true) {
+          let any = false;
+          that.data.pageData.forEach(x => {
+            if (any)
+              return;
+            let first = x.replies.find(c => c.id == id);
+            if (first) {
+              first.supportCount = parseInt(res.data);
+              any = true;
+            }
+          });
+          if (any) {
+            that.setData({
+              pageData: that.data.pageData
+            });
+          }
+        }
+      });
+    }
+  },
   switchAll: function () {
     this.setData({
       isMedia: null,
@@ -164,7 +163,7 @@ Page({
       pageNum: 1,
       pageSize: this.data.pageSize,
       total: 0,
-      predicate: 'id',
+      predicate: this.data.predicate,
       reverse: true,
       isMedia: this.data.isMedia,
       ratingLevel: this.data.ratingLevel
@@ -173,29 +172,6 @@ Page({
     });
   },
   onReachBottom: function () {
-    console.log('onPullDownRefresh');
-    // if (this.data.showType == 0) {
-
-    //   if (this.data.allCount / this.data.size < this.data.allPage) {
-    //     return false;
-    //   }
-
-    //   this.setData({
-    //     'allPage': this.data.allPage + 1
-    //   });
-    // } else {
-    //   if (this.data.hasPicCount / this.data.size < this.data.picPage) {
-    //     return false;
-    //   }
-
-    //   this.setData({
-    //     'picPage': this.data.picPage + 1
-    //   });
-    // }
-
-
-
-    // this.getCommentList();
     if (this.data.total > 0 && this.data.pageNum * this.data.pageSize < this.data.total) {
       this.setData({
         pageNum: this.data.pageNum + 1

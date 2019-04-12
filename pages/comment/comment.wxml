@@ -1,12 +1,17 @@
 <view class="comments">
   <view class="h">
-    <!-- <view class="item {{ showType == 0 ? 'active' : ''}}" bindtap="switchTab">
-      <view class="txt">全部({{reviewsInfo.reviewsCount}})</view>
+    <view class="item {{ showType == 0 ? 'active' : ''}}" bindtap="switchTab">
+      <view class="txt">默认</view>
     </view>
     <view class="item {{ showType == 0 ? '' : 'active'}}" bindtap="switchTab">
-      <view class="txt">有图({{reviewsInfo.mediasCount}})</view>
-    </view> -->
-    <view style="padding:25rpx 0rpx 25rpx 36rpx;">
+      <view class="txt">
+        最新
+        <text wx:if="{{predicate=='id'}}" class="icon-triangledownfill lg text-gray"></text>
+      </view>
+    </view>
+  </view>
+  <view class="b">
+    <view class="padding-sm" style="margin-left:-30rpx;">
       <button bindtap="switchAll" class="cu-btn round sm {{ratingLevel==null&&isMedia==null?'bg-red':'line text-red'}}">全部 {{reviewsInfo.reviewsCount}}</button>
       <button bindtap="switchLevel" data-id="5" class="cu-btn round sm {{ratingLevel==5?'bg-orange':'line text-orange'}}">
         好评 {{reviewsInfo.rating5Count}}
@@ -19,13 +24,11 @@
       </button>
       <button bindtap="switchMedia" class="cu-btn round sm {{isMedia===true?'bg-cyan':'line text-cyan'}}">有图 {{reviewsInfo.mediasCount}}</button>
     </view>
-  </view>
-  <view class="b">
     <view class="item" wx:for="{{pageData}}" wx:key="{{item.id}}">
       <view class="cu-item">
         <view class="cu-list menu-avatar" style="margin-left:-30rpx;">
           <view class="cu-item">
-            <view class="cu-avatar round lg" style="background-image:url({{item.avatar}});"></view>
+            <view class="cu-avatar round lg" style="background-image:url({{item.avatar?item.avatar:defaultAvatar}});"></view>
             <view class="content">
               <view class="text">{{item.reviewerName}}</view>
               <view class="text-gray text-sm">
@@ -45,8 +48,8 @@
         <view class="margin-top-sm flex justify-between text-left">
           <view class="text-gray text-df">白色 × 2</view>
           <view class="margin-right text-gray text-sm">
-            <text class="icon-appreciate margin-lr-xs">{{item.supportCount}}</text>
-            <text class="icon-message margin-lr-xs">{{item.replieCount}}</text>
+            <text bindtap="supportReview" data-id="{{item.id}}" class="icon-appreciate margin-lr-xs">{{item.supportCount}}</text>
+            <text bindtap="redirectReview" data-id="{{item.id}}" class="icon-message margin-lr-xs">{{item.replieCount}}</text>
           </view>
         </view>
         <view wx:if="{{item.replies.length>0}}">
@@ -56,9 +59,10 @@
               <view class="flex-sub">{{iitem.comment}}</view>
             </view>
             <view class="margin-top-sm flex justify-between">
-              <view class="text-gray text-df">{{iitem.createdOnForDate}}</view>
-              <view>
-                <text class="icon-appreciatefill text-red"></text>
+              <view class="text-gray text-sm">{{iitem.createdOnForDate}}</view>
+              <view class="text-sm">
+                <!-- fill text-red -->
+                <text bindtap="supportReply" data-id="{{iitem.id}}" class="icon-appreciate text-gray">{{iitem.supportCount}}</text>
               </view>
             </view>
           </view>

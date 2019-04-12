@@ -3,7 +3,7 @@
     height: auto;
     padding-left:30rpx;
     background: #fff;
-    margin: 20rpx 0;
+    /* margin: 20rpx 0; */
 }
 
 .comments .h{
@@ -15,7 +15,7 @@
     display: flex;   
     background: #fff;
     height: 84rpx;
-    border-bottom: 1px solid rgba(0,0,0,.15);
+    /* border-bottom: 1px solid rgba(0,0,0,.15); */
 }
 
 .comments .h .item{
@@ -24,10 +24,6 @@
     width: 50%;
     padding: 0 15rpx;
     text-align: center;
-}
-
-.comments .h view button{
-    margin-right: 8rpx;
 }
 
 .comments .h .item .txt{
@@ -49,6 +45,10 @@
     margin-top: 85rpx;
     height: auto;
     width: 720rpx;
+}
+
+.comments .b view button{
+    margin-right: 4rpx;
 }
 
 .comments .b.no-h{
