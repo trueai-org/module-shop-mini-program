@@ -16,11 +16,11 @@
                     </view>
                 </view>
             </view>
-            <view class="text-content">{{item.comment}}</view>
+            <view class="content padding">{{item.comment}}</view>
             <view wx:if="{{item.mediaUrls.length > 0}}" class="grid flex-sub padding-lr grid-square col-1">
                 <view wx:for="{{item.mediaUrls}}" class="bg-img only-img" style="background-image:url({{item}});"></view>
             </view>
-            <view class="margin-top-sm flex justify-between text-left">
+            <view class="flex justify-between text-left">
                 <view class="text-gray text-sm text-left padding">白色 × 2</view>
                 <view class="text-gray text-sm text-right padding">
                     <text bindtap="supportReview" class="icon-appreciate margin-lr-xs">{{item.supportCount}}</text>
