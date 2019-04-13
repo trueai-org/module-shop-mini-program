@@ -24,7 +24,7 @@
     <view class='action'>
       <text class="text-sm text-red text-bold">￥</text>
       <text class="text-xl text-red text-bold">{{product.price}}</text>
-      <view wx:if="{{product.oldPrice&&product.oldPrice>0}}" class="padding-left-sm text-gray" style="text-decoration:line-through;">
+      <view wx:if="{{product.oldPrice&&product.oldPrice>0}}" class="padding-left-xs text-gray" style="text-decoration:line-through;">
         <text class="text-sm text-gray">￥</text>
         <text class="text text-gray">{{product.oldPrice}}</text>
       </view>
