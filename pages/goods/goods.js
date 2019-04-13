@@ -24,7 +24,8 @@ Page({
     noCollectImage: "/static/images/icon_collect.png",
     hasCollectImage: "/static/images/icon_collect_checked.png",
     collectBackImage: "/static/images/icon_collect.png",
-
+    defaultAvatar: app.defaultAvatar,
+    
     product: {
       categoryIds: [],
       attributes: [],
@@ -51,8 +52,12 @@ Page({
     },
 
     tabCur: 0,
-    // TabCur:0,
-    // tabNav: ['Flex布局', 'Grid布局', '辅助布局']
+    reviewsList: []
+  },
+  navToReview: function () {
+    wx.navigateTo({
+      url: `../comment/comment?entityId=${this.data.id}&entityTypeId=3`
+    })
   },
   tabSelect(e) {
     this.setData({
@@ -61,36 +66,6 @@ Page({
   },
   getGoodsInfo: function () {
     let that = this;
-    // util.request(api.GoodsDetail, { id: that.data.id }).then(function (res) {
-    //   if (res.errno === 0) {
-    //     that.setData({
-    //       goods: res.data.info,
-    //       gallery: res.data.gallery,
-    //       attribute: res.data.attribute,
-    //       issueList: res.data.issue,
-    //       comment: res.data.comment,
-    //       brand: res.data.brand,
-    //       specificationList: res.data.specificationList,
-    //       productList: res.data.productList,
-    //       userHasCollect: res.data.userHasCollect
-    //     });
-
-    //     if (res.data.userHasCollect == 1) {
-    //       that.setData({
-    //         'collectBackImage': that.data.hasCollectImage
-    //       });
-    //     } else {
-    //       that.setData({
-    //         'collectBackImage': that.data.noCollectImage
-    //       });
-    //     }
-
-    //     WxParse.wxParse('goodsDetail', 'html', res.data.info.goods_desc, that);
-
-    //     that.getGoodsRelated();
-    //   }
-    // });
-
     util.request(api.Goods + '/' + that.data.id).then(function (res) {
       if (res.success === true) {
         that.setData({
@@ -101,10 +76,11 @@ Page({
         WxParse.wxParse('description', 'html', res.data.description, that);
       }
     });
-    that.getGoodsRelated();
-    that.getGoodsStocks();
     that.getCollectStatus();
     that.getReviewsInfo();
+    that.getGoodsStocks();
+    that.getReviewsList();
+    that.getGoodsRelated();
   },
   getReviewsInfo: function () {
     let that = this;
@@ -115,6 +91,19 @@ Page({
       if (res.success === true) {
         that.setData({
           reviewsInfo: res.data,
+        });
+      }
+    });
+  },
+  getReviewsList: function () {
+    let that = this;
+    util.request(api.ReviewsList, {
+      entityId: that.data.id,
+      entityTypeId: 3
+    }, 'POST').then(function (res) {
+      if (res.success === true) {
+        that.setData({
+          reviewsList: res.data,
         });
       }
     });
@@ -368,8 +357,8 @@ Page({
   addCollect: function () {
     let that = this;
     util.request(api.Wishlist, {
-        productId: this.data.id
-      }, "POST")
+      productId: this.data.id
+    }, "POST")
       .then(function (res) {
         if (res.success === true) {
           that.setData({
@@ -470,9 +459,9 @@ Page({
       }
       // 添加到购物车
       util.request(api.CartAddItem, {
-          productId: stockProduct.productId,
-          quantity: this.data.number
-        }, "POST")
+        productId: stockProduct.productId,
+        quantity: this.data.number
+      }, "POST")
         .then(function (res) {
           let _res = res;
           if (_res.success === true) {

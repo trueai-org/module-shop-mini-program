@@ -37,9 +37,8 @@
   "window": {
     "backgroundTextStyle": "dark",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "测试商城",
-    "navigationBarTextStyle": "black",
-    "enablePullDownRefresh": true
+    "navigationBarTitleText": "商城",
+    "navigationBarTextStyle": "black"
   },
   "tabBar": {
     "backgroundColor": "#fafafa",

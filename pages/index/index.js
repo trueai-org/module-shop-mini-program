@@ -3,12 +3,10 @@ const api = require('../../config/api.js');
 const user = require('../../services/user.js');
 var WxParse = require('../../lib/wxParse/wxParse.js');
 var HtmlToJson = require('../../lib/wxParse/html2json.js');
-
-//获取应用实例
 const app = getApp()
+
 Page({
   data: {
-    goodsCount: 0,
     newGoods: [],
     hotGoods: [],
     topics: [],
@@ -108,11 +106,6 @@ Page({
   },
   onLoad: function (options) {
     this.getIndexData();
-    util.request(api.GoodsCount).then(res => {
-      this.setData({
-        goodsCount: res.data.goodsCount
-      });
-    });
   },
   onReady: function () {
     // 页面渲染完成

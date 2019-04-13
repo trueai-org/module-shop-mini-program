@@ -53,6 +53,7 @@ module.exports = {
   // 评论
   Reviews: ApiHost + 'reviews',
   ReviewsInfo: ApiHost + 'reviews/info',
+  ReviewsList: ApiHost + 'reviews/list',
   ReviewsGrid: ApiHost + 'reviews/grid',
 
   // 评论回复 

@@ -16,7 +16,7 @@
 .service-policy {
   /* width: 750rpx; */
   height: 73rpx;
-  background: #f4f4f4;
+  /* background: #f4f4f4; */
   padding: 0 31.25rpx;
   display: flex;
   flex-flow: row nowrap;
