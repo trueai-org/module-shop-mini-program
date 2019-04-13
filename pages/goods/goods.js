@@ -21,9 +21,8 @@ Page({
     number: 1,
     checkedSpecText: '请选择规格数量',
     openAttr: false,
-    noCollectImage: "/static/images/icon_collect.png",
-    hasCollectImage: "/static/images/icon_collect_checked.png",
-    collectBackImage: "/static/images/icon_collect.png",
+
+    isCollect: false,
     defaultAvatar: app.defaultAvatar,
 
     product: {
@@ -131,11 +130,11 @@ Page({
           if (res.success === true) {
             if (res.data == true) {
               that.setData({
-                'collectBackImage': that.data.hasCollectImage
+                isCollect: true
               });
             } else {
               that.setData({
-                'collectBackImage': that.data.noCollectImage
+                isCollect: false
               });
             }
           }
@@ -311,12 +310,10 @@ Page({
   },
   onLoad: function (options) {
     // 页面初始化 options为页面跳转所带来的参数
+    var that = this;
     this.setData({
       id: parseInt(options.id)
-      // id: 1181000
     });
-    var that = this;
-    this.getGoodsInfo();
 
     user.checkLogin().then(v => {
       if (v === true) {
@@ -329,6 +326,8 @@ Page({
         });
       }
     });
+
+    this.getGoodsInfo();
   },
   onReady: function () {
     // 页面渲染完成
@@ -367,7 +366,7 @@ Page({
       .then(function (res) {
         if (res.success === true) {
           that.setData({
-            collectBackImage: that.data.hasCollectImage
+            isCollect: true
           });
         } else {
           wx.showToast({
@@ -383,7 +382,7 @@ Page({
       .then(function (res) {
         if (res.success === true) {
           that.setData({
-            collectBackImage: that.data.noCollectImage
+            isCollect: false
           });
         } else {
           wx.showToast({
@@ -394,10 +393,10 @@ Page({
       });
   },
   switchCollect: function () {
-    if (this.data.collectBackImage == this.data.noCollectImage) {
-      this.addCollect();
-    } else {
+    if (this.data.isCollect) {
       this.removeCollect();
+    } else {
+      this.addCollect();
     }
   },
   openCartPage: function () {

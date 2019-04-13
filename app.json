@@ -20,8 +20,6 @@
     "pages/comment/comment",
     "pages/commentPost/commentPost",
     "pages/topicComment/topicComment",
-    "pages/brand/brand",
-    "pages/brandDetail/brandDetail",
     "pages/search/search",
     "pages/category/category",
     "pages/cart/cart",

@@ -42,18 +42,6 @@
     </view>
     <view class="text-sm text-gray padding-top-xs">{{product.shortDescription}}</view>
   </view>
-  <!-- <view class="goods-info">
-    <view class="c">
-      <text class="name">{{product.name}}</text>
-      <text class="desc">{{product.shortDescription}}</text>
-      <text class="price">￥{{product.price}}</text>
-      <view class="brand" wx:if="{{product.brandName}}">
-        <navigator url="../brandDetail/brandDetail?id={{product.brandId}}">
-          <text>{{product.brandName}}</text>
-        </navigator>
-      </view>
-    </view>
-  </view> -->
   <view bindtap="switchAttrPop" class="cu-bar bg-white solid-bottom margin-tb-sm">
     <view class="action">
       <text class="icon-titles text-red"></text>
@@ -240,16 +228,24 @@
     </view>
   </view>
 </view>
-<view class="bottom-btn">
-  <view class="l l-collect" bindtap="switchCollect">
-    <image class="icon" src="{{ collectBackImage }}"></image>
-  </view>
-  <view class="l l-cart">
-    <view class="box">
-      <text class="cart-count">{{cartGoodsCount}}</text>
-      <image bindtap="openCartPage" class="icon" src="/static/images/ic_menu_shoping_nor.png"></image>
+<view class="cu-bar bg-white tabbar border shop foot" style="bottom:0px">
+  <!-- <button class="action" open-type="contact">
+    <view class="icon-service text-green">
+      <view class="cu-tag badge"></view>
     </view>
+    客服
+  </button> -->
+  <view bindtap="switchCollect" class="action">
+    <view wx:if="{{isCollect}}" class="icon-favorfill text-orange"></view>
+    <view wx:else="{{isCollect}}" class="icon-favor"></view>
+    {{isCollect?'已收藏':'收藏'}}
   </view>
-  <view class="c">立即购买</view>
-  <view class="r" bindtap="addToCart">加入购物车</view>
+  <view bindtap="openCartPage" class="action">
+    <view class="icon-cart" style="overflow:visible;">
+      <view class="cu-tag badge">{{cartGoodsCount>99?'99+':cartGoodsCount}}</view>
+    </view>
+    购物车
+  </view>
+  <view bindtap="addToCart" class="bg-red submit">加入购物车</view>
+  <view class="bg-orange submit">立即购买</view>
 </view>
