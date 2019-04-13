@@ -5,12 +5,12 @@
     <view class="cu-item text {{2==tabCur?'text-red cur':''}}" bindtap='tabSelect' data-id="{{2}}">评价</view>
     <view class="cu-item text {{3==tabCur?'text-red cur':''}}" bindtap='tabSelect' data-id="{{3}}">推荐</view>
   </scroll-view>
-  <swiper class="goodsimgs" indicator-dots="true" autoplay="true" interval="3000" duration="1000">
+  <!-- <swiper class="goodsimgs" indicator-dots="true" autoplay="true" interval="3000" duration="1000">
     <swiper-item wx:for="{{product.productImages}}" wx:key="{{item.id}}">
       <image src="{{item.mediaUrl}}" background-size="cover"></image>
     </swiper-item>
-  </swiper>
-  <swiper class="screen-swiper square-dot" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500">
+  </swiper> -->
+  <swiper style="height:680rpx;margin-top:90rpx;" class="screen-swiper square-dot" indicator-dots="true" circular="true" autoplay="true" interval="3000" duration="1000">
     <swiper-item wx:for="{{product.productImages}}" wx:key>
       <image src="{{item.mediaUrl}}" mode="aspectFill"></image>
     </swiper-item>
@@ -20,7 +20,29 @@
     <view class="item">48小时快速退款</view>
     <view class="item">满88元免邮费</view>
   </view>
-  <view class="goods-info">
+  <view class="cu-bar bg-white solid-bottom">
+    <view class='action'>
+      <text class="text-sm text-red text-bold">￥</text>
+      <text class="text-xl text-red text-bold">{{product.price}}</text>
+      <view wx:if="{{product.oldPrice&&product.oldPrice>0}}" class="padding-left-sm text-gray" style="text-decoration:line-through;">
+        <text class="text-sm text-gray">￥</text>
+        <text class="text text-gray">{{product.oldPrice}}</text>
+      </view>
+    </view>
+    <view class='action'>
+      <text class="text-sm">好评度</text>
+      <view class="icon-like text-red"></view>
+      <text class="text-red text padding-left-xs">{{reviewsInfo.positiveRatingPercent}}%</text>
+    </view>
+  </view>
+  <view class="padding-sm bg-white solid-bottom">
+    <view class="text-content text">
+      <view wx:if="{{product.isFeatured}}" class="cu-tag round bg-red sm">精品</view>
+      {{product.name}}
+    </view>
+    <view class="text-sm text-gray padding-top-xs">{{product.shortDescription}}</view>
+  </view>
+  <!-- <view class="goods-info">
     <view class="c">
       <text class="name">{{product.name}}</text>
       <text class="desc">{{product.shortDescription}}</text>
@@ -31,7 +53,7 @@
         </navigator>
       </view>
     </view>
-  </view>
+  </view> -->
   <view class="section-nav section-attr" bindtap="switchAttrPop">
     <view class="t">请选择规格数量</view>
     <image class="i" src="../../static/images/address_right.png" background-size="cover"></image>
@@ -49,8 +71,10 @@
       <navigator url="../comment/comment?entityId={{product.id}}&entityTypeId=3">
         <text class="t">评价({{reviewsInfo.reviewsCount>999?'999+':reviewsInfo.reviewsCount}})</text>
         <view class="i">
-          好评度
-          <text class="text-red text-xl">{{reviewsInfo.positiveRatingPercent}}%</text>
+          <!-- 好评度
+          <text class="text-red text-xl">{{reviewsInfo.positiveRatingPercent}}%</text> -->
+          <text>评分</text>
+          <text class="text-cyan text-xl">{{reviewsInfo.ratingAverage}}/5</text>
         </view>
       </navigator>
     </view>
@@ -140,9 +164,7 @@
           <view class="p">价格：￥{{product.price}}</view>
           <view wx:if="{{isAllSpec}}">
             <view class="a" style="color:red;" wx:if="{{!currentStock.isAllowToOrder}}">无货</view>
-            <view class="a" style="" wx:elif="{{currentStock.isAllowToOrder && currentStock.displayStockAvailability && currentStock.displayStockQuantity}}">
-              库存：{{currentStock.stockQuantity}}
-            </view>
+            <view class="a" style="" wx:elif="{{currentStock.isAllowToOrder && currentStock.displayStockAvailability && currentStock.displayStockQuantity}}">库存：{{currentStock.stockQuantity}}</view>
             <view class="a" style="" wx:elif="{{currentStock.isAllowToOrder && currentStock.displayStockAvailability}}">有货</view>
           </view>
           <view class="a" wx:if="{{product.options.length>0}}">{{checkedSpecText}}</view>
@@ -153,9 +175,7 @@
       <view class="spec-item" wx:for="{{product.options}}" wx:key="{{item.id}}">
         <view class="name">{{item.name}}</view>
         <view class="values">
-          <view class="value {{vitem.checked ? 'selected' : ''}}" bindtap="clickSkuValue" wx:for="{{item.values}}" wx:for-item="vitem" wx:key="{{vitem.id}}" data-value-id="{{vitem.id}}" data-name-id="{{item.id}}">
-            {{vitem.value}}
-          </view>
+          <view class="value {{vitem.checked ? 'selected' : ''}}" bindtap="clickSkuValue" wx:for="{{item.values}}" wx:for-item="vitem" wx:key="{{vitem.id}}" data-value-id="{{vitem.id}}" data-name-id="{{item.id}}">{{vitem.value}}</view>
         </view>
       </view>
       <view class="number-item">
