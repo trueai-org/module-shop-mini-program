@@ -41,49 +41,53 @@
         <text class="text-red text">{{reviewsInfo.positiveRatingPercent}}%</text>
       </view>
     </view>
-    <view class="item solid-bottom" wx:for="{{pageData}}" wx:key="{{item.id}}">
-      <view class="cu-item padding">
-        <view class="cu-list menu-avatar" style="margin-left:-30rpx;">
-          <view class="cu-item">
-            <view class="cu-avatar round lg" style="background-image:url({{item.avatar?item.avatar:defaultAvatar}});"></view>
-            <view class="content">
-              <view class="text">{{item.reviewerName}}</view>
-              <view class="text-gray text-sm">
-                <text wx:for="{{item.rating}}" class="icon-favorfill text-red"></text>
-                <text wx:for="{{(5 - item.rating)}}" class="icon-favor text-red"></text>
-              </view>
+    <view class="cu-item padding solid-bottom" wx:for="{{pageData}}" wx:key="{{item.id}}">
+      <view class="cu-list menu-avatar" style="margin-left:-30rpx;">
+        <view class="cu-item">
+          <view class="cu-avatar round lg" style="background-image:url({{item.avatar?item.avatar:defaultAvatar}});"></view>
+          <view class="content">
+            <view class="text">{{item.reviewerName}}</view>
+            <view class="text-gray text-sm">
+              <text wx:for="{{item.rating}}" class="icon-favorfill text-red"></text>
+              <text wx:for="{{(5 - item.rating)}}" class="icon-favor text-red"></text>
             </view>
-            <view>
-              <view class="text-gray text-sm flex justify-between">{{item.createdOnForDate}}</view>
+          </view>
+          <view>
+            <view class="text-gray text-sm flex justify-between">{{item.createdOnForDate}}</view>
+          </view>
+        </view>
+      </view>
+      <view class="text-content">{{item.comment}}</view>
+      <view wx:if="{{item.mediaUrls.length > 0}}" class="grid flex-sub col-3 grid-square margin-right">
+        <view wx:for="{{item.mediaUrls}}" class="bg-img only-img" style="background-image:url({{item}});"></view>
+      </view>
+      <view class="margin-top-sm flex justify-between text-left">
+        <view class="text-gray text-df">白色 × 2</view>
+        <view class="text-gray text-sm">
+          <text bindtap="supportReview" data-id="{{item.id}}" class="icon-appreciate margin-lr-xs">{{item.supportCount}}</text>
+          <text bindtap="redirectReview" data-id="{{item.id}}" class="icon-message margin-lr-xs">{{item.replieCount}}</text>
+        </view>
+      </view>
+      <view wx:if="{{item.replies.length>0}}">
+        <view wx:for="{{item.replies}}" wx:for-item="iitem" class="bg-gray padding-sm radius margin-top-sm text-sm">
+          <view class="flex">
+            <view>{{iitem.replierName}}：</view>
+            <view class="flex-sub">{{iitem.comment}}</view>
+          </view>
+          <view class="margin-top-sm flex justify-between">
+            <view class="text-gray text-sm">{{iitem.createdOnForDate}}</view>
+            <view class="text-sm">
+              <!-- fill text-red -->
+              <text bindtap="supportReply" data-id="{{iitem.id}}" class="icon-appreciate text-gray">{{iitem.supportCount}}</text>
             </view>
           </view>
         </view>
-        <view class="text-content">{{item.comment}}</view>
-        <view wx:if="{{item.mediaUrls.length > 0}}" class="grid flex-sub col-3 grid-square margin-right">
-          <view wx:for="{{item.mediaUrls}}" class="bg-img only-img" style="background-image:url({{item}});"></view>
-        </view>
-        <view class="margin-top-sm flex justify-between text-left">
-          <view class="text-gray text-df">白色 × 2</view>
-          <view class="text-gray text-sm">
-            <text bindtap="supportReview" data-id="{{item.id}}" class="icon-appreciate margin-lr-xs">{{item.supportCount}}</text>
-            <text bindtap="redirectReview" data-id="{{item.id}}" class="icon-message margin-lr-xs">{{item.replieCount}}</text>
-          </view>
-        </view>
-        <view wx:if="{{item.replies.length>0}}">
-          <view wx:for="{{item.replies}}" wx:for-item="iitem" class="bg-gray padding-sm radius margin-top-sm text-sm">
-            <view class="flex">
-              <view>{{iitem.replierName}}：</view>
-              <view class="flex-sub">{{iitem.comment}}</view>
-            </view>
-            <view class="margin-top-sm flex justify-between">
-              <view class="text-gray text-sm">{{iitem.createdOnForDate}}</view>
-              <view class="text-sm">
-                <!-- fill text-red -->
-                <text bindtap="supportReply" data-id="{{iitem.id}}" class="icon-appreciate text-gray">{{iitem.supportCount}}</text>
-              </view>
-            </view>
-          </view>
-        </view>
+      </view>
+      <view wx:if="{{item.replieCount>item.replies.length}}" class="text-right text-sm padding-top-sm">
+        <button bindtap="redirectReview" data-id="{{item.id}}" class="cu-btn round sm text-gray">
+          更多
+          <text class="icon-right lg text-gray"></text>
+        </button>
       </view>
     </view>
   </view>
