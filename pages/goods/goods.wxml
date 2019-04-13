@@ -10,7 +10,7 @@
       <image src="{{item.mediaUrl}}" background-size="cover"></image>
     </swiper-item>
   </swiper> -->
-  <swiper style="height:750rpx;margin-top:0rpx;" class="screen-swiper square-dot" indicator-dots="true" circular="true" autoplay="true" interval="3000" duration="1000">
+  <swiper style="height:750rpx;margin-top:0rpx;" indicator-active-color="rgba(255, 255, 255, .0)" indicator-color="rgba(255, 255, 255, .3)" class="screen-swiper round-dot" indicator-dots="true" circular="true" autoplay="true" interval="3000" duration="1000">
     <swiper-item wx:for="{{product.productImages}}" wx:key>
       <image src="{{item.mediaUrl}}" mode="aspectFill"></image>
     </swiper-item>
@@ -19,21 +19,6 @@
     <view class="item">30天无忧退货</view>
     <view class="item">48小时快速退款</view>
     <view class="item">满88元免邮费</view>
-  </view> -->
-  <!-- <view class="cu-bar bg-white solid-bottom">
-    <view class='action'>
-      <text class="text-sm text-red text-bold">￥</text>
-      <text class="text-xl text-red text-bold">{{product.price}}</text>
-      <view wx:if="{{product.oldPrice&&product.oldPrice>0}}" class="padding-left-xs text-gray" style="text-decoration:line-through;">
-        <text class="text-sm text-gray">￥</text>
-        <text class="text text-gray">{{product.oldPrice}}</text>
-      </view>
-    </view>
-    <view class='action'>
-      <text class="text-sm text">好评度</text>
-      <view class="icon-like text-red"></view>
-      <text class="text-red text padding-left-xs">{{reviewsInfo.positiveRatingPercent}}%</text>
-    </view>
   </view> -->
   <view class="cu-bar bg-gradual-pink shadow-blur">
     <view class='action'>
@@ -82,7 +67,7 @@
   </view>
   <view class="cu-bar bg-white solid-bottom margin-tb-sm">
     <view class="action">
-      <text class="icon-titles text-orange"></text>
+      <text class="icon-titles text-olive"></text>
       <text class="">1个促销</text>
       <text class="cu-tag round line-orange sm margin-lr-xs">万圣趴</text>
       <text class="text-sm text-orange">全场满499，额外送糖果</text>
@@ -188,21 +173,32 @@
       </view>
     </view>
   </view>
-  <view class="related-goods" wx:if="{{relateds.length > 0}}">
-    <view class="text-center">
+  <view wx:if="{{relateds.length > 0}}">
+    <view class="text-center solid-bottom">
       <view class="padding-lr bg-white margin-top">
-        <view class="solid-bottom padding">
+        <view class="padding-tb">
+          <text class="icon-title text-pink"></text>
           <text>大家都在看</text>
         </view>
       </view>
     </view>
-    <view class="b">
-      <view class="item" wx:for="{{relateds}}" wx:key="{{item.id}}">
-        <navigator url="/pages/goods/goods?id={{item.id}}">
-          <image class="img" src="{{item.thumbnailUrl}}" background-size="cover"></image>
-          <text class="name">{{item.name}}</text>
-          <text class="price">￥{{item.price}}</text>
-        </navigator>
+    <view class="cu-list grid col-2">
+      <view class="cu-item" bindtap="navToGoods" data-id="{{item.id}}" wx:for="{{relateds}}" wx:key="{{item.id}}" style="padding-top:0rpx;">
+        <view class="image bg-gray">
+          <image src="{{item.thumbnailUrl}}" mode="aspectFit" style="max-height:375rpx;"></image>
+        </view>
+        <view class="cu-list">
+          <view class="cu-item">
+            <view class="content padding-lr-sm">
+              <view class="text-cut text text-bold text-left">{{item.name}}</view>
+              <view class="text-cut text-gray text-sm text-left">{{item.shortDescription}}</view>
+              <view class="flex">
+                <view class="text-red text-bold">￥{{item.price}}</view>
+                <view wx:if="{{item.oldPrice&&item.oldPrice>0}}" class="padding-left-xs text-gray" style="text-decoration:line-through;">￥{{item.oldPrice}}</view>
+              </view>
+            </view>
+          </view>
+        </view>
       </view>
     </view>
   </view>

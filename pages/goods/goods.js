@@ -25,7 +25,7 @@ Page({
     hasCollectImage: "/static/images/icon_collect_checked.png",
     collectBackImage: "/static/images/icon_collect.png",
     defaultAvatar: app.defaultAvatar,
-    
+
     product: {
       categoryIds: [],
       attributes: [],
@@ -57,6 +57,11 @@ Page({
   navToReview: function () {
     wx.navigateTo({
       url: `../comment/comment?entityId=${this.data.id}&entityTypeId=3`
+    })
+  },
+  navToGoods: function (e) {
+    wx.navigateTo({
+      url: `./goods?id=${e.currentTarget.dataset.id}`
     })
   },
   tabSelect(e) {
