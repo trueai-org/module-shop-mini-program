@@ -175,7 +175,7 @@
   </view>
   <view wx:if="{{relateds.length > 0}}">
     <view class="text-center solid-bottom">
-      <view class="padding-lr bg-white margin-top">
+      <view class="padding-lr bg-white margin-top-sm">
         <view class="padding-tb">
           <text class="icon-title text-pink"></text>
           <text>大家都在看</text>
