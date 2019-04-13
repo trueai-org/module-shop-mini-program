@@ -19,7 +19,7 @@
 
 view {
     word-break: break-all;
-    /* overflow: auto; */
+    overflow: auto;
 }
 
 .wxParse-inline {
