@@ -127,7 +127,7 @@ Page({
     let that = this;
     wx.showModal({
       title: '',
-      confirmColor: '#b4282d',
+      confirmColor: '#e54d42',
       content: '退出登录？',
       success: function (res) {
         if (res.confirm) {

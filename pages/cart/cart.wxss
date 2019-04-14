@@ -302,7 +302,7 @@ page{
 
 .cart-bottom{
     position: fixed;
-    bottom:0;
+    bottom:100rpx;
     left:0;
     height: 100rpx;
     width: 100%;
