@@ -57,7 +57,11 @@ Page({
     this.getKeywords();
     // this.getSearchKeyword();
   },
-
+  hideModal(e) {
+    this.setData({
+      categoryFilter: !this.data.categoryFilter,
+    })
+  },
   getSearchKeyword() {
     let that = this;
     util.request(api.SearchIndex).then(function (res) {

@@ -1,12 +1,20 @@
 <!-- index.wxml -->
 <import src="./template/widget.wxml" />
 <view class="container">
-  <view class="search">
+  <!-- <view class="search">
     <navigator url="/pages/search/search" class="input">
       <image class="icon"></image>
       <text class="txt">搜索商品</text>
     </navigator>
-  </view>
+  </view> -->
+  <navigator url="/pages/search/search">
+    <view class="cu-bar bg-white search no-padding">
+      <view class="search-form radius">
+        <text class="icon-search"></text>
+        <input type="text" placeholder="搜索商品" confirm-type="search"></input>
+      </view>
+    </view>
+  </navigator>
   <view class="header">
     <template is="widget" data="{{widgets:widgets,widgetZoneId:1,carouselWidgets:carouselWidgets,categorys:categorys,htmls:htmls,simplProducts:simplProducts,products:products}}" />
   </view>

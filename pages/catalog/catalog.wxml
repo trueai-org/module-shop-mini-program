@@ -1,19 +1,25 @@
 <view class="container">
-    <view class="search">
+    <!-- <view class="search">
         <navigator url="/pages/search/search" class="input">
             <image class="icon"></image>
             <text class="txt">商品搜索, 共{{goodsCount}}款好物</text>
         </navigator>
-    </view>
+    </view> -->
+    <navigator url="/pages/search/search">
+        <view class="cu-bar bg-white search no-padding">
+            <view class="search-form radius">
+                <text class="icon-search"></text>
+                <input type="text" placeholder="搜索商品" confirm-type="search"></input>
+            </view>
+        </view>
+    </navigator>
     <view class="catalog">
         <scroll-view class="nav" scroll-y="true">
-            <view class="item {{ current.id == item.id ? 'active' : ''}}" wx:for="{{categories}}" data-id="{{item.id}}" data-index="{{index}}" bindtap="switchCate2">
-                {{item.name}}
-            </view>
+            <view class="item {{ current.id == item.id ? 'active' : ''}}" wx:for="{{categories}}" data-id="{{item.id}}" data-index="{{index}}" bindtap="switchCate2">{{item.name}}</view>
         </scroll-view>
         <scroll-view class="cate" scroll-y="true">
             <navigator url="url" class="banner">
-                <image class="image" src="{{current.thumbnailUrl}}"></image>
+                <image class="image" src="{{current.thumbnailUrl}}" mode="aspectFill"></image>
                 <view wx:if="{{current.description}}" class="txt">{{current.description}}</view>
             </navigator>
             <view class="hd">
