@@ -1,5 +1,6 @@
 .container {
-  margin-bottom: 100rpx;
+  /* margin-bottom: 100rpx; */
+  padding-bottom: 100rpx;
 }
 
 .goodsimgs {

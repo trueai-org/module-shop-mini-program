@@ -18,12 +18,19 @@ Page({
 
   },
   onShow: function () {
-    if (wx.getStorageSync('userInfo')) {
-      this.setData({
-        userInfo: app.globalData.userInfo,
-      });
+    if (typeof this.getTabBar === 'function' && this.getTabBar()) {
+      this.getTabBar().setData({
+        selected: 3
+      })
     }
 
+    user.checkLogin().then(x => {
+      if (x) {
+        this.setData({
+          userInfo: app.globalData.userInfo,
+        });
+      }
+    });
   },
   onHide: function () {
     // 页面隐藏
