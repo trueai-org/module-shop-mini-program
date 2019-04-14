@@ -15,7 +15,7 @@
     </view>
     <view data-index="{{3}}" bindtap="switchTab" class="action {{selected==3?selectedClass:selectedNoneClass}}">
         <view class="icon-my{{selected==3?fillCalss:''}} {{selected==3?selectedClass:selectedNoneClass}}">
-            <view class="cu-tag badge"></view>
+            <!-- <view class="cu-tag badge"></view> -->
         </view>
         {{list[3].text}}
     </view>

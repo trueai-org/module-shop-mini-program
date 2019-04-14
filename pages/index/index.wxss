@@ -1,5 +1,6 @@
 /* @import "../../lib/wxParse/wxParse.wxss" */
-/* 样式收到影响，暂不引用 */
+/* 样式受到影响，暂不引用 */
+
 .search {
   height: 88rpx;
   width: 100%;
