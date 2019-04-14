@@ -40,6 +40,11 @@ Page({
       searchStatus: false
     });
   },
+  navToGoods: function (e) {
+    wx.navigateTo({
+      url: `../goods/goods?id=${e.currentTarget.dataset.id}`
+    })
+  },
   onLoad: function () {
     let that = this;
     util.request(api.SubCategories)

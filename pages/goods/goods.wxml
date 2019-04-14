@@ -173,7 +173,7 @@
     <view class="cu-list grid col-2">
       <view class="cu-item" bindtap="navToGoods" data-id="{{item.id}}" wx:for="{{relateds}}" wx:key="{{item.id}}" style="padding-top:0rpx;">
         <view class="image">
-          <image class="bg-gray" src="{{item.thumbnailUrl}}" mode="aspectFit" style="max-height:375rpx;"></image>
+          <image class="bg-gray" src="{{item.thumbnailUrl}}" mode="aspectFill" style="max-height:375rpx;"></image>
         </view>
         <view class="cu-list">
           <view class="cu-item">
