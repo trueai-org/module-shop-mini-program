@@ -30,7 +30,11 @@ Page({
       path: '/pages/index/index'
     }
   },
-
+  navToGoods: function (e) {
+    wx.navigateTo({
+      url: `../goods/goods?id=${e.currentTarget.dataset.id}`
+    })
+  },
   getIndexData: function () {
     let that = this;
     // util.request(api.IndexUrl).then(function (res) {

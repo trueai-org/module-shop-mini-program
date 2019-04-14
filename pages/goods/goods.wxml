@@ -178,7 +178,7 @@
         <view class="cu-list">
           <view class="cu-item">
             <view class="content padding-lr-sm">
-              <view class="text-cut text text-bold text-left">{{item.name}}</view>
+              <view class="text-cut text text text-left">{{item.name}}</view>
               <view class="text-cut text-gray text-sm text-left">{{item.shortDescription}}</view>
               <view class="flex">
                 <view class="text-red text-bold">￥{{item.price}}</view>
