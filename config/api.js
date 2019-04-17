@@ -1,6 +1,6 @@
 const ApiRootUrl = 'http://127.0.0.1:8360/api/';
-// const ApiHost = 'https://localhost:44372/api/';
-const ApiHost = 'https://circle.ac.cn/api/';
+const ApiHost = 'https://localhost:44372/api/';
+// const ApiHost = 'https://circle.ac.cn/api/';
 
 module.exports = {
   // 首页
@@ -62,6 +62,9 @@ module.exports = {
 
   // 推荐/赞
   Supports: ApiHost + 'supports',
+
+  // 留言
+  Feedbacks: ApiHost + 'feedbacks',
 
   // ------------------------------
   IndexUrl: ApiRootUrl + 'index/index', //首页数据接口

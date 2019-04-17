@@ -80,7 +80,7 @@
       </navigator>
     </view>
     <view class="cu-item arrow">
-      <navigator class="content" url="/pages/ucenter/feedback/feedback" hover-class="none">
+      <navigator class="content" url="/pages/about/about" hover-class="none">
         <text class="icon-infofill text-cyan"></text>
         <text class="text-grey">关于软件</text>
       </navigator>
@@ -106,7 +106,7 @@
         </view>
       </view>
       <view class="padding flex flex-direction">
-        <button class="cu-btn bg-green lg"  open-type="getUserInfo" bindgetuserinfo="onWechatLogin">微信登录</button>
+        <button class="cu-btn bg-green lg" open-type="getUserInfo" bindgetuserinfo="onWechatLogin">微信登录</button>
         <button class="cu-btn bg-blue margin-top-sm lg" open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="onWechatLogin">手机号登录</button>
       </view>
     </view>
