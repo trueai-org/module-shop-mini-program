@@ -10,7 +10,6 @@ function formatTime(date) {
   var minute = date.getMinutes()
   var second = date.getSeconds()
 
-
   return [year, month, day].map(formatNumber).join('-') + ' ' + [hour, minute, second].map(formatNumber).join(':')
 }
 
@@ -23,6 +22,7 @@ function formatNumber(n) {
  * 封封微信的的request
  */
 function request(url, data = {}, method = "GET") {
+  let that = this;
   return new Promise(function (resolve, reject) {
     wx.request({
       url: url,
@@ -35,37 +35,10 @@ function request(url, data = {}, method = "GET") {
       success: function (res) {
         if (res.statusCode == 200) {
           resolve(res.data);
-          // if (res.data.errno == 401) {
-          //   // 需要登录后才可以操作
-          //   let code = null;
-          //   return login().then((res) => {
-          //     code = res.code;
-          //     return getUserInfo();
-          //   }).then((userInfo) => {
-          //     //登录远程服务器
-          //     request(api.AuthLoginByWeixin, { code: code, userInfo: userInfo }, 'POST').then(res => {
-          //       if (res.errno === 0) {
-          //         //存储用户信息
-          //         wx.setStorageSync('userInfo', res.data.userInfo);
-          //         wx.setStorageSync('token', res.data.token);
-
-          //         resolve(res);
-          //       } else {
-          //         reject(res);
-          //       }
-          //     }).catch((err) => {
-          //       reject(err);
-          //     });
-          //   }).catch((err) => {
-          //     reject(err);
-          //   })
-          // } else {
-          //   resolve(res.data);
-          // }
-        }
-        else if (res.statusCode == 401) {
+        } else if (res.statusCode == 401) {
           wx.showToast({
             title: '请登录',
+            icon: 'none'
           })
           // 清空本地缓存
           try {
@@ -75,16 +48,122 @@ function request(url, data = {}, method = "GET") {
             // Do something when catch error
           }
           resolve(res.data);
-        }
-        else if (res.statusCode == 403) {
+
+          // 如果没有权限，则重新执行自动登录处理
+          /* 自动登录代码，已测试通过
+          let code = null;
+          login().then((res) => {
+            code = res;
+            return getUserInfo2();
+          }).then((e) => {
+            // console.log(e);
+            // console.log(code);
+            if (e && e.userInfo && code) {
+              // 如果获取到用户信息，则自动重新登录
+              request2(api.LoginByWeixin, {
+                code: code,
+                nickName: e.userInfo.nickName,
+                avatarUrl: e.userInfo.avatarUrl
+              }, 'POST').then(res => {
+                if (res.success === true) {
+                  let userInfo = {
+                    name: res.data.name,
+                    avatar: res.data.avatar
+                  };
+
+                  app.globalData.userInfo = userInfo;
+                  app.globalData.token = res.data.token;
+                  wx.setStorageSync('userInfo', JSON.stringify(userInfo));
+                  wx.setStorageSync('token', res.data.token);
+
+                  // 自动登录成功
+                  // 重新发起请求
+                  let data2 = request2(url, data, method);
+                  resolve(data2);
+                } else {
+                  wx.showToast({
+                    title: '请登录',
+                    icon: 'none'
+                  })
+                  resolve(res.data);
+                }
+              });
+            } else {
+              wx.showToast({
+                title: '请登录',
+                icon: 'none'
+              })
+              resolve(res.data);
+            }
+          }).catch((err) => {
+            wx.showToast({
+              title: '请登录',
+              icon: 'none'
+            })
+            console.log(err)
+          })
+          */
+
+        } else if (res.statusCode == 403) {
           wx.showToast({
-            title: '您没有权限',
+            title: '您没有操作权限',
+            icon: 'none'
+          })
+        } else {
+          wx.showToast({
+            title: '系统繁忙',
+            icon: 'none'
           })
         }
-        else {
-          reject(res.message);
-        }
+      },
+      fail: function (err) {
+        console.log("failed")
+        reject(err)
+      }
+    })
+  });
+}
 
+/**
+ * 封封微信的的request2 用于自动登录成功后重新发起请求
+ */
+function request2(url, data = {}, method = "GET") {
+  return new Promise(function (resolve, reject) {
+    wx.request({
+      url: url,
+      data: data,
+      method: method,
+      header: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + wx.getStorageSync('token')
+      },
+      success: function (res) {
+        if (res.statusCode == 200) {
+          resolve(res.data);
+        } else if (res.statusCode == 401) {
+          wx.showToast({
+            title: '请登录',
+            icon: 'none'
+          })
+          // 清空本地缓存
+          try {
+            wx.removeStorageSync('userInfo');
+            wx.removeStorageSync('token');
+          } catch (e) {
+            // Do something when catch error
+          }
+          resolve(res.data);
+        } else if (res.statusCode == 403) {
+          wx.showToast({
+            title: '您没有操作权限',
+            icon: 'none'
+          })
+        } else {
+          wx.showToast({
+            title: '系统繁忙',
+            icon: 'none'
+          })
+        }
       },
       fail: function (err) {
         reject(err)
@@ -156,8 +235,28 @@ function getUserInfo() {
   });
 }
 
-function redirect(url) {
+/**
+ * 注意这里是二次登录 用于自动登录处理
+ */
+function getUserInfo2() {
+  return new Promise(function (resolve, reject) {
+    wx.getUserInfo({
+      withCredentials: true,
+      success: function (res) {
+        if (res.errMsg === 'getUserInfo:ok') {
+          resolve(res);
+        } else {
+          reject(res)
+        }
+      },
+      fail: function (err) {
+        reject(err);
+      }
+    })
+  });
+}
 
+function redirect(url) {
   //判断页面是否需要登录
   if (false) {
     wx.redirectTo({
@@ -187,7 +286,5 @@ module.exports = {
   showErrorToast,
   checkSession,
   login,
-  getUserInfo,
+  getUserInfo
 }
-
-

@@ -41,8 +41,12 @@ Page({
     });
   },
   save() {
-    if (this.data.index) {
-
+    if (!this.data.index) {
+      wx.showToast({
+        title: '请选择反馈类型',
+        icon: 'none'
+      });
+      return;
     }
     wx.showLoading({
       title: '提交中...'
@@ -59,9 +63,9 @@ Page({
           title: '提交成功'
         });
       } else {
-        wx.showModal({
-          content: res.message,
-          showCancel: false
+        wx.showToast({
+          title: res.message,
+          icon: 'none'
         });
       }
     });
