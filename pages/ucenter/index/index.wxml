@@ -54,7 +54,7 @@
       </navigator>
     </view>
     <view class="cu-item arrow">
-      <navigator class="content" url="/pages/ucenter/coupon/coupon" hover-class="none">
+      <navigator class="content" url="/pages/ucenter/index/index" hover-class="none">
         <text class="icon-safe text-cyan"></text>
         <text class="text-grey">账号安全</text>
       </navigator>
@@ -62,13 +62,13 @@
   </view>
   <view class="cu-list menu shadow-lg" style="margin-top:24rpx;">
     <view class="cu-item arrow">
-      <navigator class="content" url="/pages/ucenter/coupon/coupon" hover-class="none">
+      <navigator class="content" url="/pages/ucenter/index/index" hover-class="none">
         <text class="icon-dianhua text-red"></text>
         <text class="text-grey">联系客服</text>
       </navigator>
     </view>
     <view class="cu-item arrow">
-      <navigator class="content" url="/pages/ucenter/coupon/coupon" hover-class="none">
+      <navigator class="content" url="/pages/ucenter/index/index" hover-class="none">
         <text class="icon-questionfill text-yellow"></text>
         <text class="text-grey">帮助中心</text>
       </navigator>
