@@ -37,27 +37,36 @@
     "navigationBarTextStyle": "black"
   },
   "tabBar": {
-    "custom": true,
-    "list": [{
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "selectedColor": "#e54d42",
+    "color": "#aaaaaa",
+    "list": [
+      {
         "pagePath": "pages/index/index",
+        "iconPath": "static/images/home.png",
+        "selectedIconPath": "static/images/homefill.png",
         "text": "首页"
       },
       {
         "pagePath": "pages/catalog/catalog",
+        "iconPath": "static/images/cate_4.png",
+        "selectedIconPath": "static/images/catefill_4.png",
         "text": "分类"
       },
       {
         "pagePath": "pages/cart/cart",
+        "iconPath": "static/images/cart_3.png",
+        "selectedIconPath": "static/images/cartfill_3.png",
         "text": "购物车"
       },
       {
         "pagePath": "pages/ucenter/index/index",
+        "iconPath": "static/images/my_6.png",
+        "selectedIconPath": "static/images/myfill_6.png",
         "text": "我的"
       }
     ]
-  },
-  "usingComponents": {
-    "cu-custom-bar": "custom-tab-bar/index"
   },
   "networkTimeout": {
     "request": 10000,

@@ -117,11 +117,11 @@ Page({
   onShow: function () {
     // 页面显示
 
-    if (typeof this.getTabBar === 'function' && this.getTabBar()) {
-      this.getTabBar().setData({
-        selected: 0
-      })
-    }
+    // if (typeof this.getTabBar === 'function' && this.getTabBar()) {
+    //   this.getTabBar().setData({
+    //     selected: 0
+    //   })
+    // }
   },
   onHide: function () {
     // 页面隐藏

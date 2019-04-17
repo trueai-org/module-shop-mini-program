@@ -1,4 +1,28 @@
   "tabBar": {
+    "custom": true,
+    "list": [{
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/catalog/catalog",
+        "text": "分类"
+      },
+      {
+        "pagePath": "pages/cart/cart",
+        "text": "购物车"
+      },
+      {
+        "pagePath": "pages/ucenter/index/index",
+        "text": "我的"
+      }
+    ]
+  },
+  "usingComponents": {
+    "cu-custom-bar": "custom-tab-bar/index"
+  },
+    
+  "tabBar": {
     "backgroundColor": "#fafafa",
     "borderStyle": "white",
     "selectedColor": "#b4282d",
