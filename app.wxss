@@ -22,11 +22,6 @@ view,text{
 }
 
 /* module shop extend */
-
-.block-100{
-  height: 100rpx;
-}
-
 .no-padding {
   padding: 0px !important;
 }

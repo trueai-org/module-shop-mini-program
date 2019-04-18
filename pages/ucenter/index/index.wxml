@@ -62,13 +62,13 @@
   </view>
   <view class="cu-list menu shadow-lg" style="margin-top:24rpx;">
     <view class="cu-item arrow">
-      <navigator class="content" url="/pages/ucenter/index/index" hover-class="none">
+      <navigator class="content" url="/pages/chat/chat" hover-class="none">
         <text class="icon-dianhua text-red"></text>
         <text class="text-grey">联系客服</text>
       </navigator>
     </view>
     <view class="cu-item arrow">
-      <navigator class="content" url="/pages/ucenter/index/index" hover-class="none">
+      <navigator class="content" url="/pages/help/help" hover-class="none">
         <text class="icon-questionfill text-yellow"></text>
         <text class="text-grey">帮助中心</text>
       </navigator>
@@ -94,7 +94,6 @@
       </button>
     </view>
   </view>
-  <view class="cu-tabbar-height"></view>
 </scroll-view>
 <view class="cu-modal {{showLoginDialog?'show':''}}" bindtap="onCloseLoginDialog">
   <view class="cu-dialog" catchtap='onDialogBody'>
