@@ -3,14 +3,10 @@ var api = require('../../../config/api.js');
 
 Page({
   data: {
-    orderId: 0,
-    orderInfo: {},
-    orderGoods: [],
-    handleOption: {},
-
     order: {
       address: {}
-    }
+    },
+    timerStr: `${0}小时 ${0}分钟 ${0}秒`,
   },
   onLoad: function (options) {
     // 页面初始化 options为页面跳转所带来的参数
@@ -21,39 +17,42 @@ Page({
   },
   getOrderDetail() {
     let that = this;
-    // util.request(api.OrderDetail, {
-    //   orderId: that.data.orderId
-    // }).then(function (res) {
-    //   if (res.errno === 0) {
-    //     console.log(res.data);
-    //     that.setData({
-    //       orderInfo: res.data.orderInfo,
-    //       orderGoods: res.data.orderGoods,
-    //       handleOption: res.data.handleOption
-    //     });
-    //     //that.payTimer();
-    //   }
-    // });
-
+    wx.showLoading({
+      title: '加载中...'
+    });
     util.request(api.Orders + '/' + that.data.orderId).then(function (res) {
+      wx.hideLoading();
       if (res.success === true) {
         that.setData({
           order: res.data
         });
+        that.payTimer();
       }
     });
   },
   payTimer() {
-    let that = this;
-    let orderInfo = that.data.orderInfo;
-
-    setInterval(() => {
-      console.log(orderInfo);
-      orderInfo.add_time -= 1;
-      that.setData({
-        orderInfo: orderInfo,
-      });
-    }, 1000);
+    if (this.data.order.orderStatus == 20 || this.data.order.orderStatus == 25) {
+      let that = this;
+      let now = parseInt(Date.parse(new Date()) / 1000);
+      let dateStr = this.data.order.createdOn; //2017-01-01 11:00:00 -> 2017/01/01 11:00:00
+      dateStr = dateStr.replace(/-/g, '/');
+      let createdOn = parseInt(Date.parse(new Date(dateStr)) / 1000) + 1800; //+ 30min
+      let total = parseInt(createdOn - now);
+      if (total > 0) {
+        setInterval(() => {
+          if (total > 0) {
+            total -= 1;
+            let hour = parseInt(total / 3600);
+            let min = parseInt((total % 3600) / 60);
+            let sec = parseInt((total % 60));
+            let str = `${hour}小时 ${min}分钟 ${sec}秒`;
+            that.setData({
+              timerStr: str,
+            });
+          }
+        }, 1000);
+      }
+    }
   },
   payOrder() {
     let that = this;
@@ -77,7 +76,6 @@ Page({
         });
       }
     });
-
   },
   onReady: function () {
     // 页面渲染完成

@@ -3,34 +3,22 @@ var api = require('../../../config/api.js');
 
 Page({
   data: {
-    orderList: [],
-
     pageNum: 1,
-    pageSize: 10,
+    pageSize: 5,
     total: 0,
     predicate: 'id',
     reverse: true,
     name: '',
     categoryId: '',
-    pageData: []
+    pageData: [],
+
+    showType: 0,
+    orderStatus: [],
+    show: false,
   },
   onLoad: function (options) {
     // 页面初始化 options为页面跳转所带来的参数
-
-    // this.getOrderList();
-
     this.getGrid();
-  },
-  getOrderList() {
-    let that = this;
-    // util.request(api.OrderList).then(function (res) {
-    //   if (res.errno === 0) {
-    //     console.log(res.data);
-    //     that.setData({
-    //       orderList: res.data.data
-    //     });
-    //   }
-    // });
   },
   payOrder() {
     wx.redirectTo({
@@ -60,6 +48,12 @@ Page({
     }
   },
   getGrid: function () {
+    // wx.showLoading({
+    //   title: '加载中...'
+    // });
+    this.setData({
+      show: true
+    });
     let that = this;
     var params = {
       pagination: {
@@ -71,12 +65,15 @@ Page({
         reverse: that.data.reverse,
       },
       search: {
-        name: that.data.name,
-        categoryId: that.data.categoryId,
+        orderStatus: that.data.orderStatus
       }
     };
     util.request(api.OrderGrid, params, "POST")
       .then(function (res) {
+        // wx.hideLoading();
+        that.setData({
+          show: false
+        });
         if (res.success === true) {
           let origin_data = that.data.pageData || [];
           let new_data = origin_data.concat(res.data.list)
@@ -86,5 +83,43 @@ Page({
           });
         }
       });
-  }
+  },
+  switchTab: function (e) {
+    let id = e.currentTarget.dataset.id;
+    let os = [];
+    switch (id) {
+      case 1:
+        os = [20, 25];
+        break;
+      case 2:
+        os = [30, 40, 50];
+        break;
+      case 3:
+        os = [60];
+        break;
+      case 4:
+        os = [70];
+        break;
+      default:
+        break;
+    }
+    this.setData({
+      showType: id,
+      orderStatus: os
+    });
+    this.quickResetQuery();
+  },
+  quickResetQuery() {
+    this.setData({
+      pageData: [],
+      pageNum: 1,
+      pageSize: this.data.pageSize,
+      total: 0,
+      predicate: this.data.predicate,
+      reverse: true,
+      orderStatus: this.data.orderStatus
+    }, () => {
+      this.getGrid();
+    });
+  },
 })
