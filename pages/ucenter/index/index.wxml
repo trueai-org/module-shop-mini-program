@@ -86,7 +86,7 @@
       </navigator>
     </view>
   </view>
-  <view wx:if="{{userInfo && userInfo.name}}" class="cu-list menu shadow-lg" style="margin-top:24rpx;">
+  <view wx:if="{{userInfo && userInfo.name}}" class="cu-list menu shadow-lg" style="margin:24rpx 0;">
     <view bindtap="exitLogin" class="cu-item arrow">
       <button class="cu-btn content">
         <text class="icon-exit text-grey"></text>

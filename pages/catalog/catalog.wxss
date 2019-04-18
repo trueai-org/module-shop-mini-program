@@ -62,9 +62,9 @@ page {
   line-height: 90rpx;
   width: 162rpx;
   height: 90rpx;
-  color: #333;
-  font-size: 28rpx;
-  border-left: 6rpx solid #fff;
+  /* color: #333; */
+  /* font-size: 28rpx; */
+  /* border-left: 6rpx solid #fff; */
 }
 
 .catalog .nav .item.active {
