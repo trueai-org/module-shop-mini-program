@@ -7,6 +7,9 @@ Page({
       address: {}
     },
     timerStr: `${0}小时 ${0}分钟 ${0}秒`,
+
+    visibleDelete: false,
+    visibleCancel: false,
   },
   onLoad: function (options) {
     // 页面初始化 options为页面跳转所带来的参数
@@ -31,6 +34,9 @@ Page({
     });
   },
   payTimer() {
+    if (!this.data.order || !this.data.order.orderStatus)
+      return;
+
     if (this.data.order.orderStatus == 20 || this.data.order.orderStatus == 25) {
       let that = this;
       let now = parseInt(Date.parse(new Date()) / 1000);
@@ -88,5 +94,69 @@ Page({
   },
   onUnload: function () {
     // 页面关闭
-  }
+  },
+  showDeleteModal(e) {
+    this.setData({
+      visibleDelete: true
+    })
+  },
+  hideModal(e) {
+    this.setData({
+      visibleDelete: false
+    })
+  },
+  deleteOrder() {
+    wx.showLoading({
+      title: '删除中...'
+    });
+    let that = this;
+    util.request(api.Orders + '/' + that.data.orderId, {}, 'DELETE').then(function (res) {
+      wx.hideLoading();
+      if (res.success === true) {
+        // wx.navigateBack({
+        //   delta: 1
+        // });
+        wx.redirectTo({
+          url: '../order/order',
+        });
+      } else {
+        wx.showToast({
+          title: res.message,
+          icon: 'none'
+        });
+      }
+    });
+  },
+  showCancelModal(e) {
+    this.setData({
+      visibleCancel: true
+    })
+  },
+  hideCancelModal(e) {
+    this.setData({
+      visibleCancel: false
+    })
+  },
+  cancelOrder() {
+    wx.showLoading({
+      title: '取消中...'
+    });
+    let that = this;
+    util.request(api.Orders + '/' + that.data.orderId + '/cancel', {}, 'PUT').then(function (res) {
+      wx.hideLoading();
+      if (res.success === true) {
+        // wx.navigateBack({
+        //   delta: 1
+        // });
+        wx.redirectTo({
+          url: '../order/order',
+        });
+      } else {
+        wx.showToast({
+          title: res.message,
+          icon: 'none'
+        });
+      }
+    });
+  },
 })

@@ -15,6 +15,11 @@ Page({
     showType: 0,
     orderStatus: [],
     show: false,
+
+    visibleDelete: false,
+    visibleCancel: false,
+    currentDeleteId: 0,
+    currentCancelId: 0
   },
   onLoad: function (options) {
     // 页面初始化 options为页面跳转所带来的参数
@@ -120,6 +125,76 @@ Page({
       orderStatus: this.data.orderStatus
     }, () => {
       this.getGrid();
+    });
+  },
+  showDeleteModal(e) {
+    this.setData({
+      visibleDelete: true,
+      currentDeleteId: e.currentTarget.dataset.id
+    })
+  },
+  hideModal() {
+    this.setData({
+      visibleDelete: false
+    })
+  },
+  deleteOrder() {
+    wx.showLoading({
+      title: '删除中...'
+    });
+    let that = this;
+    util.request(api.Orders + '/' + this.data.currentDeleteId, {}, 'DELETE').then(function (res) {
+      wx.hideLoading();
+      if (res.success === true) {
+        // wx.navigateBack({
+        //   delta: 1
+        // });
+        // wx.redirectTo({
+        //   url: '../order/order',
+        // });
+        that.hideModal();
+        that.quickResetQuery();
+      } else {
+        wx.showToast({
+          title: res.message,
+          icon: 'none'
+        });
+      }
+    });
+  },
+  showCancelModal(e) {
+    this.setData({
+      visibleCancel: true,
+      currentCancelId: e.currentTarget.dataset.id
+    })
+  },
+  hideCancelModal() {
+    this.setData({
+      visibleCancel: false
+    })
+  },
+  cancelOrder() {
+    wx.showLoading({
+      title: '取消中...'
+    });
+    let that = this;
+    util.request(api.Orders + '/' + this.data.currentCancelId + '/cancel', {}, 'PUT').then(function (res) {
+      wx.hideLoading();
+      if (res.success === true) {
+        // wx.navigateBack({
+        //   delta: 1
+        // });
+        // wx.redirectTo({
+        //   url: '../order/order',
+        // });
+        that.hideCancelModal();
+        that.quickResetQuery();
+      } else {
+        wx.showToast({
+          title: res.message,
+          icon: 'none'
+        });
+      }
     });
   },
 })

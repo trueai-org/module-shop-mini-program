@@ -18,15 +18,10 @@ Page({
 
   },
   onShow: function () {
-    // if (typeof this.getTabBar === 'function' && this.getTabBar()) {
-    //   this.getTabBar().setData({
-    //     selected: 3
-    //   })
-    // }
-
-    user.checkLogin().then(x => {
-      if (x) {
-        this.setData({
+    let that = this;
+    user.checkLogin().then(res => {
+      if (res) {
+        that.setData({
           userInfo: app.globalData.userInfo,
         });
       }
