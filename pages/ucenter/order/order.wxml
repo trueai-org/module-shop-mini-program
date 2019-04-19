@@ -53,7 +53,7 @@
         <view wx:if="{{item.orderStatus!=30&&item.orderStatus!=40&&item.orderStatus!=50}}" class="cu-bar bg-white solid-top">
             <view class="action"></view>
             <view class='action'>
-                <button wx:if="{{item.orderStatus==60}}" class="cu-btn sm round line shadow margin-left-xs">评价晒单</button>
+                <button wx:if="{{item.orderStatus==60&&!item.isReviewed}}" class="cu-btn sm round line shadow margin-left-xs">评价晒单</button>
                 <view wx:if="{{item.orderStatus==20 || item.orderStatus==25}}">
                     <button bindtap="showCancelModal" data-id="{{item.id}}" class="cu-btn sm round line shadow margin-left-xs">取消订单</button>
                     <button catchtap="payOrder" class="cu-btn sm round bg-red shadow margin-left-xs">去支付</button>

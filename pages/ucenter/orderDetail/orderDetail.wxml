@@ -19,19 +19,21 @@
 <view class="cu-card article no-card">
     <view class="cu-item no-padding">
         <view class="cu-list">
-            <view class="cu-item padding-lr-sm" wx:for="{{order.items}}" wx:key="{{gitem.id}}" wx:for-item="gitem">
-                <view class="content" style="padding:12rpx 0;">
-                    <image src="{{gitem.productMediaUrl}}" mode="aspectFill" class="shadow"></image>
-                    <view class="desc">
-                        <view class="text-content">
-                            <text class="text-sm">{{gitem.productName}}</text>
-                        </view>
-                        <view>
-                            <view class="cu-tag sm bg-white">× {{gitem.quantity}}</view>
+            <navigator url="/pages/goods/goods?id={{gitem.id}}" wx:for="{{order.items}}" wx:key="{{gitem.id}}" wx:for-item="gitem">
+                <view class="cu-item padding-lr-sm">
+                    <view class="content" style="padding:12rpx 0;">
+                        <image src="{{gitem.productMediaUrl}}" mode="aspectFill" class="shadow"></image>
+                        <view class="desc">
+                            <view class="text-content">
+                                <text class="text-sm">{{gitem.productName}}</text>
+                            </view>
+                            <view>
+                                <view class="cu-tag sm bg-white">× {{gitem.quantity}}</view>
+                            </view>
                         </view>
                     </view>
                 </view>
-            </view>
+            </navigator>
             <view wx:if="{{item.itemsCount>2}}" class="cu-item text-center padding-xs">
                 <view class="icon-more"></view>
             </view>
@@ -97,7 +99,7 @@
     <view class="cu-bar bg-white solid-top" style="position:fixed;bottom:0;width:100%;">
         <view class="action"></view>
         <view class='action'>
-            <button wx:if="{{order.orderStatus==60}}" class="cu-btn sm round line shadow margin-left-xs">评价晒单</button>
+            <button wx:if="{{order.orderStatus==60&&!order.isReviewed}}" class="cu-btn sm round line shadow margin-left-xs">评价晒单</button>
             <view wx:if="{{order.orderStatus==20 || order.orderStatus==25}}">
                 <button bindtap="showCancelModal" class="cu-btn sm round line shadow margin-left-xs">取消订单</button>
                 <button catchtap="payOrder" class="cu-btn sm round bg-red shadow margin-left-xs">去支付</button>

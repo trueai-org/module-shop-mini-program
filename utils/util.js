@@ -117,6 +117,10 @@ function request(url, data = {}, method = "GET") {
         }
       },
       fail: function (err) {
+        wx.showToast({
+          title: '网络异常',
+          icon: 'none'
+        })
         console.log("failed")
         reject(err)
       }
