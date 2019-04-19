@@ -36,21 +36,21 @@ function request(url, data = {}, method = "GET") {
         if (res.statusCode == 200) {
           resolve(res.data);
         } else if (res.statusCode == 401) {
-          wx.showToast({
-            title: '请登录',
-            icon: 'none'
-          })
-          // 清空本地缓存
-          try {
-            wx.removeStorageSync('userInfo');
-            wx.removeStorageSync('token');
-          } catch (e) {
-            // Do something when catch error
-          }
-          resolve(res.data);
+          // wx.showToast({
+          //   title: '请登录',
+          //   icon: 'none'
+          // })
+          // // 清空本地缓存
+          // try {
+          //   wx.removeStorageSync('userInfo');
+          //   wx.removeStorageSync('token');
+          // } catch (e) {
+          //   // Do something when catch error
+          // }
+          // resolve(res.data);
 
           // 如果没有权限，则重新执行自动登录处理
-          /* 自动登录代码，已测试通过
+          // 自动登录代码，已测试通过
           let code = null;
           login().then((res) => {
             code = res;
@@ -102,8 +102,6 @@ function request(url, data = {}, method = "GET") {
             })
             console.log(err)
           })
-          */
-
         } else if (res.statusCode == 403) {
           wx.showToast({
             title: '您没有操作权限',

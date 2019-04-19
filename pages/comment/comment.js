@@ -53,6 +53,20 @@ Page({
       }
     });
   },
+  ViewImage(e) {
+    console.log(e);
+    let id = e.currentTarget.dataset.id;
+    let index = parseInt(e.currentTarget.dataset.index);
+    if (id && index >= 0) {
+      let item = this.data.pageData.find(c => c.id == id);
+      if (item) {
+        wx.previewImage({
+          urls: item.mediaUrls,
+          current: item.mediaUrls[index]
+        });
+      }
+    }
+  },
   onReady: function () {
     // 页面渲染完成
 

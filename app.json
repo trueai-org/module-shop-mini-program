@@ -29,6 +29,7 @@
     "pages/goods/goods",
     "pages/topicDetail/topicDetail",
     "pages/about/about",
+    "pages/review/review",
     "pages/help/help"
   ],
   "window": {

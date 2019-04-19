@@ -53,7 +53,7 @@
         <view wx:if="{{item.orderStatus!=30&&item.orderStatus!=40&&item.orderStatus!=50}}" class="cu-bar bg-white solid-top">
             <view class="action"></view>
             <view class='action'>
-                <button wx:if="{{item.orderStatus==60&&!item.isReviewed}}" class="cu-btn sm round line shadow margin-left-xs">评价晒单</button>
+                <!-- <button wx:if="{{item.orderStatus==60&&!item.isReviewed}}" class="cu-btn sm round line shadow margin-left-xs">评价晒单</button> -->
                 <view wx:if="{{item.orderStatus==20 || item.orderStatus==25}}">
                     <button bindtap="showCancelModal" data-id="{{item.id}}" class="cu-btn sm round line shadow margin-left-xs">取消订单</button>
                     <button catchtap="payOrder" class="cu-btn sm round bg-red shadow margin-left-xs">去支付</button>
@@ -79,7 +79,7 @@
         </view> -->
         <view class="padding-xl">确认删除订单吗？</view>
         <view class="cu-bar bg-white">
-            <view class="action margin-0 flex-sub solid-left" bindtap="hideModal">取消</view>
+            <view class="action margin-0 flex-sub" bindtap="hideModal">取消</view>
             <view class="action margin-0 flex-sub text-red solid-left" bindtap="deleteOrder">确定</view>
         </view>
     </view>
@@ -94,7 +94,7 @@
         </view> -->
         <view class="padding-xl">确认取消订单吗？</view>
         <view class="cu-bar bg-white">
-            <view class="action margin-0 flex-sub solid-left" bindtap="hideCancelModal">取消</view>
+            <view class="action margin-0 flex-sub" bindtap="hideCancelModal">取消</view>
             <view class="action margin-0 flex-sub text-red solid-left" bindtap="cancelOrder">确定</view>
         </view>
     </view>

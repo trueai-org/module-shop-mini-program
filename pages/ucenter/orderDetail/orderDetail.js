@@ -16,7 +16,7 @@ Page({
     this.setData({
       orderId: options.id
     });
-    this.getOrderDetail();
+    // this.getOrderDetail();
   },
   getOrderDetail() {
     let that = this;
@@ -88,6 +88,7 @@ Page({
   },
   onShow: function () {
     // 页面显示
+    this.getOrderDetail();
   },
   onHide: function () {
     // 页面隐藏
@@ -159,4 +160,9 @@ Page({
       }
     });
   },
+  redirectToReview(e) {
+    wx.navigateTo({
+      url: `/pages/review/review?entityId=${e.target.dataset.id}&entityTypeId=3&sourceId=${this.data.orderId}&sourceType=0`
+    });
+  }
 })
