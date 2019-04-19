@@ -52,7 +52,7 @@ Page({
       util.showErrorToast('请填写评论')
       return false;
     }
-    if (this.data.content.length < 5) {
+    if (this.data.content.length < 2) {
       util.showErrorToast('评论太短~')
       return false;
     }
