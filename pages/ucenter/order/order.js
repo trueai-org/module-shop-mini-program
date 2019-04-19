@@ -23,7 +23,12 @@ Page({
   },
   onLoad: function (options) {
     // 页面初始化 options为页面跳转所带来的参数
-    this.getGrid();
+    console.log(options);
+    if (options.type && parseInt(options.type) >= 0) {
+      this.switchTabById(parseInt(options.type));
+    } else {
+      this.getGrid();
+    }
   },
   payOrder() {
     wx.redirectTo({
@@ -91,6 +96,10 @@ Page({
   },
   switchTab: function (e) {
     let id = e.currentTarget.dataset.id;
+    this.switchTabById(id);
+  },
+  switchTabById: function (id) {
+    // let id = e.currentTarget.dataset.id;
     let os = [];
     switch (id) {
       case 1:

@@ -3,8 +3,9 @@
         <text class="icon-info text-white"></text>
         <text class="text text-white">{{order.orderStatusString}}</text>
     </view>
-    <view wx:if="{{order.orderStatus==20 || order.orderStatus==25}}" class='action'>
-        <text class="text-white text-sm">剩余支付时间：{{timerStr}}</text>
+    <view wx:if="{{showTimer}}" class='action'>
+        <!-- 支付 -->
+        <text class="text-white text-sm">剩余时间：{{timerStr}}</text>
     </view>
 </view>
 <view class="cu-bar bg-white solid-bottom margin-top-sm">
@@ -103,7 +104,7 @@
         </view>
     </view>
 </view>
-<view wx:if="{{order.orderStatus!=30&&order.orderStatus!=40&&order.orderStatus!=50}}">
+<view wx:if="{{order.orderStatus}}">
     <view class="cu-tabbar-height"></view>
     <view class="cu-bar bg-white solid-top" style="position:fixed;bottom:0;width:100%;">
         <view class="action"></view>
@@ -112,6 +113,9 @@
             <view wx:if="{{order.orderStatus==20 || order.orderStatus==25}}">
                 <button bindtap="showCancelModal" class="cu-btn sm round line shadow margin-left-xs">取消订单</button>
                 <button catchtap="payOrder" class="cu-btn sm round bg-red shadow margin-left-xs">去支付</button>
+            </view>
+            <view wx:elif="{{order.orderStatus==30||order.orderStatus==40||order.orderStatus==50}}">
+                <button bindtap="showShippedModal" class="cu-btn sm round line-green shadow margin-left-xs">确认收货</button>
             </view>
             <view wx:elif="{{order.orderStatus==60 || order.orderStatus==70}}">
                 <button bindtap="showDeleteModal" class="cu-btn sm round line shadow margin-left-xs">删除订单</button>
@@ -147,6 +151,21 @@
         <view class="cu-bar bg-white">
             <view class="action margin-0 flex-sub" bindtap="hideCancelModal">取消</view>
             <view class="action margin-0 flex-sub text-red solid-left" bindtap="cancelOrder">确定</view>
+        </view>
+    </view>
+</view>
+<view class="cu-modal {{visibleShipped?'show':''}}">
+    <view class="cu-dialog">
+        <view class="cu-bar bg-white justify-end">
+            <view class="content text-bold">确认收货</view>
+            <view class="action" bindtap="hideModal">
+                <text class="icon-close text-red"></text>
+            </view>
+        </view>
+        <view class="padding-xl text-red text-left text-bold">请收到货后，再确认收货！否则您可能钱货两空！</view>
+        <view class="cu-bar bg-white">
+            <view class="action margin-0 flex-sub" bindtap="hideShippedModal">取消</view>
+            <view class="action margin-0 flex-sub text-red solid-left" bindtap="shippedOrder">确定</view>
         </view>
     </view>
 </view>
