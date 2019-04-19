@@ -23,7 +23,7 @@ Page({
   },
   onLoad: function (options) {
     // 页面初始化 options为页面跳转所带来的参数
-    console.log(options);
+    // console.log(options);
     if (options.type && parseInt(options.type) >= 0) {
       this.switchTabById(parseInt(options.type));
     } else {
