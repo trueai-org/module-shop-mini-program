@@ -69,8 +69,12 @@ Page({
     })
   },
   getGoodsInfo: function () {
+    wx.showLoading({
+      title: '加载中...'
+    });
     let that = this;
     util.request(api.Goods + '/' + that.data.id).then(function (res) {
+      wx.hideLoading();
       if (res.success === true) {
         that.setData({
           product: res.data,
@@ -78,6 +82,11 @@ Page({
         });
         WxParse.wxParse('specification', 'html', res.data.specification, that);
         WxParse.wxParse('description', 'html', res.data.description, that);
+      } else {
+        wx.showToast({
+          title: res.message,
+          icon: 'none'
+        });
       }
     });
     that.getCollectStatus();
