@@ -30,10 +30,10 @@ Page({
       this.getGrid();
     }
   },
-  payOrder() {
-    wx.redirectTo({
-      url: '/pages/pay/pay',
-    })
+  payOrder(e) {
+    wx.navigateTo({
+      url: `/pages/pay/pay?orderId=${e.currentTarget.dataset.id}&orderTotal=${e.currentTarget.dataset.amount}`
+    });
   },
   onReady: function () {
     // 页面渲染完成

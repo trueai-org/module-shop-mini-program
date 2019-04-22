@@ -86,25 +86,8 @@ Page({
   },
   payOrder() {
     let that = this;
-    util.request(api.PayPrepayId, {
-      orderId: that.data.orderId || 15
-    }).then(function (res) {
-      if (res.errno === 0) {
-        const payParam = res.data;
-        wx.requestPayment({
-          'timeStamp': payParam.timeStamp,
-          'nonceStr': payParam.nonceStr,
-          'package': payParam.package,
-          'signType': payParam.signType,
-          'paySign': payParam.paySign,
-          'success': function (res) {
-            console.log(res)
-          },
-          'fail': function (res) {
-            console.log(res)
-          }
-        });
-      }
+    wx.navigateTo({
+      url: `/pages/pay/pay?orderId=${that.data.order.id}&orderTotal=${that.data.order.orderTotal}`
     });
   },
   onReady: function () {

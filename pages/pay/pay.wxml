@@ -1,7 +1,7 @@
 <view class="container">
     <view class="total">
       <view class="label">订单金额</view>
-      <view class="txt">{{actualPrice}}元</view>
+      <view class="txt">{{orderTotal}}元</view>
     </view>
     <view class="pay-list">
         <view class="h">请选择支付方式</view>

@@ -74,7 +74,7 @@
       <view class="total">{{!isEditCart ? '￥'+cart.checkedSubTotal : ''}}</view>
       <view class="delete" bindtap="editCart">{{!isEditCart ? '编辑' : '完成'}}</view>
       <view class="checkout" bindtap="deleteCart" wx:if="{{isEditCart}}">删除所选</view>
-      <view class="checkout" bindtap="checkoutOrder" wx:if="{{!isEditCart}}">下单</view>
+      <view class="checkout" bindtap="checkoutOrder" wx:if="{{!isEditCart}}">去结算</view>
     </view>
   </view>
 </view>

@@ -11,10 +11,10 @@ Page({
     checkedCoupon: [],
     couponList: [],
     goodsTotalPrice: 0.00, //商品总价
-    freightPrice: 0.00,    //快递费
-    couponPrice: 0.00,     //优惠券的价格
-    orderTotalPrice: 0.00,  //订单总价
-    actualPrice: 0.00,     //实际需要支付的总价
+    freightPrice: 0.00, //快递费
+    couponPrice: 0.00, //优惠券的价格
+    orderTotalPrice: 0.00, //订单总价
+    actualPrice: 0.00, //实际需要支付的总价
     addressId: 0,
     couponId: 0,
 
@@ -62,7 +62,9 @@ Page({
     //   wx.hideLoading();
     // });
 
-    util.request(api.CartCheckout2, { userAddressId: that.data.addressId }).then(function (res) {
+    util.request(api.CartCheckout2, {
+      userAddressId: that.data.addressId
+    }).then(function (res) {
       if (res.success === true) {
         that.setData({
           checkedGoodsList: res.data.items,
@@ -130,13 +132,19 @@ Page({
     //     util.showErrorToast('下单失败');
     //   }
     // });
+    wx.showLoading({
+      title: '提交订单中...'
+    });
     util.request(api.CartOrderSubmit, {
       shippingUserAddressId: this.data.addressId,
       orderNote: '',
       couponId: this.data.couponId
     }, 'POST').then(res => {
-      if (res.success === true) {
-        // const orderId = res.data.orderInfo.id;
+      wx.hideLoading();
+      if (res.success === true && res.data && res.data.orderId) {
+        wx.redirectTo({
+          url: `/pages/pay/pay?orderId=${res.data.orderId}&orderTotal=${res.data.orderTotal}`
+        });
         // pay.payOrder(parseInt(orderId)).then(res => {
         //   wx.redirectTo({
         //     url: '/pages/payResult/payResult?status=1&orderId=' + orderId
@@ -147,7 +155,10 @@ Page({
         //   });
         // });
       } else {
-        util.showErrorToast('下单失败');
+        wx.showToast({
+          title: res.message,
+          icon: 'none'
+        });
       }
     });
 

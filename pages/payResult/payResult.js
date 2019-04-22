@@ -1,17 +1,18 @@
-var util = require('../../utils/util.js');
-var api = require('../../config/api.js');
-const pay = require('../../services/pay.js');
-
-var app = getApp();
 Page({
   data: {
-    status: false,
+    status: 0,
     orderId: 0
+  },
+  payOrder() {
+    let that = this;
+    wx.redirectTo({
+      url: '/pages/pay/pay?orderId=' + that.data.orderId
+    });
   },
   onLoad: function (options) {
     // 页面初始化 options为页面跳转所带来的参数
     this.setData({
-      orderId: options.orderId || 24,
+      orderId: options.orderId,
       status: options.status
     })
   },
@@ -28,15 +29,5 @@ Page({
   },
   onUnload: function () {
     // 页面关闭
-
-  },
-  payOrder() {
-    pay.payOrder(parseInt(this.data.orderId)).then(res => {
-      this.setData({
-        status: true
-      });
-    }).catch(res => {
-      util.showErrorToast('支付失败');
-    });
   }
 })
