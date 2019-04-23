@@ -20,7 +20,7 @@ Page({
       rating5Count: 0
     },
 
-    defaultAvatar: app.defaultAvatar,
+    defaultAvatar: app.globalData.defaultAvatar,
 
     pageNum: 1,
     pageSize: 5,

@@ -1,22 +1,12 @@
 <import src="../../../lib/wxParse/wxParse.wxml" />
 <template name="widget">
-    <view wx:for="{{widgets}}">
+    <view wx:for="{{widgets}}" wx:key>
         <view wx:if="{{item.widgetZoneId==widgetZoneId}}">
             <view wx:if="{{item.widgetId==1}}">
-                <!-- <view wx:for="{{ categorys }}" wx:for-index="idx" wx:for-item="item1">
-                    <view wx:if="{{item1.widgetZoneId==widgetZoneId && item1.id == item.id}}">
-                        <view class="m-menu">
-                            <navigator class="item" url="/pages/category/category?id={{item2.id}}" wx:for="{{item1.categorys}}" wx:for-item="item2" wx:key="{{item2.id}}">
-                                <image src="{{item2.thumbnailUrl}}" background-size="cover"></image>
-                                <text>{{item2.name}}</text>
-                            </navigator>
-                        </view>
-                    </view>
-                </view> -->
-                <view wx:for="{{ categorys }}" wx:for-index="idx" wx:for-item="item1">
+                <view wx:for="{{ categorys }}" wx:for-index="idx" wx:for-item="item1" wx:key>
                     <view wx:if="{{item1.widgetZoneId==widgetZoneId && item1.id == item.id}}">
                         <view class="cu-list grid col-{{item1.categorys.length}} no-border">
-                            <view class="cu-item" wx:for="{{item1.categorys}}" wx:key wx:for-item="item2" wx:key="{{item2.id}}">
+                            <view class="cu-item" wx:for="{{item1.categorys}}" wx:for-item="item2" wx:key>
                                 <navigator class="item" url="/pages/category/category?id={{item2.id}}">
                                     <view class="image">
                                         <image src="{{item2.thumbnailUrl}}" mode="aspectFit" style="max-height:75rpx;"></image>
@@ -30,7 +20,7 @@
                 </view>
             </view>
             <view wx:elif="{{item.widgetId==2}}">
-                <view wx:for="{{ products }}" wx:for-index="idx" wx:for-item="item1">
+                <view wx:for="{{ products }}" wx:key wx:for-index="idx" wx:for-item="item1">
                     <view wx:if="{{item1.widgetZoneId==widgetZoneId && item1.id == item.id}}">
                         <navigator url="../newGoods/newGoods">
                             <view class="solid-bottom">
@@ -43,7 +33,7 @@
                             </view>
                         </navigator>
                         <view class="cu-list grid col-2">
-                            <view class="cu-item" bindtap="navToGoods" data-id="{{item2.id}}" wx:for="{{item1.products}}" wx:for-item="item2" wx:key="{{item2.id}}" style="padding-top:0rpx;">
+                            <view class="cu-item" bindtap="navToGoods" data-id="{{item2.id}}" wx:for="{{item1.products}}" wx:for-item="item2" wx:key style="padding-top:0rpx;">
                                 <view class="image">
                                     <image class="bg-gray" src="{{item2.thumbnailUrl}}" mode="aspectFill" style="max-height:375rpx;"></image>
                                 </view>
@@ -65,7 +55,7 @@
                 </view>
             </view>
             <view wx:elif="{{item.widgetId==3}}">
-                <view wx:for="{{ simplProducts }}" wx:for-index="idx" wx:for-item="item1">
+                <view wx:for="{{ simplProducts }}" wx:for-index="idx" wx:for-item="item1" wx:key>
                     <view wx:if="{{item1.widgetZoneId==widgetZoneId && item1.id == item.id}}">
                         <navigator url="../hotGoods/hotGoods">
                             <view class="solid-bottom">
@@ -106,17 +96,17 @@
                 </view>
             </view>
             <view wx:elif="{{item.widgetId==4}}">
-                <view wx:for="{{ htmls }}" wx:for-index="idx" wx:for-item="item1">
+                <view wx:for="{{ htmls }}" wx:for-index="idx" wx:for-item="item1" wx:key>
                     <view wx:if="{{item1.widgetZoneId==widgetZoneId && item1.id == item.id}}">
                         <template is="wxParse" data="{{wxParseData:item1.htmlData}}" />
                     </view>
                 </view>
             </view>
             <view wx:elif="{{item.widgetId==5}}">
-                <view wx:for="{{ carouselWidgets }}" wx:for-index="idx" wx:for-item="itemCw">
+                <view wx:for="{{ carouselWidgets }}" wx:for-index="idx" wx:for-item="itemCw" wx:key>
                     <view wx:if="{{itemCw.widgetZoneId==widgetZoneId && itemCw.id == item.id}}">
                         <swiper class="banner" indicator-active-color="rgba(0, 0, 0, .6)" indicator-color="rgba(0, 0, 0, .3)" indicator-dots="true" autoplay="true" interval="3000" duration="1000">
-                            <swiper-item wx:for="{{ itemCw.items }}" wx:for-item="itemCwItem" wx:key="{{ itemCwItem.imageId }}">
+                            <swiper-item wx:for="{{ itemCw.items }}" wx:for-item="itemCwItem" wx:key>
                                 <navigator url="{{ itemCwItem.targetUrl }}">
                                     <image src="{{ itemCwItem.imageUrl }}" background-size="cover"></image>
                                 </navigator>

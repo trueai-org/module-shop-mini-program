@@ -43,8 +43,7 @@
     "borderStyle": "black",
     "selectedColor": "#e54d42",
     "color": "#aaaaaa",
-    "list": [
-      {
+    "list": [{
         "pagePath": "pages/index/index",
         "iconPath": "static/images/home.png",
         "selectedIconPath": "static/images/homefill.png",
@@ -74,6 +73,5 @@
     "request": 10000,
     "downloadFile": 10000
   },
-  "debug": true,
-  "sitemapLocation": "sitemap.json"
+  "debug": true
 }

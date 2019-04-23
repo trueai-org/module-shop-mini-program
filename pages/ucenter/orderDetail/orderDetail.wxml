@@ -120,7 +120,7 @@
             </view>
             <view wx:elif="{{order.orderStatus==60 || order.orderStatus==70}}">
                 <button bindtap="showDeleteModal" class="cu-btn sm round line shadow margin-left-xs">删除订单</button>
-                <button class="cu-btn sm round line-red shadow margin-left-xs">再次购买</button>
+                <button bindtap="againOrder" class="cu-btn sm round line-red shadow margin-left-xs">再次购买</button>
             </view>
         </view>
     </view>

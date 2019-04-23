@@ -23,7 +23,7 @@ Page({
     openAttr: false,
 
     isCollect: false,
-    defaultAvatar: app.defaultAvatar,
+    defaultAvatar: app.globalData.defaultAvatar,
 
     product: {
       categoryIds: [],
@@ -370,8 +370,8 @@ Page({
   addCollect: function () {
     let that = this;
     util.request(api.Wishlist, {
-      productId: this.data.id
-    }, "POST")
+        productId: this.data.id
+      }, "POST")
       .then(function (res) {
         if (res.success === true) {
           that.setData({
@@ -413,7 +413,9 @@ Page({
       url: '/pages/cart/cart',
     });
   },
-  addToCart: function () {
+  buy: function (e) {
+    console.log(e);
+
     this.isCheckedAllSpec();
 
     var that = this;
@@ -462,7 +464,7 @@ Page({
       }
 
       // 验证库存
-      if (stockProduct.displayStockQuantity && stockProduct.stockQuantity < this.data.number) {
+      if (stockProduct.displayStockQuantity && stockProduct.stockQuantity < that.data.number) {
         wx.showToast({
           image: '/static/images/icon_error.png',
           title: '剩余库存:' + stockProduct.stockQuantity,
@@ -470,12 +472,16 @@ Page({
         });
         return false;
       }
-      // 添加到购物车
-      util.request(api.CartAddItem, {
-        productId: stockProduct.productId,
-        quantity: this.data.number
-      }, "POST")
-        .then(function (res) {
+      if (e.currentTarget.dataset.type == 1) {
+        wx.navigateTo({
+          url: `/pages/shopping/checkout/checkout?type=product&productId=${stockProduct.productId}&quantity=${that.data.number}`,
+        });
+      } else {
+        // 添加到购物车
+        util.request(api.CartAddItem, {
+          productId: stockProduct.productId,
+          quantity: that.data.number
+        }, "POST").then(function (res) {
           let _res = res;
           if (_res.success === true) {
             wx.showToast({
@@ -493,6 +499,7 @@ Page({
             });
           }
         });
+      }
 
       // //根据选中的规格，判断是否有对应的sku信息
       // var specKey = this.getCheckedSpecKey();
@@ -539,7 +546,6 @@ Page({
       //     }
       //   });
     }
-
   },
   cutNumber: function () {
     this.setData({

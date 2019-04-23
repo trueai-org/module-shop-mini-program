@@ -4,7 +4,7 @@ var api = require('../../../config/api.js');
 Page({
   data: {
     pageNum: 1,
-    pageSize: 5,
+    pageSize: 10,
     total: 0,
     predicate: 'id',
     reverse: true,
@@ -204,6 +204,11 @@ Page({
           icon: 'none'
         });
       }
+    });
+  },
+  againOrder(e) {
+    wx.navigateTo({
+      url: '/pages/shopping/checkout/checkout?type=order&orderId=' + e.currentTarget.dataset.id,
     });
   },
 })

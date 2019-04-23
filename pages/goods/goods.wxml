@@ -246,7 +246,7 @@
     </view>
     购物车
   </view>
-  <view bindtap="addToCart" class="bg-red submit">加入购物车</view>
-  <view class="bg-orange submit">立即购买</view>
+  <view bindtap="buy" data-type="{{0}}" class="bg-red submit">加入购物车</view>
+  <view bindtap="buy" data-type="{{1}}" class="bg-orange submit">立即购买</view>
 </view>
 <view class="bg-white block-100"></view>

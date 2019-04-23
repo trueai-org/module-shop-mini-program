@@ -220,5 +220,10 @@ Page({
     wx.navigateTo({
       url: `/pages/review/review?entityId=${e.target.dataset.id}&entityTypeId=3&sourceId=${this.data.orderId}&sourceType=0`
     });
-  }
+  },
+  againOrder(e) {
+    wx.navigateTo({
+      url: '/pages/shopping/checkout/checkout?type=order&orderId=' + this.data.orderId,
+    });
+  },
 })

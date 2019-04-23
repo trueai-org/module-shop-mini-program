@@ -7,7 +7,7 @@ Page({
   data: {
     userInfo: {
       name: '',
-      avatar: app.defaultAvatar
+      avatar: app.globalData.defaultAvatar
     },
     showLoginDialog: false
   },
@@ -129,7 +129,7 @@ Page({
           that.setData({
             userInfo: {
               name: '',
-              avatar: app.defaultAvatar
+              avatar: app.globalData.defaultAvatar
             }
           });
           wx.removeStorageSync('token');
