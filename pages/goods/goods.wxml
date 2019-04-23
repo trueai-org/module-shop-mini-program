@@ -86,8 +86,8 @@
           <text>{{item.reviewerName}}</text>
         </view>
         <view class="text-sm">
-          <text wx:for="{{item.rating}}" class="icon-favorfill text-red"></text>
-          <text wx:for="{{(5 - item.rating)}}" class="icon-favor text-red"></text>
+          <text wx:for="{{item.rating}}" wx:key class="icon-favorfill text-red"></text>
+          <text wx:for="{{(5 - item.rating)}}" wx:key class="icon-favor text-red"></text>
         </view>
       </view>
     </view>
@@ -100,7 +100,7 @@
         <view class="text-gray text-sm">白色 × 2</view>
       </view>
       <view wx:if="{{item.replies.length>0}}">
-        <view wx:for="{{item.replies}}" wx:for-item="iitem" class="bg-gray padding-sm radius margin-top-sm text-sm">
+        <view wx:for="{{item.replies}}" wx:for-item="iitem" class="bg-gray padding-sm radius margin-top-sm text-sm" wx:key>
           <view class="flex">
             <view class="text-sm">{{iitem.replierName}}：</view>
             <view class="flex-sub text-sm">{{iitem.comment}}</view>

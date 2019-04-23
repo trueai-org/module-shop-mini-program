@@ -98,7 +98,9 @@
 <view class="cu-modal {{showLoginDialog?'show':''}}" bindtap="onCloseLoginDialog">
   <view class="cu-dialog" catchtap='onDialogBody' style="width:520rpx;">
     <view class="cu-list padding">
-      <view class="cu-avatar xl round" style="background-image:url('/static/images/logo.png');"></view>
+      <view class="cu-avatar xl round">
+        <image src="/static/images/logo.png" mode="aspectFit"></image>
+      </view>
       <view class="padding-top-sm">
         <text class="text-bold text-black">{{shopName}}</text>
       </view>

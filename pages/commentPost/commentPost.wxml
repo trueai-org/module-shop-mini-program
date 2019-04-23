@@ -6,8 +6,8 @@
                 <view class="content">
                     <view bindtap="replyReset" class="text">{{item.reviewerName}}</view>
                     <view class="text-gray text-sm">
-                        <text wx:for="{{item.rating}}" class="icon-favorfill text-red"></text>
-                        <text wx:for="{{(5 - item.rating)}}" class="icon-favor text-red"></text>
+                        <text wx:for="{{item.rating}}" wx:key class="icon-favorfill text-red"></text>
+                        <text wx:for="{{(5 - item.rating)}}" wx:key class="icon-favor text-red"></text>
                     </view>
                 </view>
                 <view>
@@ -32,7 +32,7 @@
                     {{item.replieCount}}条回复
                 </view>
             </view>
-            <view wx:for="{{pageData}}" class="cu-item">
+            <view wx:for="{{pageData}}" wx:key class="cu-item">
                 <view bindtap="replyReplier" data-id="{{item.id}}" data-name="{{item.replierName}}" class="cu-avatar round" style="background-image:url({{item.avatar?item.avatar:defaultAvatar}});"></view>
                 <view class="content">
                     <view bindtap="replyReplier" data-id="{{item.id}}" data-name="{{item.replierName}}" class="text">{{item.replierName}}</view>
@@ -43,7 +43,7 @@
                         </view>
                     </view>
                     <view class="text text-content">{{item.comment}}</view>
-                    <view wx:for="{{item.replies}}" wx:for-item="iitem" class="bg-gray padding-sm radius margin-top-sm text-sm">
+                    <view wx:for="{{item.replies}}" wx:key wx:for-item="iitem" class="bg-gray padding-sm radius margin-top-sm text-sm">
                         <view class="flex text-sm">
                             <view>
                                 <text bindtap="replyReplier" data-id="{{iitem.id}}" data-name="{{iitem.replierName}}" class="text-sm text">{{iitem.replierName}}{{' '}}</text>
