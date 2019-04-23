@@ -33,46 +33,52 @@ Page({
   onLoad: function (options) {
     // 页面初始化 options为页面跳转所带来的参数
     let that = this;
-    util.request(api.SubCategories)
-      .then(function (res) {
-        if (res.success === true && res.data && res.data.length > 0) {
-          let first = res.data[0];
-          if (options.id) {
-            let ss = res.data.find(c => c.id == options.id);
-            if (ss) {
-              first = ss;
-            }
-          }
-          that.setData({
-            categories: res.data,
-            current: first,
-            categoryId: first.id
-          });
-          that.getGoods();
-        }
-      });
-
-    return;
-
-    if (options.id) {
-      that.setData({
-        id: parseInt(options.id)
-      });
+    let param = {};
+    if (options.parentId) {
+      param = {
+        parentId: options.parentId
+      };
     }
 
-    wx.getSystemInfo({
-      success: function (res) {
+    util.request(api.SubCategories, param).then(function (res) {
+      if (res.success === true && res.data && res.data.length > 0) {
+        let first = res.data[0];
+        if (options.id) {
+          let ss = res.data.find(c => c.id == options.id);
+          if (ss) {
+            first = ss;
+          }
+        }
         that.setData({
-          scrollHeight: res.windowHeight
+          categories: res.data,
+          current: first,
+          categoryId: first.id
         });
+        that.getGoods();
       }
     });
 
-    this.getCategoryInfo();
+    // if (options.id) {
+    //   that.setData({
+    //     id: parseInt(options.id)
+    //   });
+    // }
+
+    // wx.getSystemInfo({
+    //   success: function (res) {
+    //     that.setData({
+    //       scrollHeight: res.windowHeight
+    //     });
+    //   }
+    // });
+
+    // this.getCategoryInfo();
   },
   getCategoryInfo: function () {
     let that = this;
-    util.request(api.GoodsCategory, { id: this.data.id })
+    util.request(api.GoodsCategory, {
+        id: this.data.id
+      })
       .then(function (res) {
 
         if (res.errno == 0) {
@@ -116,7 +122,11 @@ Page({
   getGoodsList: function () {
     var that = this;
 
-    util.request(api.GoodsList, { categoryId: that.data.id, page: that.data.page, size: that.data.size })
+    util.request(api.GoodsList, {
+        categoryId: that.data.id,
+        page: that.data.page,
+        size: that.data.size
+      })
       .then(function (res) {
         that.setData({
           goodsList: res.data.goodsList,
