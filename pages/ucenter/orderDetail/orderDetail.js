@@ -7,7 +7,10 @@ Page({
       address: {}
     },
     showTimer: false,
+    timeStrDesc: '',
     timerStr: `${0}天 ${0}小时 ${0}分钟 ${0}秒`,
+    timerTrue: false,
+    total: 0,
 
     visibleDelete: false,
     visibleCancel: false,
@@ -36,52 +39,48 @@ Page({
     });
   },
   payTimer() {
-    if (!this.data.order || !this.data.order.orderStatus)
+    let that = this;
+    if (!this.data.order)
       return;
-    let ss = this.data.order.orderStatus;
-
-    let dateStr = this.data.order.createdOn; //2017-01-01 11:00:00 -> 2017/01/01 11:00:00
-
-    let addSec = 1800; // +30min 剩余支付时间
-    //支付后，买家7天内确认收货（可延长确认收货时间），如果到时间未确认收货，则自动确认收货，并自动好评
-    if (ss == 30 ||
-      ss == 40 ||
-      ss == 50) {
-      addSec = 3600 * 24 * 7; // +7天
-      if (this.data.order.paymentOn) {
-        dateStr = this.data.order.paymentOn;
-      }
+    let total = 0
+    let desc = '';
+    if (parseInt(this.data.order.paymentEndOnForSecond) > 0) {
+      desc = '剩余支付时间：';
+      total = parseInt(this.data.order.paymentEndOnForSecond);
+    } else if (parseInt(this.data.order.deliveredEndOnForSecond) > 0) {
+      desc = '确认收货时间：';
+      total = parseInt(this.data.order.deliveredEndOnForSecond);
     }
-    dateStr = dateStr.replace(/-/g, '/');
-    // console.log(dateStr);
-
-    if (ss && ss != 10 && ss != 60 && ss != 70) {
-      let that = this;
-      let now = parseInt(Date.parse(new Date()) / 1000);
-      let endOn = parseInt(Date.parse(new Date(dateStr)) / 1000) + addSec;
-      let total = parseInt(endOn - now);
-      if (total > 0) {
-        that.setData({
-          showTimer: true
-        })
-        setInterval(() => {
-          if (total > 0) {
-            total -= 1;
-            let day = parseInt(total / (3600 * 24));
-            let hour = parseInt(total % (3600 * 24) / 3600);
-            let min = parseInt((total % 3600) / 60);
-            let sec = parseInt((total % 60));
-            let str = `${day}天 ${hour}小时 ${min}分钟 ${sec}秒`;
-            that.setData({
-              timerStr: str,
-            });
-          } else {
-            that.setData({
-              showTimer: false
-            })
-          }
-        }, 1000);
-      }
+    that.setData({
+      total: total
+    })
+    if (total > 0) {
+      if (that.data.timerTrue)
+        return;
+      that.setData({
+        showTimer: true,
+        timeStrDesc: desc,
+        timerTrue: true
+      })
+      setInterval(() => {
+        total = parseInt(that.data.total);
+        if (total > 0) {
+          total -= 1;
+          let day = parseInt(total / (3600 * 24));
+          let hour = parseInt(total % (3600 * 24) / 3600);
+          let min = parseInt((total % 3600) / 60);
+          let sec = parseInt((total % 60));
+          let str = `${day}天 ${hour}小时 ${min}分钟 ${sec}秒`;
+          that.setData({
+            timerStr: str,
+            total: total
+          });
+        } else {
+          that.setData({
+            showTimer: false
+          })
+        }
+      }, 1000);
     }
   },
   payOrder() {
@@ -195,6 +194,27 @@ Page({
         });
       }
     });
+  },
+  delayShippedOrder() {
+    wx.showLoading({
+      title: '延长收货中...'
+    });
+    let that = this;
+    util.request(api.Orders + '/' + that.data.orderId + '/delay-cinfirm-receipt', {}, 'PUT')
+      .then(function (res) {
+        wx.hideLoading();
+        if (res.success === true) {
+          wx.showToast({
+            title: '延长收货成功'
+          });
+          that.getOrderDetail();
+        } else {
+          wx.showToast({
+            title: res.message,
+            icon: 'none'
+          });
+        }
+      });
   },
   redirectToReview(e) {
     wx.navigateTo({
