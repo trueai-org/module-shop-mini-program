@@ -1,12 +1,5 @@
-<!-- index.wxml -->
 <import src="./template/widget.wxml" />
 <view class="container">
-  <!-- <view class="search">
-    <navigator url="/pages/search/search" class="input">
-      <image class="icon"></image>
-      <text class="txt">搜索商品</text>
-    </navigator>
-  </view> -->
   <navigator url="/pages/search/search">
     <view class="cu-bar bg-white search no-padding">
       <view class="search-form radius">
@@ -15,7 +8,7 @@
       </view>
     </view>
   </navigator>
-  <view class="header">
+  <view>
     <template is="widget" data="{{widgets:widgets,widgetZoneId:1,carouselWidgets:carouselWidgets,categorys:categorys,htmls:htmls,simplProducts:simplProducts,products:products}}" />
   </view>
   <view class="content">
@@ -23,21 +16,5 @@
   </view>
   <view class="content-after">
     <template is="widget" data="{{widgets:widgets,widgetZoneId:3,carouselWidgets:carouselWidgets,categorys:categorys,htmls:htmls,simplProducts:simplProducts,products:products}}" />
-  </view>
-  <view class="good-grid" wx:for="{{floorGoods}}" wx:key="{{item.id}}">
-    <view class="h">
-      <view>
-        <text>{{item.name}}</text>
-      </view>
-    </view>
-    <view class="b">
-      <block wx:for="{{item.goodsList}}" wx:for-index="iindex" wx:for-item="iitem" wx:key="{{iitem.id}}">
-        <navigator url="../goods/goods?id={{iitem.id}}" class="item">
-          <image class="img" src="{{iitem.list_pic_url}}" background-size="cover"></image>
-          <view class="name">{{iitem.name}}</view>
-          <view class="price">￥{{iitem.retail_price}}</view>
-        </navigator>
-      </block>
-    </view>
   </view>
 </view>

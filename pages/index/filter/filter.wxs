@@ -1,7 +1,0 @@
-var Filter = {
-    aa: function (data, widgetZoneId) {
-        console.log(widgetZoneId);
-        return data;// data.filter(c => c.widgetZoneId == widgetZoneId);
-    },
-}
-module.exports = Filter;

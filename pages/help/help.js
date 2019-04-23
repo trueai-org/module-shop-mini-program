@@ -1,23 +1,18 @@
-// pages/help/help.js
-Component({
-  /**
-   * 组件的属性列表
-   */
-  properties: {
-
+Page({
+  data: {},
+  onLoad: function (options) {
+    
   },
-
-  /**
-   * 组件的初始数据
-   */
-  data: {
-
+  onReady: function () {
+    // 页面渲染完成
   },
-
-  /**
-   * 组件的方法列表
-   */
-  methods: {
-
+  onShow: function () {
+    // 页面显示
+  },
+  onHide: function () {
+    // 页面隐藏
+  },
+  onUnload: function () {
+    // 页面关闭
   }
 })

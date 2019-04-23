@@ -9,6 +9,7 @@ Page({
       name: '',
       avatar: app.globalData.defaultAvatar
     },
+    shopName: app.globalData.title,
     showLoginDialog: false
   },
   onLoad: function (options) {
