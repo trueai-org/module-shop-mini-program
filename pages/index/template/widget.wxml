@@ -98,7 +98,9 @@
             <view wx:elif="{{item.widgetId==4}}">
                 <view wx:for="{{ htmls }}" wx:for-index="idx" wx:for-item="item1" wx:key>
                     <view wx:if="{{item1.widgetZoneId==widgetZoneId && item1.id == item.id}}">
-                        <template is="wxParse" data="{{wxParseData:item1.htmlData}}" />
+                        <view class="bg-white padding-sm margin-top-sm text">
+                            <template is="wxParse" data="{{wxParseData:item1.htmlData}}" />
+                        </view>
                     </view>
                 </view>
             </view>
