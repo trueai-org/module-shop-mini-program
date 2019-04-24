@@ -1,5 +1,5 @@
 // const ApiHost = 'https://localhost:44372/api/';
-const ApiHost = 'https://circle.ac.cn/api/';
+const ApiHost = 'https://shopapi.circle.ac.cn/api/';
 
 module.exports = {
   Host: ApiHost,
