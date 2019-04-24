@@ -35,7 +35,11 @@ Page({
   },
   getIndexData: function () {
     let that = this;
+    wx.showLoading({
+      title: '加载中...',
+    });
     util.request(api.Widgets).then(function (res) {
+      // wx.hideLoading();
       if (res.success === true) {
         that.setData({
           widgets: res.data.widgetInstances || []
@@ -55,7 +59,11 @@ Page({
               });
               return;
             }
+            wx.showLoading({
+              title: '加载中...',
+            });
             util.request(api.Widgets + '/' + e.id).then(function (itemRes) {
+              wx.hideLoading();
               if (itemRes.success === true) {
                 if (e.widgetId == 5 &&
                   itemRes.data &&
@@ -88,6 +96,12 @@ Page({
               }
             });
           });
+        });
+      } else {
+        // wx.hideLoading();
+        wx.showToast({
+          title: res.message,
+          icon: 'none'
         });
       }
     });
