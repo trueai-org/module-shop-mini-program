@@ -70,7 +70,7 @@
                         <view class="cu-card article no-card">
                             <view class="padding-sm cu-item shadow no-padding" wx:for="{{item1.products}}" wx:for-index="index" wx:for-item="item2" wx:key="{{item2.id}}">
                                 <view bindtap="navToGoods" data-id="{{item2.id}}" class="content " style="padding:12rpx;">
-                                    <image class="bg-gray" src="{{item2.thumbnailUrl}}" mode="aspectFill"></image>
+                                    <image class="bg-gray" src="{{item2.thumbnailUrl}}" mode="aspectFit"></image>
                                     <view class="desc">
                                         <view class="text-content">
                                             <view>
