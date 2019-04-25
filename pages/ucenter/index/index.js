@@ -71,6 +71,10 @@ Page({
       return false
     }
 
+    wx.showToast({
+      title: '正在登录...',
+      icon: 'none'
+    });
     util.login().then((res) => {
       // return util.request(api.AuthLoginByWeixin, {
       //   code: res,
@@ -83,12 +87,17 @@ Page({
         avatarUrl: e.detail.userInfo.avatarUrl
       }, 'POST');
     }).then((res) => {
+      wx.hideLoading();
       // console.log(res)
       if (res.success !== true) {
         wx.showToast({
           title: '微信登录失败',
         })
         return false;
+      } else {
+        wx.showToast({
+          title: '登录成功'
+        });
       }
       let userInfo = {
         name: res.data.name,
