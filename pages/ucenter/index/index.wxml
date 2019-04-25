@@ -22,7 +22,7 @@
       </view>
     </view>
   </view>
-  <view class="cu-list menu shadow-lg" style="margin-top:24rpx;">
+  <view class="cu-list menu shadow-lg" style="margin-top:20rpx;">
     <view class="cu-item arrow">
       <navigator class="content" url="/pages/ucenter/order/order" hover-class="none">
         <text class="icon-formfill text-red"></text>
@@ -60,7 +60,7 @@
       </navigator>
     </view>
   </view>
-  <view class="cu-list menu shadow-lg" style="margin-top:24rpx;">
+  <view class="cu-list menu shadow-lg" style="margin-top:20rpx;">
     <view class="cu-item arrow">
       <navigator class="content" url="/pages/chat/chat" hover-class="none">
         <text class="icon-dianhua text-red"></text>
@@ -86,7 +86,7 @@
       </navigator>
     </view>
   </view>
-  <view wx:if="{{userInfo && userInfo.name}}" class="cu-list menu shadow-lg" style="margin-top:24rpx 0;">
+  <view wx:if="{{userInfo && userInfo.name}}" class="cu-list menu shadow-lg" style="margin:20rpx 0;">
     <view bindtap="exitLogin" class="cu-item arrow">
       <button class="cu-btn content">
         <text class="icon-exit text-grey"></text>
