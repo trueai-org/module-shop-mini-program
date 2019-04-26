@@ -5,7 +5,9 @@
 本项目需要配合ModuleShop商城服务端使用，GitHub: [https://github.com/trueai-org/module-shop](https://github.com/trueai-org/module-shop)
 
 ### 在线预览
-![小程序码](https://gogs.circle.ac.cn/gogs/data/raw/master/images/shop_mp.jpg =100x100)
+<img src="https://gogs.circle.ac.cn/gogs/data/raw/master/images/shop_mp.jpg" width="200">
+
+ <!-- ![小程序码](https://gogs.circle.ac.cn/gogs/data/raw/master/images/shop_mp.jpg) -->
 
 ### 项目截图
 ![首页](https://gogs.circle.ac.cn/gogs/data/raw/master/images/wechatdevtools_2019-04-26_17-44-30.png)
