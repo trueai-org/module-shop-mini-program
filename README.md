@@ -5,8 +5,7 @@
 本项目需要配合ModuleShop商城服务端使用，GitHub: [https://github.com/trueai-org/module-shop](https://github.com/trueai-org/module-shop)
 
 ### 在线预览
-![小程序码](https://gogs.circle.ac.cn/gogs/data/raw/master/images/shop_mp.jpg)
-
+![小程序码](https://gogs.circle.ac.cn/gogs/data/raw/master/images/shop_mp.jpg =100x100)
 
 ### 项目截图
 ![首页](https://gogs.circle.ac.cn/gogs/data/raw/master/images/wechatdevtools_2019-04-26_17-44-30.png)
@@ -85,5 +84,3 @@
 
 ### 交流
 喜欢别忘了 Star，有问题可通过微信、公众号、QQ 群联系我，谢谢您的关注。
-
-![联系方式](http://nideshop-static.nideshop.com/nideshop-qrcode.png)
