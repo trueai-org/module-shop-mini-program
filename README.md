@@ -4,23 +4,17 @@
 
 系统由三部分组成：后台API、后台前端、微信小程序。
 
-***
-
 ## 后台API
 
 项目地址：[https://github.com/trueai-org/module-shop](https://github.com/trueai-org/module-shop)
 
 在线预览（Swagger）：[https://shopapi.circle.ac.cn/swagger](https://shopapi.circle.ac.cn/swagger)
 
-***
-
 ## 后台前端
 
 项目地址：[https://github.com/trueai-org/module-shop](https://github.com/trueai-org/module-shop)
 
 在线预览（admin/123456）：[https://shop.circle.ac.cn](https://shop.circle.ac.cn)
-
-***
 
 ## 微信小程序
 
