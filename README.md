@@ -6,36 +6,27 @@
 
 ## 后台API
 
-项目地址：[https://github.com/trueai-org/module-shop](https://github.com/trueai-org/module-shop)
+项目地址：[https://github.com/trueai-org/module-shop-admin](https://github.com/trueai-org/module-shop-admin)
 
-在线预览（Swagger）：[https://shopapi.circle.ac.cn/swagger](https://shopapi.circle.ac.cn/swagger)
+在线预览：[https://shopapi.circle.ac.cn/swagger](https://shopapi.circle.ac.cn/swagger)
 
 ## 后台前端
 
 项目地址：[https://github.com/trueai-org/module-shop](https://github.com/trueai-org/module-shop)
 
-在线预览（admin/123456）：[https://shop.circle.ac.cn](https://shop.circle.ac.cn)
+在线预览：[https://shop.circle.ac.cn](https://shop.circle.ac.cn)
+*admin/123456*
 
 ## 微信小程序
 
-**注意：当前版本功能还未完善，请勿商用。**
+项目地址：[https://github.com/trueai-org/module-shop-mini-program](https://github.com/trueai-org/module-shop-mini-program)
 
-本项目需要配合ModuleShop商城服务端使用，GitHub: [https://github.com/trueai-org/module-shop](https://github.com/trueai-org/module-shop)
+在线预览：
 
-### 在线预览
-![小程序码](https://gogs.circle.ac.cn/gogs/data/raw/master/images/shop_mp_8_8.jpg)
-<img src="https://gogs.circle.ac.cn/gogs/data/raw/master/images/shop_mp_8_8.jpg" width="200">
-
- <!-- ![小程序码](https://gogs.circle.ac.cn/gogs/data/raw/master/images/shop_mp_8_8.jpg) -->
-
-#### 后台api
-[https://shopapi.circle.ac.cn](https://shopapi.circle.ac.cn)
-
-#### 后台前端
-[https://shop.circle.ac.cn](https://shop.circle.ac.cn)
-**用户名/密码：admin/123456**
+![小程序码](https://gogs.circle.ac.cn/gogs/data/raw/master/images/shop_mp_8.jpg)
 
 ### 项目截图
+
 ![首页](https://gogs.circle.ac.cn/gogs/data/raw/master/images/wechatdevtools_2019-04-26_17-44-30.png)
 
 ![分类](https://gogs.circle.ac.cn/gogs/data/raw/master/images/wechatdevtools_2019-04-26_17-45-37.png)
@@ -104,11 +95,6 @@
 └─utils
 ```
 
-### 服务端api
-项目地址：https://github.com/trueai-org/module-shop
+## 交流
 
-### 服务端后台
-项目地址：https://github.com/trueai-org/module-shop-admin
-
-### 交流
 喜欢别忘了 Star，有问题可通过微信、公众号、QQ 群联系我，谢谢您的关注。
