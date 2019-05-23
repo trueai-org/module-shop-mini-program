@@ -1,13 +1,45 @@
-### ModuleShop商城（微信小程序端）
+## ModuleShop
+
+一个基于 .NET Core构建的简单、跨平台、模块化的商城系统。
+
+系统由三部分组成：后台API、后台前端、微信小程序。
+
+***
+
+## 后台API
+
+项目地址：[https://github.com/trueai-org/module-shop](https://github.com/trueai-org/module-shop)
+
+在线预览（Swagger）：[https://shopapi.circle.ac.cn/swagger](https://shopapi.circle.ac.cn/swagger)
+
+***
+
+## 后台前端
+
+项目地址：[https://github.com/trueai-org/module-shop](https://github.com/trueai-org/module-shop)
+
+在线预览（admin/123456）：[https://shop.circle.ac.cn](https://shop.circle.ac.cn)
+
+***
+
+## 微信小程序
 
 **注意：当前版本功能还未完善，请勿商用。**
 
 本项目需要配合ModuleShop商城服务端使用，GitHub: [https://github.com/trueai-org/module-shop](https://github.com/trueai-org/module-shop)
 
 ### 在线预览
-<img src="https://gogs.circle.ac.cn/gogs/data/raw/master/images/shop_mp.jpg" width="200">
+![小程序码](https://gogs.circle.ac.cn/gogs/data/raw/master/images/shop_mp_8_8.jpg)
+<img src="https://gogs.circle.ac.cn/gogs/data/raw/master/images/shop_mp_8_8.jpg" width="200">
 
- <!-- ![小程序码](https://gogs.circle.ac.cn/gogs/data/raw/master/images/shop_mp.jpg) -->
+ <!-- ![小程序码](https://gogs.circle.ac.cn/gogs/data/raw/master/images/shop_mp_8_8.jpg) -->
+
+#### 后台api
+[https://shopapi.circle.ac.cn](https://shopapi.circle.ac.cn)
+
+#### 后台前端
+[https://shop.circle.ac.cn](https://shop.circle.ac.cn)
+**用户名/密码：admin/123456**
 
 ### 项目截图
 ![首页](https://gogs.circle.ac.cn/gogs/data/raw/master/images/wechatdevtools_2019-04-26_17-44-30.png)
