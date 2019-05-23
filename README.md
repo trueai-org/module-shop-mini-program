@@ -1,6 +1,6 @@
 ## ModuleShop
 
-一个基于 .NET Core构建的简单、跨平台、模块化的商城系统。
+一个基于 .NET Core构建的简单、跨平台、模块化的商城系统
 
 **跨平台**
 
@@ -13,8 +13,6 @@ Docker, Windows, Linux, Mac. Microsoft SQL Server, PostgreSQL, MySQL, SQLite
 **免费并且开源**
 
 ModuleShop完全免费并且开源
-
-系统由三部分组成：后台API、后台前端、微信小程序
 
 ## 后台API
 
