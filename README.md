@@ -1,20 +1,18 @@
 ## ModuleShop
 
-A simple, cross platform, modularized shop system built on .NET Core
+一个基于 .NET Core构建的简单、跨平台、模块化的商城系统。
 
-**Cross Platform**
+**跨平台**
 
 Docker, Windows, Linux, Mac. Microsoft SQL Server, PostgreSQL, MySQL, SQLite
 
-**Modular**
+**模块化**
 
-The application is divided into many self contained modules
+该应用程序分为许多自包含模块
 
-**Free and Open Source**
+**免费并且开源**
 
-ModuleShop is free and fully open source on GitHub
-
-一个基于 .NET Core构建的简单、跨平台、模块化的商城系统。
+ModuleShop完全免费并且开源
 
 系统由三部分组成：后台API、后台前端、微信小程序
 
