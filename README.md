@@ -2,9 +2,21 @@
 
 A simple, cross platform, modularized shop system built on .NET Core
 
+**Cross Platform**
+
+Docker, Windows, Linux, Mac. Microsoft SQL Server, PostgreSQL, MySQL, SQLite
+
+**Modular**
+
+The application is divided into many self contained modules
+
+**Free and Open Source**
+
+ModuleShop is free and fully open source on GitHub
+
 一个基于 .NET Core构建的简单、跨平台、模块化的商城系统。
 
-系统由三部分组成：后台API、后台前端、微信小程序。
+系统由三部分组成：后台API、后台前端、微信小程序
 
 ## 后台API
 
@@ -21,6 +33,10 @@ A simple, cross platform, modularized shop system built on .NET Core
 项目地址：[https://github.com/trueai-org/module-shop](https://github.com/trueai-org/module-shop)
 
 在线预览：[https://shop.circle.ac.cn](https://shop.circle.ac.cn) *admin/123456*
+
+前端框架：[Ant Design Pro](https://pro.ant.design)
+
+使用文档：http://pro.ant.design/docs/getting-started-cn
 
 ### 项目截图
 
